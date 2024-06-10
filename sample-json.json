@@ -1,0 +1,281 @@
+{
+    "success": true,
+    "message": "success",
+    "left_rows": "10",
+    "right_rows": "10",
+    "left_columns": "2",
+    "right_columns": "2",
+    "no_of_seats_in_last_row": "5",
+    "seat_layout": [
+        {
+            "position": "left",
+            "seat_no": "L1",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "left",
+            "seat_no": "L2",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "left",
+            "seat_no": "L3",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "left",
+            "seat_no": "L4",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "left",
+            "seat_no": "L5",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "left",
+            "seat_no": "L6",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "left",
+            "seat_no": "L7",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "left",
+            "seat_no": "L8",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "left",
+            "seat_no": "L9",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "left",
+            "seat_no": "L10",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "left",
+            "seat_no": "L11",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "left",
+            "seat_no": "L12",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "left",
+            "seat_no": "L13",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "left",
+            "seat_no": "L14",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "left",
+            "seat_no": "L15",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "left",
+            "seat_no": "L16",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "left",
+            "seat_no": "L17",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "left",
+            "seat_no": "L18",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "left",
+            "seat_no": "L19",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "left",
+            "seat_no": "L20",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "right",
+            "seat_no": "R1",
+            "seat_type": "seater",
+            "is_booked": false
+        },
+        {
+            "position": "right",
+            "seat_no": "R2",
+            "seat_type": "seater",
+            "is_booked": false
+        },
+        {
+            "position": "right",
+            "seat_no": "R3",
+            "seat_type": "seater",
+            "is_booked": false
+        },
+        {
+            "position": "right",
+            "seat_no": "R4",
+            "seat_type": "seater",
+            "is_booked": false
+        },
+        {
+            "position": "right",
+            "seat_no": "R5",
+            "seat_type": "seater",
+            "is_booked": false
+        },
+        {
+            "position": "right",
+            "seat_no": "R6",
+            "seat_type": "seater",
+            "is_booked": false
+        },
+        {
+            "position": "right",
+            "seat_no": "R7",
+            "seat_type": "seater",
+            "is_booked": false
+        },
+        {
+            "position": "right",
+            "seat_no": "R8",
+            "seat_type": "seater",
+            "is_booked": false
+        },
+        {
+            "position": "right",
+            "seat_no": "R9",
+            "seat_type": "seater",
+            "is_booked": false
+        },
+        {
+            "position": "right",
+            "seat_no": "R10",
+            "seat_type": "seater",
+            "is_booked": false
+        },
+        {
+            "position": "right",
+            "seat_no": "R11",
+            "seat_type": "seater",
+            "is_booked": false
+        },
+        {
+            "position": "right",
+            "seat_no": "R12",
+            "seat_type": "seater",
+            "is_booked": false
+        },
+        {
+            "position": "right",
+            "seat_no": "R13",
+            "seat_type": "seater",
+            "is_booked": false
+        },
+        {
+            "position": "right",
+            "seat_no": "R14",
+            "seat_type": "seater",
+            "is_booked": false
+        },
+        {
+            "position": "right",
+            "seat_no": "R15",
+            "seat_type": "seater",
+            "is_booked": false
+        },
+        {
+            "position": "right",
+            "seat_no": "R16",
+            "seat_type": "seater",
+            "is_booked": false
+        },
+        {
+            "position": "right",
+            "seat_no": "R17",
+            "seat_type": "seater",
+            "is_booked": false
+        },
+        {
+            "position": "right",
+            "seat_no": "R18",
+            "seat_type": "seater",
+            "is_booked": false
+        },
+        {
+            "position": "right",
+            "seat_no": "R19",
+            "seat_type": "seater",
+            "is_booked": false
+        },
+        {
+            "position": "right",
+            "seat_no": "R20",
+            "seat_type": "seater",
+            "is_booked": false
+        },
+        {
+            "position": "back",
+            "seat_no": "B1",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "back",
+            "seat_no": "B2",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "back",
+            "seat_no": "B3",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "back",
+            "seat_no": "B4",
+            "seat_type": "seater",
+            "is_booked": true
+        },
+        {
+            "position": "back",
+            "seat_no": "B5",
+            "seat_type": "seater",
+            "is_booked": true
+        }
+    ]
+}
