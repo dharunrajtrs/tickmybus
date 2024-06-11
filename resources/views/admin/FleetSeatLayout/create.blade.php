@@ -1,4 +1,4 @@
-@php 
+@php
 use App\Models\Admin\FleetSeatLayout;
 //#seat type color...!
 
@@ -6,10 +6,10 @@ $APP_URL = getenv('APP_URL');
 
 if ($APP_URL !== false) {
     // $APP_URL now contains the value of the 'APP_URL' environment variable
-    echo $APP_URL;
+   // echo $APP_URL;
 } else {
     // 'APP_URL' environment variable not found
-    echo 'APP_URL is not set in the environment.';
+  //  echo 'APP_URL is not set in the environment.';
 }
 $seater = [
     "value"=>"seater", //#value dont change because it is store in db...!
@@ -81,9 +81,9 @@ $blocker = [
   .seat-inner {
       text-align: center;
   }
-  .box {
+  /* .box {
     margin-top: 100px;
-  }
+  } */
 
   .form-check-input {
     width: 30px;
@@ -140,7 +140,7 @@ $blocker = [
       <div class="col-sm-12 col-lg-12">
         <div class="box">
           <div class="box-header with-border">
-          
+
             <a href="{{ url('fleet_seat_layout') }}" class="busForm">
               <button class="btn btn-danger btn-sm pull-right" type="button" >
                 <i class="mdi mdi-keyboard-backspace mr-2"></i> @lang('view_pages.back') </button>
@@ -149,20 +149,20 @@ $blocker = [
                 <i class="mdi mdi-keyboard-backspace mr-2"></i> @lang('view_pages.back') </button>
           </div>
           <div class="col-12">
-            <form method="post" action="{{url('fleet_seat_layout/store')}}" id="formData"> 
+            <form method="post" action="{{url('fleet_seat_layout/store')}}" id="formData">
         <!-- <form action="#" method="post">/ -->
 
               @csrf
                  <h3> Bus Details </h3>
 
               <div class="row busForm ">
-                <div class="col-sm-6 float-left mb-md-3">
+                <div class="col-sm-6 float-left mb-md-3" style="display: none">
                   <div class="form-group">
                     <label for="bus_company">{{ trans('view_pages.bus_company')}}
                       <span class="text-danger">*</span>
                     </label>
                     <select name="owner_id" id="bus_company" class="form-control" required>
-                      <option value="" selected disabled>@lang('view_pages.select_bus_company')</option> @foreach($companies as $key => $company) <option value="{{$company->id}}" {{ old('owner_id') == $company->id ? 'selected' : '' }}>{{$company->company_name}}</option> @endforeach
+                        <option value="{{$companies->id}}" {{ old('owner_id') == $companies->id ? 'selected' : '' }}>{{$companies->company_name}}</option>
                     </select>
                     <span class="text-danger">{{ $errors->first('owner_id') }}</span>
                   </div>
@@ -278,12 +278,12 @@ $blocker = [
                 </div>
                 <!-- Upper deck end ------------------------------------>
                 <div class="col-sm-12 float-left mb-md-3"></div>
-                <div class="col-sm-6 float-left mb-md-3 form-group ">
+                <div class="col-sm-6 float-left mb-md-3 form-group " style="display: none;">
                     <label for="">Layout Size (per column)
                     <span class="text-danger">*</span>
                     </label><br>
                   <div class="form-group">
-                    <input type="radio" class="form-control" name="column" id="5" value="5">
+                    <input type="radio" class="form-control" name="column" id="5" value="5"  checked>
                     <label for="5">5 Sleeper/ 10 seater</label>&emsp;
                     <input type="radio" class="form-control" name="column" id="6" value="6">
                     <label for="6">6 Sleeper/ 12 seater</label>
@@ -318,9 +318,9 @@ $blocker = [
                 </div> -->
               <div class="row busPreview hide">
                 <div class="col-lg-12">
-                 
+
                   <!-- seat view -->
-                  <div class="row"> 
+                  <div class="row">
                     <div class="col-lg-5  p-0">
                       <div class="pull-right">
                         <h4 class="panel-title">Left</h4>
@@ -334,7 +334,7 @@ $blocker = [
                         <div class="backPreview">
 
                         </div>
-                      
+
                       </div>
                     </div>
                     <div>
@@ -350,12 +350,12 @@ $blocker = [
                 <!-- upper deck seat view -->
                 <div class="col-lg-12 upper_title"></div>
                 <div class="col-lg-12 upper_layout">
-                    
+
                 </div>
-              
+
               </div>
-                  
-                  
+
+
               </div>
 
               <div class="form-group">
@@ -385,7 +385,7 @@ $blocker = [
       <input type="hidden" class="seat_id" >
         <div class="container-fluid">
         <div class="row p-2">
-              <div class="col-lg-12 text-center update_seat">   
+              <div class="col-lg-12 text-center update_seat">
               </div>
             </div>
             <div class="form-group">
@@ -401,7 +401,7 @@ $blocker = [
 
 
  <script src="{{asset('assets/vendor_components/jquery/dist/jquery.js')}}"></script>
- 
+
 
 
 <script type="text/javascript">
@@ -412,12 +412,12 @@ $blocker = [
   const semiSleeperClass  = {!! json_encode($semiSleeper) !!};
   const sleeperClass  = {!! json_encode($sleeper) !!};
   const blockerClass  = {!! json_encode($blocker) !!};
-  var rightPreview = $('.rightPreview');    
+  var rightPreview = $('.rightPreview');
   var leftPreview = $('.leftPreview');
   var backPreview = $('.backPreview');
-  
-  
- 
+
+
+
 
   function getBus(value,bus_company=''){
         var selected = '';
@@ -448,7 +448,7 @@ $blocker = [
   }
 
   function doubledecker(){
-    let htmlTemplate = `<div class="row"> 
+    let htmlTemplate = `<div class="row">
                           <div class="col-lg-5  p-0">
                             <div class="pull-right">
                               <h4 class="panel-title">Left</h4>
@@ -462,7 +462,7 @@ $blocker = [
                               <div class="upperBackPreview">
 
                               </div>
-                            
+
                             </div>
                           </div>
                           <div>
@@ -488,10 +488,12 @@ $blocker = [
       $('div.upper_deck').addClass('hide');
     }
   });
+  $(document).ready(function(){
+    getBus($('#bus_company').val());
   $(document).on('change','#bus_company',function(){
       getBus($(this).val());
   });
-
+});
   function buildSeatLayout(columnCount,rowCount,seatType,seatSide,seatSeries){
     let htmlTemplate = "";
     let seatCount = 1;
@@ -518,8 +520,8 @@ $blocker = [
         seatCount++;
 
       }
-      htmlTemplate += '</div>';  
-    } 
+      htmlTemplate += '</div>';
+    }
     if(seatSide == null){
       $('.backPreview').html(htmlTemplate);
     }else{
@@ -540,7 +542,7 @@ $blocker = [
     var back_seat = $('input[name="back_seat"]:checked').val();
     // true if single deck is selected or both  upper deck seat types are selected
     var deck_type_select_condition = ((single_deck !== undefined) || [(upper_left_seat_type !== undefined) && (upper_right_seat_type !== undefined)]);
-      
+
     //#todo vailidation...!
     if( (left_row !== undefined) && (right_row !== undefined) && (column !== undefined) && (left_seat_type !== undefined) && (right_seat_type !== undefined) && deck_type_select_condition ){
       $(".busForm").addClass("hide");
@@ -567,7 +569,7 @@ $blocker = [
         //#block to build the upper left...!
         seatcount = buildSeatLayout(column,left_row,upper_left_seat_type,upperLeftPreview,'UL');
       }
-    }     
+    }
   });
   function saveModelForm(){
     const selectSeatId = modelBody.find(".seat_id").val();
@@ -575,23 +577,23 @@ $blocker = [
     const selectedseatLabel = $('input[name="selectedSeat"]:checked').val();
 
     if(updateSeat && selectedseatLabel){
-      if(seaterClass?.value  == selectedseatLabel)          
+      if(seaterClass?.value  == selectedseatLabel)
         updateSeat.find("img").attr("src",seaterClass?.image);
 
-      if(semiSleeperClass?.value  == selectedseatLabel)          
-        updateSeat.find("img").attr("src",semiSleeperClass?.image);      
+      if(semiSleeperClass?.value  == selectedseatLabel)
+        updateSeat.find("img").attr("src",semiSleeperClass?.image);
 
-      if(sleeperClass?.value  == selectedseatLabel)          
-        updateSeat.find("img").attr("src",sleeperClass?.image);      
+      if(sleeperClass?.value  == selectedseatLabel)
+        updateSeat.find("img").attr("src",sleeperClass?.image);
 
-      if(blockerClass?.value  == selectedseatLabel)          
-        updateSeat.find("img").attr("src",blockerClass?.image);         
-          
+      if(blockerClass?.value  == selectedseatLabel)
+        updateSeat.find("img").attr("src",blockerClass?.image);
+
       updateSeat.find(".seat_type").val(selectedseatLabel);
     }
     closeModelForm();
   }
-    
+
   $(document).on("click",".seat",function() {
     const seatId = $(this).find(".seat_id").val();
     const seatLabel = $(this).find(".seat_no").text();
@@ -621,7 +623,7 @@ $blocker = [
     modelBody.find(".modal-header .modal-title .seat_no").text(seatLabel);
     modelBody.find(".seat_id").val(seatId);
     $("input[name='selectedSeat']").prop('checked', false);
-    seatSelectorModelPopUp.modal('show');  
+    seatSelectorModelPopUp.modal('show');
   });
 
   //#handle submit...!
@@ -629,7 +631,7 @@ $blocker = [
     let seats = [];
     let Order = 0;
     //#taking left value
-    
+
     leftPreview.find(".row").each(function() {
       $(this).find(".seat").each(function() {
         Order +=1;
@@ -700,11 +702,11 @@ $blocker = [
       });
     }
     $("#seatLayoutValue").val(JSON.stringify(seats));
-    $("#formData").submit()  
+    $("#formData").submit()
 
   });
   function closeModelForm(){
-    seatSelectorModelPopUp.modal('hide');  
+    seatSelectorModelPopUp.modal('hide');
   }
   function viewBusForm(){
     $(".busForm").removeClass("hide");

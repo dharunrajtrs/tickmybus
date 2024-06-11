@@ -17,7 +17,7 @@ class CreateAmenitiesTable extends Migration
 
             $table->increments('id');
             $table->string('name');
-            $table->uuid('owner_id')->nullable();;
+            $table->uuid('owner_id')->nullable();
             $table->string('icon' ,255)->nullable();
             $table->timestamps();
             $table->foreign('owner_id')

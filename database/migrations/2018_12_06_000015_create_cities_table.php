@@ -13,12 +13,17 @@ class CreateCitiesTable extends Migration {
 	public function up() {
 		Schema::create('cities', function (Blueprint $table) {
 			$table->uuid('id')->primary();
+            $table->uuid('owner_id')->nullable();
 			// $table->string('slug', 50);
 			// $table->string('name', 50);
 			// $table->string('alias', 50)->nullable();
 			$table->unsignedInteger('display_order')->nullable();
 			$table->boolean('active')->default(true);
 			$table->uuid('state_id')->index();
+            $table->foreign('owner_id')
+            ->references('id')
+            ->on('owners')
+            ->onDelete('cascade');
 		});
 	}
 

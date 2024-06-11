@@ -36,6 +36,7 @@ class Amenity extends Model
     protected $fillable = [
         'name',
         'icon',
+        'owner_id'
     ];
 
      protected $appends = [

@@ -73,12 +73,9 @@
                                              </button>
                                            <div class="dropdown-menu">
                                                 @if (auth()->user()->hasRole('owner'))
-                                                <a class="dropdown-item" href="{{url('fleets/assign_driver',$result->id) }}">{{ trans('view_pages.assign_driver')}}</a>
-                                                  @if (auth()->user()->can('edit-fleet'))
-                                                    <a class="dropdown-item" href="{{url('fleets/edit',$result->id) }}">{{ trans('view_pages.edit')}}</a>
-                                                    @endif
-                                                @else
-                                                    @if (auth()->user()->can('edit-fleet'))
+                                                {{-- <a class="dropdown-item" href="{{url('fleets/assign_driver',$result->id) }}">{{ trans('view_pages.assign_driver')}}</a> --}}
+                                                @endif
+                                                @if (auth()->user()->hasRole('owner'))
                                                     <a class="dropdown-item" href="{{url('fleets/edit',$result->id) }}">{{ trans('view_pages.edit')}}</a>
                                                     @endif
 
@@ -89,7 +86,7 @@
                                                         @else
                                                             <a class="sweet-approve dropdown-item" href="{{url('fleets/toggle_approve',$result->id)}}">@lang('view_pages.approve')</a>
                                                         @endif
-                                                    @endif
+
 
                                                     @if (auth()->user()->can('delete-fleet'))
                                                     <a class="sweet-delete dropdown-item" href="{{url('fleets/delete',$result->id) }}">{{ trans('view_pages.delete')}}</a>

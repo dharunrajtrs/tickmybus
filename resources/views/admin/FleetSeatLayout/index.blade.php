@@ -29,7 +29,7 @@
                         <a href="{{ url('fleet_seat_layout/create') }}" class="btn btn-primary btn-sm">
                             <i class="mdi mdi-plus-circle mr-2"></i>@lang('view_pages.add')</a>
                     </div>
-                  @endif               
+                  @endif
             </div>
         </div>
 
@@ -39,7 +39,7 @@
         </include-fragment>
     </div>
 
-   
+
 
 </div>
 </div>
@@ -71,7 +71,7 @@
                         });
                 });
                 });
-                
+
 
             $(document).on('click', '.sweet-delete', function(e) {
                 e.preventDefault();

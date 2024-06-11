@@ -18,7 +18,7 @@ class FleetSeatLayout extends Model
 
 
     protected $fillable = ['fleet_id','position','seat_no','seat_type','deck_type','order','no_seat'];
- 
+
     public function fleet()
     {
         return $this->belongsTo(Fleet::class,'fleet_id','id');

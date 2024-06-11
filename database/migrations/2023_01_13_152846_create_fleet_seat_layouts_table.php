@@ -18,6 +18,7 @@ class CreateFleetSeatLayoutsTable extends Migration
             $table->uuid('fleet_id');
             $table->string('position');
             $table->string('seat_no');
+            $table->double('that_seat_price',8,2)->default(0)->nullable();
             $table->string('seat_type');
             $table->string('deck_type')->nullable();
             $table->timestamps();

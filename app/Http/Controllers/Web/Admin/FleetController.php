@@ -89,7 +89,7 @@ class FleetController extends BaseController
 
         $owner = Owner::where('user_id',$user_checking_id)->first();
 
-        $amenties = Amenity::all();
+        $amenties = Amenity::where('owner_id',$owner->id)->get();
 
         // dd($amenties);
 

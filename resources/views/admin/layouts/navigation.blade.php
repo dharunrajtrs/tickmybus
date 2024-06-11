@@ -120,7 +120,7 @@ if(str_contains((string)request()->path(),'dashboard')){
       </li>
       @endif --}}
       @if(auth()->user()->roles->pluck('slug')->contains('owner'))
- @if(auth()->user()->can('manage_amentity'))
+         @if(auth()->user()->can('manage_amentity'))
           <li class="{{ 'manage_amentity' == $main_menu ? 'active' : '' }}">
             <a href="{{url('/amenity')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.amenities')</a>
           </li>
@@ -134,6 +134,14 @@ if(str_contains((string)request()->path(),'dashboard')){
               </li>
             @endif
             @if(auth()->user()->roles->pluck('slug')->contains('owner'))
+            @if(auth()->user()->can('manage-city'))
+         <li class="{{ 'city' == $sub_menu ? 'active' : '' }}">
+           <a href="{{url('/city')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.city')</a>
+         </li>
+         @endif
+         @endif
+
+            @if(auth()->user()->roles->pluck('slug')->contains('owner'))
              @if(auth()->user()->can('manage-fleet'))
             <li class="{{ $main_menu == 'manage_fleet' ? 'active' : ''}}">
                 <a href="{{ route('viewFleet') }}">
@@ -143,11 +151,7 @@ if(str_contains((string)request()->path(),'dashboard')){
             </li>
             @endif
             @endif
-             @if(auth()->user()->can('manage-city'))
-          <li class="{{ 'city' == $sub_menu ? 'active' : '' }}">
-            <a href="{{url('/city')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.city')</a>
-          </li>
-          @endif
+
   {{-- @if(auth()->user()->can('seat_layout'))
       <li class="treeview {{ 'seat_layout' == $main_menu ? 'active menu-open' : '' }}">
         <a href="javascript: void(0);">
@@ -168,6 +172,16 @@ if(str_contains((string)request()->path(),'dashboard')){
         </ul>
       </li>
     @endif --}}
+
+    @if(auth()->user()->roles->pluck('slug')->contains('owner'))
+    @if(auth()->user()->can('manage_seat_layout'))
+    <li class="{{ 'fleet_seat_layout' == $main_menu ? 'active' : '' }}">
+        <a href="{{url('/fleet_seat_layout')}}">  <i class="fa fa-code-fork"></i>@lang('pages_names.seat_layout')</a>
+      </li>
+ @endif
+ @endif
+
+
 
      {{-- @if(auth()->user()->can('view_journey'))
         <li class="treeview {{ 'view_journey' == $main_menu ? 'active menu-open' : '' }}">

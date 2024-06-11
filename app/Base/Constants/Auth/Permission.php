@@ -235,6 +235,11 @@ class Permission
 
     const VERIFY_PURCHASECODE = 'verify_purchasecode';
     const MANAGE_AMENTITY = 'manage_amentity';
+    const ADD_AMENTITY = 'add_amentity';
+    const EDIT_AMENTITY = 'edit_amentity';
+    const TOGGLE_AMENTITY = 'toggle_amentity';
+    const DELETE_AMENTITY = 'delete_amentity';
+    CONST MANAGE_CITY = 'manage-city';
 
 
 }

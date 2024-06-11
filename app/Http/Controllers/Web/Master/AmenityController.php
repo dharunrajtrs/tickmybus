@@ -43,7 +43,7 @@ class AmenityController extends BaseController
     {
         $page = trans('pages_names.add_amenity');
         $user_checking_id=auth()->user()->id;
-        $owner = Owner::where('user_id',$user_checking_id)->first();
+        //$owner = Owner::where('user_id',$user_checking_id)->first();
         $main_menu = 'master';
         $sub_menu = 'amenity';
 
@@ -61,20 +61,15 @@ class AmenityController extends BaseController
      public function fetch(QueryFilterContract $queryFilter)
     {
 
-        $query = $this->make->query();//->active()
+        $query = Amenity::where('owner_id', auth()->user()->owner->id)->orderBy('created_at', 'desc');
         $results = $queryFilter->builder($query)->customFilter(new CommonMasterFilter)->paginate();
-        return view('admin.master.amenity._amenity', compact('results'));
+         return view('admin.master.amenity._amenity', compact('results'));
+
     }
 
     public function store(Request $request)
     {
-
-        if (env('APP_FOR')=='demo') {
-            $message = trans('succes_messages.you_are_not_authorised');
-
-            return redirect('amenity')->with('warning', $message);
-        }
-
+        $owner_id=auth()->user()->owner->id;
         Validator::make($request->all(), [
             'name' => 'required|unique:amenities,name',
             'icon'=>'required'
@@ -84,6 +79,7 @@ class AmenityController extends BaseController
 
         $created_params = $request->only(['name']);
         $created_params['active'] = 1;
+        $created_params['owner_id'] = $owner_id;
 
          if ($uploadedFile = $this->getValidatedUpload('icon', $request)) {
             $created_params['icon'] = $this->imageUploader->file($uploadedFile)

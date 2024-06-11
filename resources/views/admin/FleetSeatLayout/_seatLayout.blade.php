@@ -12,7 +12,7 @@
                                  <th>{{ trans('view_pages.bus_model')}}</th>
                                  <th>{{ trans('view_pages.license_number')}}</th>
                                 <th>{{ trans('view_pages.action')}}</th>
-                                 
+
                             </tr>
                         </thead>
 
@@ -38,14 +38,14 @@
                                   <td>{{ $i++ }}</td>
                                   <td>{{ $result->fleet->brand ?? '-'}}</td>
                                   <td>{{ $result->fleet->model ?? '-'}}</td>
-                                  <td>{{ $result->fleet->license_number ?? '-' }}</td>              
+                                  <td>{{ $result->fleet->license_number ?? '-' }}</td>
                                   <td>
                                   <div class="dropdown">
                                             <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@lang('view_pages.action')
                                              </button>
-                                           <div class="dropdown-menu">                                          
+                                           <div class="dropdown-menu">
                                                 <a class="dropdown-item" href="{{url('fleet_seat_layout/edit/'.$result->fleet_id) }}">{{ trans('view_pages.view_and_modify_seats')}}
-                                                </a>                         
+                                                </a>
 
                                                @if (auth()->user()->can('delete_seat_layout'))
                                                 <a class="dropdown-item sweet-delete"  href="#" data-url="{{url('fleet_seat_layout/delete/'.$result->fleet_id)}}">{{ trans('view_pages.delete')}}</a>

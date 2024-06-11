@@ -37,12 +37,12 @@ class SeatLayoutController extends BaseController
 
     public function seatLayout()
     {
-       
+
         $page = trans('pages_names.seat_layout');
         $main_menu = 'seat_layout';
         $sub_menu = null;
 
-        
+
         return view('admin.seat_layout', compact('page', 'main_menu', 'sub_menu'));
     }
 
@@ -60,26 +60,43 @@ class SeatLayoutController extends BaseController
 
         $main_menu = 'fleet_seat_layout';
         $sub_menu = null;
+        $user_checking_id=auth()->user()->id;
+        $owner = Owner::where('user_id',$user_checking_id)->first();
 
+        $companies = Owner::where('user_id',$user_checking_id)->where('approve', true)->first();
 
-        $companies = Owner::where('active', true)->where('approve', true)->get();
-    
         return view('admin.FleetSeatLayout.create', compact('page', 'main_menu', 'sub_menu','companies'));
     }
 
 
     public function getAllSeatLayout(QueryFilterContract $queryFilter)
     {
-        $query = FleetSeatLayout::groupBy('fleet_id')->where('deck_type','upper')->orWhere('deck_type', 'lower');
+        // Get the authenticated user's owner ID
+        $user_checking_id = auth()->user()->id;
+        $find_owner_id = Owner::where('user_id', $user_checking_id)->first();
+        $owner_id = $find_owner_id->id;
 
+        $query = FleetSeatLayout::join('fleets', 'fleet_seat_layouts.fleet_id', '=', 'fleets.id')
+            ->where('fleets.owner_id', $owner_id)
+            ->where(function($q) {
+                $q->where('deck_type', 'upper')
+                  ->orWhere('deck_type', 'lower');
+            })
+            ->groupBy('fleet_id');
+
+        // Apply custom query filters and paginate results
         $results = $queryFilter->builder($query)->customFilter(new CommonMasterFilter)->paginate();
+
         return view('admin.FleetSeatLayout._seatLayout', compact('results'));
     }
     public function fetchBus()
     {
-        $busCompany = request()->bus_company;
-
-        $fleet = Fleet::active()->whereOwnerId($busCompany)->get();
+        $bus_company = request()->bus_company;
+        $fleetIdsInSeatLayout = FleetSeatLayout::pluck('fleet_id');
+        $fleet = Fleet::active()
+            ->whereOwnerId($bus_company)
+            ->whereNotIn('id', $fleetIdsInSeatLayout)
+            ->get();
 
         return $fleet;
     }
@@ -106,7 +123,7 @@ class SeatLayoutController extends BaseController
         $seat_type = array_unique($seat_type);
         $seat_type = implode(',',$seat_type);
 
-        
+
         $fleet->update([
             'left_rows' => $column,
             'right_rows' => $column,
@@ -119,12 +136,12 @@ class SeatLayoutController extends BaseController
         $fleetSeatLayout = FleetSeatLayout::where('fleet_id', $fleet->id)->whereIn('deck_type',['lower','upper'])->first();
 
 
-        if ($fleetSeatLayout != null) 
+        if ($fleetSeatLayout != null)
         {
-          throw ValidationException::withMessages(['license_number' => __('Layout exists for Bus')]);     
+          throw ValidationException::withMessages(['license_number' => __('Layout exists for Bus')]);
         }else{
 
-            foreach ($seat_layouts as $seat_layout) 
+            foreach ($seat_layouts as $seat_layout)
             {
                 $total_seats ++;
                 $seats['position'] = $seat_layout->position;
@@ -144,7 +161,7 @@ class SeatLayoutController extends BaseController
         $fleet->update([
             'total_seats' => $total_seats,
         ]);
-   
+
         $message = trans('succes_messages.seat_layot_created_succesfully');
 
 
@@ -153,7 +170,7 @@ class SeatLayoutController extends BaseController
   }
     public function getById(Fleet $fleet)
     {
-        
+
         $seatLayoutView = [
             'left' => [],
             'right' => [],
@@ -161,7 +178,7 @@ class SeatLayoutController extends BaseController
             'upper_left' => [],
             'upper_right' => [],
         ];
-            
+
         if($fleet){
             $layout_type = [];
             // left lower deck
@@ -270,19 +287,19 @@ class SeatLayoutController extends BaseController
     {
         $busLayout = $request->bus_layout;
         foreach($busLayout as $key => $value){
-           
+
             $layout = FleetSeatLayout::findOrFail($value['id']);
-            
+
             $layout->update(['seat_type'=>$value['seat_type']]);
         }
-        
+
         return response()->json(['message' => "update successfully"]);
     }
 
     public function delete($fleet_id)
     {
         $busLayouts = FleetSeatLayout::where('fleet_id', $fleet_id)->get();
-        print_r($busLayouts);exit;
+
         foreach($busLayouts as $busLayout)
         {
            $busLayout->delete();

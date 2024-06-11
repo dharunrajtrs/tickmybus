@@ -9,6 +9,7 @@ use App\Models\Admin\ServiceLocation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Base\Services\ImageUploader\ImageUploaderContract;
+use App\Models\Admin\Owner;
 
 class CityController extends BaseController
 {
@@ -52,7 +53,8 @@ class CityController extends BaseController
     public function fetch(QueryFilterContract $queryFilter)
     {
 
-        $query = $this->city->query();//->active()
+        //$query = $this->city->query();//->active()
+        $query = City::where('owner_id', auth()->user()->owner->id)->orderBy('created_at', 'desc');
         $results = $queryFilter->builder($query)->customFilter(new CommonMasterFilter)->paginate();
         return view('admin.master.city._city', compact('results'));
     }
@@ -60,7 +62,7 @@ class CityController extends BaseController
 
     public function store(Request $request)
     {
-
+        $owner_id=auth()->user()->owner->id;
         Validator::make($request->all(),
         [
             'city' => 'required',
@@ -69,6 +71,7 @@ class CityController extends BaseController
 
         $created_params = $request->only(['city','short_code']);
         $created_params['active'] = 1;
+        $created_params['owner_id'] = $owner_id;
         $this->city->create($created_params);
         $message = trans('succes_messages.city_added_succesfully');
         return redirect('city')->with('success', $message);
@@ -97,7 +100,7 @@ class CityController extends BaseController
         Validator::make($request->all(), [
             'city' => 'required',
             'short_code' => 'required|max:3',
-        ])->validate(); 
+        ])->validate();
 
         $updated_params = $request->all();
         $city->update($updated_params);
