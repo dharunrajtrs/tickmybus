@@ -890,4 +890,5 @@ return array(
    'headquarters_pincode'=>'Headquarters Pincode',
    'headquarters_city'=>'Headquarters City',
    'upi_id'=>'UPI ID',
+
 );

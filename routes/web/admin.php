@@ -651,7 +651,7 @@ Route::group(['prefix' => 'privacy',  'middleware' => 'permission:manage-privacy
                 Route::get('delete/{rest}', 'RestStopController@delete');
                 });
               //Amenity CRUD
-            Route::group(['prefix' => 'amenity',  'middleware' => 'permission:manage-amenity'], function () {
+            Route::group(['prefix' => 'amenity',  'middleware' => 'permission:manage_amentity'], function () {
                 Route::get('/', 'AmenityController@index');
                 Route::get('/fetch', 'AmenityController@fetch');
                 Route::get('/create', 'AmenityController@create');

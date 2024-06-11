@@ -52,7 +52,7 @@
 
                                              {!! $data->contacttext !!}
 
-                                           
+
                                             <br>
                                         </div>
                                     </div>
@@ -105,7 +105,7 @@
                     <div class="form-group col-md-12 mb-7">
                         <!--Captcha-->
                         <center>
-                            <div class="g-recaptcha" data-sitekey="6LfnhR0bAAAAAFkB0s0LvI6x9RqYF5nm-cHSUmjI"></div>
+                            <div class="g-recaptcha" data-sitekey="sdsdfdsf-cHSUmjI"></div>
                             <!-- <div class="g-recaptcha" data-sitekey="6LemMd0ZAAAAAISBJf4IWXIwtwsTnhv2TUuu34gC"></div> -->
                         </center>
                         <!--Captcha-->

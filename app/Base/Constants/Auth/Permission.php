@@ -16,7 +16,7 @@ class Permission
     const VIEW_TRANSLATIONS = 'view-translations';
   /* Master Data */
     const MASTER = 'master-data';
-  
+
     // Manage Driver Needed Doc
     const MANAGE_DRIVER_NEEDED_DOC = 'manage-driver-needed-document';
     const ADD_DRIVER_NEEEDED_DOC = 'add-driver-needed-document';
@@ -30,7 +30,7 @@ class Permission
     const EDIT_FLEET_NEEEDED_DOC = 'edit-fleet-needed-document';
     const DELETE_FLEET_NEEEDED_DOC = 'delete-fleet-needed-document';
     const TOGGLE_FLEET_NEEEDED_DOC = 'toggle-fleet-needed-document';
-    
+
     // Manage Owner Needed Doc
     const MANAGE_OWNER_NEEDED_DOC = 'manage-owner-needed-document';
     const ADD_OWNER_NEEEDED_DOC = 'add-owner-needed-document';
@@ -46,28 +46,28 @@ class Permission
     const ADD_SERVICE_LOCATION = 'Add_Service_Location';
     const EDIT_SERVICE_LOCATION = 'Edit_Service_Location';
     const DELETE_SERVICE_LOCATION = 'Delete_Service_Location';
-    const TOGGLE_SERVICE_LOCATION = 'Toggle_Service_Location'; 
-/* Manage Owner */ 
+    const TOGGLE_SERVICE_LOCATION = 'Toggle_Service_Location';
+/* Manage Owner */
     const MANAGE_OWNER = 'manage-owner';
     const CREATE_OWNER = 'add-owner';
     const EDIT_OWNER = 'edit-owner';
     const DELETE_OWNER = 'delete-owner';
     const TOGGLE_OWNER_STATUS = 'toggle-owner-status';
     const VIEW_OWNER_DOCUMENT = 'view-owner-document';
- /* Manage Fleets */ 
+ /* Manage Fleets */
     const MANAGE_FLEET = 'manage-fleet';
     const CREATE_FLEET = 'add-fleet';
     const EDIT_FLEET = 'edit-fleet';
     const DELETE_FLEET = 'delete-fleet';
     const FLEET_TOGGLE_STATUS = 'toggle-fleet-status';
-    const FLEET_APPROVE_STATUS = 'toggle-fleet-approval';  
+    const FLEET_APPROVE_STATUS = 'toggle-fleet-approval';
     const VIEW_FLEET_DOCUMENT = 'view-fleet-document';
 /* Admin  */
    const ADMIN = 'admin';
    const CREATE_ADMIN = 'add-admin';
    const EDIT_ADMIN = 'edit-admin';
    const DELETE_ADMIN = 'delete-admin';
-   const TOGGLE_ADMIN = 'toggle-admin-status';  
+   const TOGGLE_ADMIN = 'toggle-admin-status';
 /* Requests */
    const VIEW_REQUEST = 'view-requests';
    const RIDES = 'view-rides';
@@ -126,15 +126,15 @@ class Permission
     const CANCELLED_TICKETS = 'cancelled_tickets';
     const VIEW_PASSENGER_LIST = 'view_passender_list';
     const CANCELLED_TICKET_DETAIL = 'cancelled_ticket_detail';
-    
- /* Manage seat layout */ 
+
+ /* Manage seat layout */
     const SEAT_LAYOUT = 'seat_layout';
     const MANAGE_SEAT_LAYOUT = 'manage_seat_layout';
     const CREATE_SEAT_LAYOUT = 'create_seat_layout';
     const EDIT_SEAT_LAYOUT = 'edit_seat_layout';
     const DELETE_SEAT_LAYOUT = 'delete_seat_layout';
     const TOGGLE_SEAT_LAYOUT = 'toggle_seat_layout';
-    
+
   /* Driver Document & Withdrawal Request &negative balance & rating */
     const DRIVER_DOCUMENT = 'driver-document';
     const DRIVER_DOCUMENT_VIEW = 'driver-document-view';
@@ -234,6 +234,7 @@ class Permission
     const DISPATCH_REQUEST = 'dispatch-request';
 
     const VERIFY_PURCHASECODE = 'verify_purchasecode';
+    const MANAGE_AMENTITY = 'manage_amentity';
 
 
 }

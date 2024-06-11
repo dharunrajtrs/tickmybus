@@ -268,6 +268,8 @@ class AdminController extends BaseController
 
     public function viewProfile(User $user)
     {
+
+
         $page = trans('pages_names.admins');
 
         $main_menu = 'admin';
@@ -301,7 +303,7 @@ class AdminController extends BaseController
                     ->saveProfilePicture();
             }
 
-            $user->admin->update($updatedParams);
+            $user->update($updatedParams);
         }
 
         $user->update($updated_user_params);

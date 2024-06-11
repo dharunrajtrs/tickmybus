@@ -8,14 +8,14 @@
                         <thead>
                             <tr>
                                  <th>{{ trans('view_pages.s_no')}}</th>
-                                 <th>{{ trans('view_pages.company')}}</th>
+                                 <th>{{ trans('view_pages.travels_name')}}</th>
                                  <th>{{ trans('view_pages.bus_brand')}}</th>
                                  <th>{{ trans('view_pages.bus_model')}}</th>
                                  <th> @lang('view_pages.document_view')</th>
                                  <th>{{ trans('view_pages.license_number')}}</th>
-                                 <th>{{ trans('view_pages.status')}}</th> 
+                                 <th>{{ trans('view_pages.status')}}</th>
                                 <th>{{ trans('view_pages.action')}}</th>
-                                 
+
                             </tr>
                         </thead>
 
@@ -45,17 +45,17 @@
                                     <a href="{{url('fleets/document/view', $result->id) }}" class="btn btn-social-icon btn-bitbucket">
                                     <i class="fa fa-file-code-o"></i>
                                     </a>
-                                    </td> 
+                                    </td>
 
 <!--                                     <td>
                                         @if ($result->approve)
                                             <a href="{{ $result->qr_code_image }}" download title="Click to Download">
-                                                <img src="{{ $result->qr_code_image }}" alt="" width="30" height="30">    
+                                                <img src="{{ $result->qr_code_image }}" alt="" width="30" height="30">
                                             </a>
                                         @else
                                             -
                                         @endif
-                                        
+
                                     </td> -->
                                     <td>{{ $result->license_number }}</td>
                                     <td>
@@ -66,7 +66,7 @@
                                         @endif
                                     </td>
 
-                                    
+
                                     <td>
                                   <div class="dropdown">
                                             <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@lang('view_pages.action')

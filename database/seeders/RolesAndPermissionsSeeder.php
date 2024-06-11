@@ -1124,6 +1124,12 @@ class RolesAndPermissionsSeeder extends Seeder
             'main_menu' => 'verify_purchasecode',
             'sub_menu' => 'verify_purchasecode'
         ],
+        PermissionSlug::MANAGE_AMENTITY => [
+            'name' => 'manage_amentity',
+            'description' => 'manage_amentity',
+            'main_menu' => 'manage_amentity',
+            'sub_menu' => 'manage_amentity'
+        ],
 
 ];
 
@@ -1153,7 +1159,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'name' => 'Owner',
             'description' => 'Owner for company management',
             'permissions' => [
-                 PermissionSlug::ACCESS_DASHBOARD,PermissionSlug::MANAGE_FLEET,PermissionSlug::CREATE_FLEET,PermissionSlug::EDIT_FLEET,PermissionSlug::DELETE_FLEET,PermissionSlug::FLEET_TOGGLE_STATUS,PermissionSlug::FLEET_DRIVERS_MENU,PermissionSlug::VIEW_APPROVED_FLEET_DRIVERS,PermissionSlug::FLEET_DRIVERS_WAITING_FOR_APPROVAL,PermissionSlug::EDIT_FLEET_DRIVERS,PermissionSlug::TOGGLE_FLEET_DRIVERS,PermissionSlug::UPDATE_FLEET_DRIVERS,PermissionSlug::DELETE_FLEET_DRIVERS,PermissionSlug::ADD_FLEET_DRIVERS,PermissionSlug::VIEW_FLEET_DRIVER_PROFILE,PermissionSlug::FLEET_DRIVER_DOCUMENT,PermissionSlug::FLEET_DRIVER_DOCUMENT_VIEW,PermissionSlug::FLEET_DRIVER_DOCUMENT_VIEW_IMAGE,PermissionSlug::FLEET_DRIVER_DOCUMENT_EDIT,PermissionSlug::FLEET_DRIVER_DOCUMENT_UPLOAD,PermissionSlug::FLEET_DRIVER_DOCUMENT_TOGGLE,PermissionSlug::SEAT_LAYOUT,PermissionSlug::MANAGE_SEAT_LAYOUT,PermissionSlug::CREATE_SEAT_LAYOUT,PermissionSlug::EDIT_SEAT_LAYOUT,PermissionSlug::DELETE_SEAT_LAYOUT,PermissionSlug::TOGGLE_SEAT_LAYOUT,PermissionSlug::JOURNEY,PermissionSlug::VIEW_JOURNEY ,PermissionSlug::COMPLETED_JOURNEY,PermissionSlug::CREATE_JOURNEY ,PermissionSlug::EDIT_JOURNEY,PermissionSlug::DELETE_JOURNEY,PermissionSlug::ASSIGN_DRIVER,PermissionSlug::TOGGLE_JOURNEY, PermissionSlug::VIEW_TICKETS,PermissionSlug::BOOKED_TICKETS,PermissionSlug::CANCELLED_TICKETS,PermissionSlug::VIEW_PASSENGER_LIST,PermissionSlug::MASTER
+                 PermissionSlug::ACCESS_DASHBOARD,PermissionSlug::MANAGE_FLEET,PermissionSlug::CREATE_FLEET,PermissionSlug::EDIT_FLEET,PermissionSlug::DELETE_FLEET,PermissionSlug::FLEET_TOGGLE_STATUS,PermissionSlug::FLEET_DRIVERS_MENU,PermissionSlug::VIEW_APPROVED_FLEET_DRIVERS,PermissionSlug::FLEET_DRIVERS_WAITING_FOR_APPROVAL,PermissionSlug::EDIT_FLEET_DRIVERS,PermissionSlug::TOGGLE_FLEET_DRIVERS,PermissionSlug::UPDATE_FLEET_DRIVERS,PermissionSlug::DELETE_FLEET_DRIVERS,PermissionSlug::ADD_FLEET_DRIVERS,PermissionSlug::VIEW_FLEET_DRIVER_PROFILE,PermissionSlug::FLEET_DRIVER_DOCUMENT,PermissionSlug::FLEET_DRIVER_DOCUMENT_VIEW,PermissionSlug::FLEET_DRIVER_DOCUMENT_VIEW_IMAGE,PermissionSlug::FLEET_DRIVER_DOCUMENT_EDIT,PermissionSlug::FLEET_DRIVER_DOCUMENT_UPLOAD,PermissionSlug::FLEET_DRIVER_DOCUMENT_TOGGLE,PermissionSlug::SEAT_LAYOUT,PermissionSlug::MANAGE_SEAT_LAYOUT,PermissionSlug::CREATE_SEAT_LAYOUT,PermissionSlug::EDIT_SEAT_LAYOUT,PermissionSlug::DELETE_SEAT_LAYOUT,PermissionSlug::TOGGLE_SEAT_LAYOUT,PermissionSlug::JOURNEY,PermissionSlug::VIEW_JOURNEY ,PermissionSlug::COMPLETED_JOURNEY,PermissionSlug::CREATE_JOURNEY ,PermissionSlug::EDIT_JOURNEY,PermissionSlug::DELETE_JOURNEY,PermissionSlug::ASSIGN_DRIVER,PermissionSlug::TOGGLE_JOURNEY, PermissionSlug::VIEW_TICKETS,PermissionSlug::BOOKED_TICKETS,PermissionSlug::CANCELLED_TICKETS,PermissionSlug::VIEW_PASSENGER_LIST,PermissionSlug::MANAGE_FLEET,PermissionSlug::ADMIN,PermissionSlug::FLEET_APPROVE_STATUS,PermissionSlug::DELETE_FLEET_NEEEDED_DOC,PermissionSlug::MANAGE_AMENTITY
             ],
         ],
         RoleSlug::DRIVER=>[

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Amenity;
 use Illuminate\Support\Facades\Validator;
 use App\Base\Services\ImageUploader\ImageUploaderContract;
+use App\Models\Admin\Owner;
 
 class AmenityController extends BaseController
 {
@@ -27,7 +28,7 @@ class AmenityController extends BaseController
     {
         $page = trans('pages_names.view_amenity');
 
-        $main_menu = 'master';
+        $main_menu = 'manage_amentity';
         $sub_menu = 'amenity';
 
         return view('admin.master.amenity.index', compact('page', 'main_menu', 'sub_menu'));
@@ -41,7 +42,8 @@ class AmenityController extends BaseController
     public function create()
     {
         $page = trans('pages_names.add_amenity');
-
+        $user_checking_id=auth()->user()->id;
+        $owner = Owner::where('user_id',$user_checking_id)->first();
         $main_menu = 'master';
         $sub_menu = 'amenity';
 
@@ -76,7 +78,7 @@ class AmenityController extends BaseController
         Validator::make($request->all(), [
             'name' => 'required|unique:amenities,name',
             'icon'=>'required'
-        
+
         ])->validate();
 
 
@@ -106,7 +108,7 @@ class AmenityController extends BaseController
 public function getById(Amenity $amenity)
     {
 
-      
+
         $page = trans('pages_names.edit_amenity');
 
         $main_menu = 'master';
@@ -117,7 +119,7 @@ public function getById(Amenity $amenity)
         return view('admin.master.amenity.update', compact('item', 'page', 'main_menu', 'sub_menu'));
     }
 
-    
+
     public function update(Request $request,Amenity $amenity)
     {
         if (env('APP_FOR')=='demo') {
@@ -125,7 +127,7 @@ public function getById(Amenity $amenity)
 
             return redirect('amenity')->with('warning', $message);
         }
-        
+
 
         Validator::make($request->all(), [
             // 'route_id' => 'required',
@@ -135,7 +137,7 @@ public function getById(Amenity $amenity)
         ])->validate();
 
         $updated_params = $request->only(['name']);
-        
+
 
         if ($uploadedFile = $this->getValidatedUpload('icon', $request)) {
             $updated_params['icon'] = $this->imageUploader->file($uploadedFile)

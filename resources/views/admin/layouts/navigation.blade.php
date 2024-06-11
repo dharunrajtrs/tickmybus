@@ -51,12 +51,14 @@ if(str_contains((string)request()->path(),'dashboard')){
         {{-- </ul>
       </li>
       @endif --}}
+      @if(auth()->user()->roles->pluck('slug')->contains('super-admin'))
        @if(auth()->user()->can('admin'))
       <li class="{{'admin' == $main_menu ? 'active' : '' }}">
         <a href="{{url('/admins')}}">
           <i class="fa fa-user-circle-o"></i> <span>@lang('pages_names.admins')</span>
         </a>
       </li>
+      @endif
       @endif
       @if(auth()->user()->can('master-data'))
       <li class="treeview {{ 'master' == $main_menu ? 'active menu-open' : '' }}">
@@ -85,11 +87,11 @@ if(str_contains((string)request()->path(),'dashboard')){
             <a href="{{url('/owner_needed_doc')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.bus_operators_needed_doc')</a>
           </li>
           @endif
-          {{-- @if(auth()->user()->can('manage-fleet-needed-document'))
+          @if(auth()->user()->can('manage-fleet-needed-document'))
           <li class="{{ 'fleet_needed_document' == $sub_menu ? 'active' : '' }}">
-            <a href="{{url('/fleet_needed_doc')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.fleet_needed_doc')</a>
+            <a href="{{url('/fleet_needed_doc')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.bus_needed_doc')</a>
           </li>
-          @endif --}}
+          @endif
           {{-- @if(auth()->user()->can('manage-driver-needed-document'))
           <li class="{{ 'needed_document' == $sub_menu ? 'active' : '' }}">
             <a href="{{url('/needed_doc')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.needed_doc')</a>
@@ -105,11 +107,7 @@ if(str_contains((string)request()->path(),'dashboard')){
             <a href="{{url('/rest')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.rest_stop')</a>
           </li>
           @endif  -->
-           {{-- @if(auth()->user()->can('manage-amenity'))
-          <li class="{{ 'amenity' == $sub_menu ? 'active' : '' }}">
-            <a href="{{url('/amenity')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.amenities')</a>
-          </li>
-          @endif --}}
+
         </ul>
       </li>
       @endif
@@ -121,12 +119,13 @@ if(str_contains((string)request()->path(),'dashboard')){
         </a>
       </li>
       @endif --}}
-
-
-      @php
-        $areas = App\Models\Admin\ServiceLocation::active(true)->get();
-      @endphp
-
+      @if(auth()->user()->roles->pluck('slug')->contains('owner'))
+ @if(auth()->user()->can('manage_amentity'))
+          <li class="{{ 'manage_amentity' == $main_menu ? 'active' : '' }}">
+            <a href="{{url('/amenity')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.amenities')</a>
+          </li>
+          @endif
+          @endif
         @if(auth()->user()->can('manage-owner'))
             <li class="{{ 'manage_owners' == $main_menu ? 'active menu-open' : '' }}">
                 <a href="{{url('/owners/by_area')}}">
@@ -134,16 +133,21 @@ if(str_contains((string)request()->path(),'dashboard')){
                   </a>
               </li>
             @endif
-
-             {{-- @if(auth()->user()->can('manage-fleet'))
+            @if(auth()->user()->roles->pluck('slug')->contains('owner'))
+             @if(auth()->user()->can('manage-fleet'))
             <li class="{{ $main_menu == 'manage_fleet' ? 'active' : ''}}">
                 <a href="{{ route('viewFleet') }}">
                     <i class="fa fa-bus"></i>
-                    <span> {{ trans('pages_names.manage_bus') }} </span>
+                    <span> {{ trans('pages_names.add_bus') }} </span>
                 </a>
             </li>
-            @endif --}}
-
+            @endif
+            @endif
+             @if(auth()->user()->can('manage-city'))
+          <li class="{{ 'city' == $sub_menu ? 'active' : '' }}">
+            <a href="{{url('/city')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.city')</a>
+          </li>
+          @endif
   {{-- @if(auth()->user()->can('seat_layout'))
       <li class="treeview {{ 'seat_layout' == $main_menu ? 'active menu-open' : '' }}">
         <a href="javascript: void(0);">

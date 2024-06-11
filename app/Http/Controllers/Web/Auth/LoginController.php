@@ -159,7 +159,7 @@ class LoginController extends ApiController
      */
     protected function loginUserAccount($request, $role, $needsToken = true, array $conditions = [])
     {
-        
+
 
         if ($request->has('social_id')) {
             return $this->setLoginIdentifier('social_id')
@@ -252,6 +252,7 @@ class LoginController extends ApiController
 
         if (method_exists($this, $method = 'resolveUserFrom' . Str::studly($identifier))) {
             $user = $this->{$method}($emailOrUsername, $role);
+
         }
 
         if (!$user || !hash_check($password, $user->password)) {

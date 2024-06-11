@@ -66,7 +66,7 @@ class FleetController extends BaseController
         // $query = Fleet::query();
 
         if (access()->hasRole(RoleSlug::SUPER_ADMIN)) {
-            $query = Fleet::query();                
+            $query = Fleet::query();
             } else {
                 $this->validateAdmin();
                 $query = Fleet::where('owner_id', auth()->user()->owner->id)->orderBy('created_at', 'desc');
@@ -80,18 +80,20 @@ class FleetController extends BaseController
 
     public function create()
     {
+      $user_checking_id=auth()->user()->id;
+
         $page = trans('pages_names.add_fleet');
 
         $main_menu = 'manage_fleet';
         $sub_menu = '';
 
-        $owners = Owner::whereActive(true)->get();
+        $owner = Owner::where('user_id',$user_checking_id)->first();
 
         $amenties = Amenity::all();
 
         // dd($amenties);
 
-        return view('admin.fleets.create', compact('page', 'main_menu', 'sub_menu','owners','amenties'));
+        return view('admin.fleets.create', compact('page', 'main_menu', 'sub_menu','owner','amenties'));
     }
 
     public function store(FleetStoreRequest $request)
@@ -99,7 +101,7 @@ class FleetController extends BaseController
         $created_params = $request->only(['brand','model','license_number','owner_id','total_seats','bus_type']);
 
         $seat = implode(',', $request->seat_type);
-       
+
 
         $created_params['seat_type'] = $seat;
 
@@ -116,13 +118,13 @@ class FleetController extends BaseController
         $img_params['fleet_id'] = $fleet->id;
 
         $this->fleetImage->create($img_params);
-          
+
           }
         }else{
             throw ValidationException::withMessages(['multi_img' => __('add bus images')]);
         }
 
-        foreach ($request->bus_amenties as $amenties) 
+        foreach ($request->bus_amenties as $amenties)
         {
             $amenity_params['fleet_id'] = $fleet->id;
             $amenity_params['amenity_id'] = $amenties;
@@ -137,11 +139,11 @@ class FleetController extends BaseController
 
     public function getById(Fleet $fleet)
     {
-        
+
         $page = trans('pages_names.edit_fleet');
         $main_menu = 'manage_fleet';
         $sub_menu = '';
-        
+
         $item = $fleet;
         $owners = Owner::whereActive(true)->get();
         $multiImgs = FleetMultiImage::where('fleet_id',$fleet->id)->get();
@@ -156,8 +158,8 @@ class FleetController extends BaseController
     public function update(Request $request, Fleet $fleet)
     {
        $fleet->fleetAmenity()->delete();
-       
-        foreach ($request->bus_amenties as $key=>$amenties) 
+
+        foreach ($request->bus_amenties as $key=>$amenties)
         {
             $amenity_params['fleet_id'] = $fleet->id;
             $amenity_params['amenity_id'] =json_decode($amenties)->id;
@@ -165,30 +167,30 @@ class FleetController extends BaseController
             $fleet->fleetAmenity()->create($amenity_params);
 
          }
-        
+
         $updated_params = $request->only(['brand','model','license_number','owner_id','total_seats','bus_type']);
-      
+
         $seat = implode(',', $request->seat_type);
-       
+
 
         $updated_params['seat_type'] = $seat;
 
 
         $fleet->update($updated_params);
-       
+
         $imgs = $request->multi_img;
        if ($request->file('multi_img')) {
 
          foreach ($imgs as $id => $img) {
-      
+
         $img_params['image_name'] = $this->imageUploader->file($img)
                 ->saveBusImages();
         $img_params['fleet_id'] = $fleet->id;
-       
-        
+
+
         $fleet->fleetImage()->create($img_params);
 
-     }  
+     }
 
 
 
@@ -200,7 +202,7 @@ class FleetController extends BaseController
 
         return redirect('fleets')->with('success', $message);
 
-        }      
+        }
     }
 
     public function multiImgDelete(FleetMultiImage $fleetImg)
@@ -211,7 +213,7 @@ class FleetController extends BaseController
 
         return redirect()->back()->with('success', $message);
 
-    } 
+    }
 
 
     public function toggleStatus(Fleet $fleet)

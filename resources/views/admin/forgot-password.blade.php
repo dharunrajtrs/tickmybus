@@ -37,7 +37,7 @@
         }
 
         body {
-            background-image: url(assets/images/bg-.jpg) !important;
+            /* background-image: url(assets/images/bg-.jpg) !important; */
             background-size: cover !important;
         }
 
@@ -49,9 +49,7 @@
     <div class="container h-p100">
         <div class="row align-items-center justify-content-md-center h-p100">
 
-            <div class="col-lg-8 col-md-4 d-none d-md-block">
-                <!-- <img src="http://localhost/tagyourtaxi/future/public/assets/images/left.svg" alt=""> -->
-            </div>
+
 
             <div class="col-lg-4 col-md-8 col-12">
                 <div class="login-box">
@@ -97,7 +95,7 @@
         </div>
     </div>
 
-    
+
 
 </body>
 

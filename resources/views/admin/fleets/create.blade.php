@@ -24,16 +24,15 @@
                 <form  method="post" action="{{url('fleets/store')}}" enctype="multipart/form-data">
                 @csrf
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-6" style="display: none">
                             <div class="form-group">
                                 <label for="type">@lang('view_pages.select_bus_company')
                                     <span class="text-danger">*</span>
                                 </label>
                                 <select name="owner_id" id="owner" class="form-control" required>
-                                    <option value="" >@lang('view_pages.select_bus_company')</option>
-                                    @foreach($owners as $key=>$owner)
+
                                     <option value="{{$owner->id}}" {{ old('owner_id') == $owner->id ? 'selected' : '' }}>{{$owner->company_name}}</option>
-                                    @endforeach
+
                                 </select>
                                 </div>
                         </div>
@@ -78,7 +77,7 @@
                                 <span class="text-danger">*</span>
                                 </label>
                                 <select name="bus_type" id="bus_type" class="form-control select" required>
-                               <option selected="">@lang('view_pages.select')</option>                                    
+                               <option selected="">@lang('view_pages.select')</option>
                                 <option value="ac" >@lang('view_pages.ac')</option>
                                  <option value="non_ac">@lang('view_pages.non_ac')</option>
                                   </select>
@@ -143,7 +142,7 @@
                                   </div>
                             </div>
                         </div>
- 
+
                         <div class="form-group">
                             <div class="col-12">
                                 <button class="btn btn-primary btn-sm m-5 pull-right" type="submit">

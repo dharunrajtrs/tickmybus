@@ -194,5 +194,9 @@ return array (
   'bus_operators'=>'Bus Operators',
   'bus_operators_needed_doc'=>'Bus Operators Needed Document',
 'add_document'=>'Add Document',
+'add_bus'=>'Add Bus',
+'edit_bus_operator'=>'Edit Bus Operator',
+'edit_document'=>'Edit Document',
+'bus_needed_doc'=>'Bus Needed Document',
 
 );

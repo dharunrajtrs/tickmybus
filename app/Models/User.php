@@ -35,6 +35,7 @@ use App\Models\Payment\UserBankInfo;
 use App\Models\Payment\WalletWithdrawalRequest;
 use App\Models\Admin\Driver;
 
+
 class User extends Authenticatable implements CanSendOTPContract
 {
     use CanSendOTP,
@@ -96,7 +97,7 @@ class User extends Authenticatable implements CanSendOTPContract
      * @var array
      */
     public $includes = [
-        'roles', 'otp','requestDetail'
+        'roles', 'otp','requestDetail','onwerDetail'
     ];
 
     /**
@@ -269,7 +270,7 @@ class User extends Authenticatable implements CanSendOTPContract
     {
         return $this->hasOne(Driver::class, 'user_id', 'id');
     }
-    
+
     /**
      * The Driver associated with the user's id.
      *
@@ -287,6 +288,10 @@ class User extends Authenticatable implements CanSendOTPContract
     public function requestDetail()
     {
         return $this->hasMany(Request::class, 'user_id', 'id');
+    }
+    public function onwerDetail()
+    {
+        return $this->hasMany(Owner::class, 'user_id', 'id');
     }
 
     /**
@@ -342,7 +347,7 @@ class User extends Authenticatable implements CanSendOTPContract
         return $this->apn_token;
     }
 
-    
+
 
     protected $searchable = [
         'columns' => [

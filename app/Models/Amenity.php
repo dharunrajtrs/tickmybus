@@ -9,7 +9,7 @@ use App\Models\Traits\HasActive;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use App\Base\Uuid\UuidModel;
 use Storage;
-
+use App\Models\Admin\Owner;
 class Amenity extends Model
 {
     use HasFactory,SearchableTrait;
@@ -59,11 +59,11 @@ class Amenity extends Model
     * @param string $value
     * @return string
     */
-   
+
 
     protected $searchable = [
         'columns' => [
-            'amenities.name' => 20,
+               'amenities.name' => 20,
         ],
     ];
 
@@ -96,6 +96,9 @@ class Amenity extends Model
     }
     public function fleets(){
         return $this->belongsToMany(Fleet::class,'fleet_id','amenity_id');
+    }
+    public function owner(){
+        return $this->belongsTo(Owner::class,'owner_id','id');
     }
 
 
