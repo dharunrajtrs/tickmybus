@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Base\Services\ImageUploader\ImageUploaderContract;
 use App\Models\Admin\Owner;
-
+use App\Models\AllCities;
 class CityController extends BaseController
 {
      protected $city;
@@ -45,8 +45,8 @@ class CityController extends BaseController
 
         $main_menu = 'master';
         $sub_menu = 'city';
-
-        return view('admin.master.city.create', compact('page', 'main_menu', 'sub_menu',));
+        $countries=AllCities::all();
+        return view('admin.master.city.create', compact('page', 'main_menu', 'sub_menu','countries'));
     }
 
 

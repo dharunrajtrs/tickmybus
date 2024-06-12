@@ -890,5 +890,5 @@ return array(
    'headquarters_pincode'=>'Headquarters Pincode',
    'headquarters_city'=>'Headquarters City',
    'upi_id'=>'UPI ID',
-
+'boarding_point_droping_point'=> 'Boarding Point /Droping Point'
 );

@@ -30,9 +30,11 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label for="name">@lang('view_pages.city') <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" id="city" name="city"
-                                                value="{{ old('city') }}" required
-                                                placeholder="@lang('view_pages.enter') @lang('view_pages.city')">
+                                            <select name="city" id="city" data-placeholder="Select" class="form-control" required>
+                                                @foreach($countries as $country)
+                                                    <option value="{{ $country->name }}" {{ old('country') == $country->id ? 'selected' : '' }}>{{ $country->name }}</option>
+                                                @endforeach
+                                            </select>
                                             <span class="text-danger">{{ $errors->first('city') }}</span>
                                         </div>
                                     </div>
@@ -76,12 +78,12 @@
     <!-- content -->
 
 
- <!--  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNogOiJ30O-EHWyRS3155LC3JxA2zUp7k&libraries=places"></script>
+    <script src="https://maps.google.com/maps/api/js?key={{get_settings('google_map_key')}}&libraries=drawing,geometry,places"></script>
 
-<script src="{{ asset('assets/build/js/intlTelInput.js') }}"></script>
+    <script src="{{ asset('assets/build/js/intlTelInput.js') }}"></script>
     <script type="text/javascript"></script>
 
-
+{{--
 
     <script>
     function initialize() {
@@ -152,8 +154,7 @@
 
     google.maps.event.addDomListener(window, 'load', initialize2);
 
-</script>
- -->
+</script> --}}
 
 
 

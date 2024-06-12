@@ -71,7 +71,7 @@ background:green;
                             </button>
                         </a>
                     </div>
-                
+
                 <div class="col-12">
                 <form  method="post" action="{{url('fleet_seat_layout/store')}}">
                 @csrf
@@ -79,14 +79,14 @@ background:green;
 
 
                 <div class="row">
-                   
+
                             <div class="col-sm-6 float-left mb-md-3">
                             <div class="form-group">
                                 <label for="bus_company">{{ trans('view_pages.bus_company')}}<span class="text-danger">*</span></label>
                                     <input type="disabled" class="form-control" name="bus_company" value="{{json_decode($request_input)->bus_company}}">
                             </div>
                         </div>
-                        
+
 
                          <div class="col-sm-6 float-left mb-md-3">
                             <div class="form-group">
@@ -97,7 +97,7 @@ background:green;
                             </div>
                         </div>
 
-                     
+
                         <div class="col-sm-6 float-left mb-md-3">
                             <div class="form-group">
                                 <label for="deck_type">{{ trans('view_pages.deck_type')}}<span class="text-danger">*</span></label>
@@ -193,7 +193,7 @@ $total_back_seats= json_decode($request_input)->total_back_seats;
 </div>
     </div>
       @endfor
-      <!-- Left ends here -->      
+      <!-- Left ends here -->
 </div>
 
 </div>
@@ -224,7 +224,7 @@ $total_back_seats= json_decode($request_input)->total_back_seats;
 </div>
     </div>
       @endfor
-      <!-- Left ends here -->      
+      <!-- Left ends here -->
 </div>
 
 </div>
@@ -254,7 +254,7 @@ $total_back_seats= json_decode($request_input)->total_back_seats;
 </div>
 </div>
 </div>
-</section> 
+</section>
                 </div>
             </div>
         </div>

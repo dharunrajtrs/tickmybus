@@ -51,7 +51,7 @@ if(str_contains((string)request()->path(),'dashboard')){
         {{-- </ul>
       </li>
       @endif --}}
-      @if(auth()->user()->roles->pluck('slug')->contains('super-admin'))
+      {{-- @if(auth()->user()->roles->pluck('slug')->contains('super-admin'))
        @if(auth()->user()->can('admin'))
       <li class="{{'admin' == $main_menu ? 'active' : '' }}">
         <a href="{{url('/admins')}}">
@@ -59,7 +59,7 @@ if(str_contains((string)request()->path(),'dashboard')){
         </a>
       </li>
       @endif
-      @endif
+      @endif --}}
       @if(auth()->user()->can('master-data'))
       <li class="treeview {{ 'master' == $main_menu ? 'active menu-open' : '' }}">
         <a href="javascript: void(0);">
@@ -119,13 +119,52 @@ if(str_contains((string)request()->path(),'dashboard')){
         </a>
       </li>
       @endif --}}
+
+
       @if(auth()->user()->roles->pluck('slug')->contains('owner'))
+
+      <li class="treeview {{ 'master' == $main_menu ? 'active menu-open' : '' }}">
+        <a href="javascript: void(0);">
+          <i class="fa fa-code-fork"></i>
+          <span> @lang('pages_names.set_up') </span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-right pull-right"></i>
+          </span>
+        </a>
+
+        <ul class="treeview-menu">
+            @if(auth()->user()->roles->pluck('slug')->contains('owner'))
          @if(auth()->user()->can('manage_amentity'))
-          <li class="{{ 'manage_amentity' == $main_menu ? 'active' : '' }}">
+          <li class="{{ 'manage_amentity' == $sub_menu ? 'active' : '' }}">
             <a href="{{url('/amenity')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.amenities')</a>
           </li>
           @endif
           @endif
+          @if(auth()->user()->roles->pluck('slug')->contains('owner'))
+          @if(auth()->user()->can('manage_seat_layout'))
+          <li class="{{ 'fleet_seat_layout' == $sub_menu ? 'active' : '' }}">
+              <a href="{{url('/fleet_seat_layout')}}">  <i class="fa fa-code-fork"></i>@lang('pages_names.seat_layout')</a>
+            </li>
+       @endif
+       @endif
+       @if(auth()->user()->roles->pluck('slug')->contains('owner'))
+       @if(auth()->user()->can('manage-boarding-point'))
+       <li class="{{ 'boarding_point' == $sub_menu ? 'active' : '' }}">
+         <a href="{{url('/boarding_point')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.rotues')</a>
+       </li>
+       @endif
+
+       @endif
+
+        </ul>
+    </li>
+@endif
+
+
+
+
+
+
         @if(auth()->user()->can('manage-owner'))
             <li class="{{ 'manage_owners' == $main_menu ? 'active menu-open' : '' }}">
                 <a href="{{url('/owners/by_area')}}">
@@ -133,13 +172,13 @@ if(str_contains((string)request()->path(),'dashboard')){
                   </a>
               </li>
             @endif
-            @if(auth()->user()->roles->pluck('slug')->contains('owner'))
+            {{-- @if(auth()->user()->roles->pluck('slug')->contains('owner'))
             @if(auth()->user()->can('manage-city'))
          <li class="{{ 'city' == $sub_menu ? 'active' : '' }}">
            <a href="{{url('/city')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.city')</a>
          </li>
          @endif
-         @endif
+         @endif --}}
 
             @if(auth()->user()->roles->pluck('slug')->contains('owner'))
              @if(auth()->user()->can('manage-fleet'))
@@ -173,13 +212,7 @@ if(str_contains((string)request()->path(),'dashboard')){
       </li>
     @endif --}}
 
-    @if(auth()->user()->roles->pluck('slug')->contains('owner'))
-    @if(auth()->user()->can('manage_seat_layout'))
-    <li class="{{ 'fleet_seat_layout' == $main_menu ? 'active' : '' }}">
-        <a href="{{url('/fleet_seat_layout')}}">  <i class="fa fa-code-fork"></i>@lang('pages_names.seat_layout')</a>
-      </li>
- @endif
- @endif
+
 
 
 

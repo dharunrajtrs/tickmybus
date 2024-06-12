@@ -240,6 +240,7 @@ class Permission
     const TOGGLE_AMENTITY = 'toggle_amentity';
     const DELETE_AMENTITY = 'delete_amentity';
     CONST MANAGE_CITY = 'manage-city';
+    CONST MANAGE_BOARDING_POINT = 'manage-boarding-point';
 
 
 }

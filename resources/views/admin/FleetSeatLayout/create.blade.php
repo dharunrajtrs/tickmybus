@@ -278,15 +278,13 @@ $blocker = [
                 </div>
                 <!-- Upper deck end ------------------------------------>
                 <div class="col-sm-12 float-left mb-md-3"></div>
-                <div class="col-sm-6 float-left mb-md-3 form-group " style="display: none;">
-                    <label for="">Layout Size (per column)
+                <div class="col-sm-6 float-left mb-md-3 form-group ">
+                    <label for="">Layout Type (per column)
                     <span class="text-danger">*</span>
                     </label><br>
                   <div class="form-group">
-                    <input type="radio" class="form-control" name="column" id="5" value="5"  checked>
-                    <label for="5">5 Sleeper/ 10 seater</label>&emsp;
-                    <input type="radio" class="form-control" name="column" id="6" value="6">
-                    <label for="6">6 Sleeper/ 12 seater</label>
+                    <input type="text" class="form-control" name="column" id="5" value="">
+                    <label for="5"></label>&emsp;
                   </div>
                 </div>
                 <div class="col-sm-6 float-left mb-md-3">
@@ -497,7 +495,7 @@ $blocker = [
   function buildSeatLayout(columnCount,rowCount,seatType,seatSide,seatSeries){
     let htmlTemplate = "";
     let seatCount = 1;
-    if( (seatType == "seater" || seatType == "semi_sleeper") && seatSide !== null){ columnCount *= 2; }
+    if( (seatType == "seater" || seatType == "semi_sleeper") && seatSide !== null){ columnCount}
     for (let column = 0; column < columnCount; column++) {
       htmlTemplate += '<div class="row m-2">';
       for (let row = 0; row < rowCount; row++) {
@@ -538,7 +536,7 @@ $blocker = [
     var right_seat_type =$('input[name="right_seat_type"]:checked').val();
     seat_type.push(left_seat_type);
     seat_type.push(right_seat_type);
-    var column =$('input[name="column"]:checked').val();
+    var column =$('input[name="column"]').val();
     var back_seat = $('input[name="back_seat"]:checked').val();
     // true if single deck is selected or both  upper deck seat types are selected
     var deck_type_select_condition = ((single_deck !== undefined) || [(upper_left_seat_type !== undefined) && (upper_right_seat_type !== undefined)]);

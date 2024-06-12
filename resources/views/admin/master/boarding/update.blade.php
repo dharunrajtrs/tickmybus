@@ -27,20 +27,6 @@
                                 @csrf
 <div class="row">
 
-  <div class="col-sm-12">
-<div class="form-group">
-    <label for="admin_id">@lang('view_pages.select_area')
-        <span class="text-danger">*</span>
-    </label>
-    <select name="service_location_id" id="service_location_id" class="form-control">
-        <option value="" selected disabled>@lang('view_pages.select_area')</option>
-        @foreach($services as $key=>$service)
-        <option value="{{$service->id}}" {{ old('service_location_id',$item->service_location_id) == $service->id ? 'selected' : '' }}>{{$service->name}}</option>
-        @endforeach
-    </select>
-    </div>
-</div>
-
 <div class="col-sm-12">
 <div class="form-group">
     <label for="city_id">@lang('view_pages.select_city')
@@ -49,7 +35,7 @@
     <select name="city_id" id="city_id" class="form-control">
         <option value="" selected disabled>@lang('view_pages.select_city')</option>
         @foreach($cities as $key=>$city)
-        <option value="{{$city->id}}" {{ old('city_id',$item->city_id) == $city->id ? 'selected' : '' }}>{{$city->city}}</option>
+        <option value="{{$city->id}}" {{ old('city_id',$item->city_id) == $city->id ? 'selected' : '' }}>{{$city->name}}</option>
         @endforeach
     </select>
     </div>
@@ -77,8 +63,8 @@
                                             <span class="text-danger">{{ $errors->first('landmark') }}</span>
                                         </div>
                                     </div>
-                                    
-            
+
+
                                     </div>
 
 
@@ -102,13 +88,13 @@
 
 
 
-
+{{--
     <script src="https://maps.google.com/maps/api/js?key={{get_settings('google_map_key')}}&libraries=drawing,geometry,places"></script>
 
 <script src="{{ asset('assets/build/js/intlTelInput.js') }}"></script>
     <script type="text/javascript"></script>
 
- 
+
 
     <script>
     function initialize() {
@@ -124,7 +110,7 @@
 
     }
 
- 
+
     google.maps.event.addDomListener(window, 'load', initialize);
 
 
@@ -164,6 +150,6 @@
         // alert($(this).val());
         getCity($(this).val());
     });
-</script>
+</script> --}}
 
 @endsection

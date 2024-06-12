@@ -14,7 +14,7 @@ use App\Models\Admin\ServiceLocation;
 
 class BoardingPoint extends Model
 {
-   use SearchableTrait, 
+   use SearchableTrait,
     HasActive,UuidModel;
 
     /**
@@ -60,7 +60,7 @@ class BoardingPoint extends Model
     * @param string $value
     * @return string
     */
-   
+
 
     protected $searchable = [
         'columns' => [
@@ -76,7 +76,7 @@ class BoardingPoint extends Model
      */
     public function city()
     {
-        return $this->belongsTo(City::class, 'city_id', 'id');
+        return $this->belongsTo(AllCities::class, 'city_id', 'id');
     }
     /**
      * The state that the city belongs to.
@@ -95,7 +95,12 @@ class BoardingPoint extends Model
      */
     public function serviceLocations()
     {
-        return $this->belongsTo(ServiceLocation::class, 'service_location_id', 'id');
+        return
+        $this->belongsTo(ServiceLocation::class, 'service_location_id', 'id');
+    }
+    public function journeyBoardingPoint()
+    {
+        return $this->hasMany(JourneyBoardingPoint::class, 'boardingpoint_id', 'id');
     }
 
 }

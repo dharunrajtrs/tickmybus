@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBoardingpointsTable extends Migration
+class CreateBoardingDropingPoint extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,15 @@ class CreateBoardingpointsTable extends Migration
      */
     public function up()
     {
-        Schema::create('boardingpoints', function (Blueprint $table) {
+        Schema::create('boarding_droping_point', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('boarding_address');
-            $table->uuid('owner_id')->nullable();
-            $table->double('boarding_lat', 15, 8)->nullable();
-            $table->double('boarding_lng', 15, 8)->nullable();
+            $table->uuid('boarding_id');
+            $table->time('boarding_time');
             $table->timestamps();
 
-
-            $table->foreign('owner_id')
+            $table->foreign('boarding_id')
                     ->references('id')
-                    ->on('owners')
+                    ->on('boardingpoints')
                     ->onDelete('cascade');
         });
     }
@@ -36,6 +33,6 @@ class CreateBoardingpointsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('boardingpoints');
+        Schema::dropIfExists('boarding_droping_point');
     }
 }

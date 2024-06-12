@@ -49,7 +49,7 @@ class SeatLayoutController extends BaseController
     public function index()
     {
         $page = trans('pages_names.seat_layout');
-        $main_menu = 'seat_layout';
+        $main_menu = 'master';
         $sub_menu = null;
 
         return view('admin.FleetSeatLayout.index', compact('page', 'main_menu', 'sub_menu'))->render();

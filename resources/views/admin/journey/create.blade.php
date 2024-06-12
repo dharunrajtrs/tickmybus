@@ -99,7 +99,7 @@ flex-direction: row-reverse;
                                                 <select name="from_city_id" id="from_city_id" class="form-control" required>
                                                 </select>
                                             <span class="text-danger">{{ $errors->first('from_city_id') }}</span>
-                                            
+
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
@@ -109,12 +109,12 @@ flex-direction: row-reverse;
                                                 </select>
                                             <span class="text-danger">{{ $errors->first('to_city_id') }}</span>
                                         </div>
-                                    </div>   
+                                    </div>
                                     <div class="col-sm-6">
                                     <div class="bootstrap-timepicker">
                                         <div class="form-group">
                                            <label for="depature_at">@lang('view_pages.depature_at') <span
-                                                    class="text-danger">*</span></label>  
+                                                    class="text-danger">*</span></label>
                                             <div class="input-group">
                                                 <div class="input-group-addon">
                                                 <i class="fa fa-clock-o"></i>
@@ -129,7 +129,7 @@ flex-direction: row-reverse;
                                     <div class="bootstrap-timepicker">
                                         <div class="form-group">
                                            <label for="arrived_at">@lang('view_pages.arrived_at') <span
-                                                    class="text-danger">*</span></label>  
+                                                    class="text-danger">*</span></label>
                                             <div class="input-group">
                                                 <div class="input-group-addon">
                                                 <i class="fa fa-clock-o"></i>
@@ -140,7 +140,7 @@ flex-direction: row-reverse;
                                         </div>
                                      </div>
                                 </div>
-                           </div>  
+                           </div>
                 <div class="row">
                  <div class="col-lg-6" id="seater" style="display: none">
                     <div class="form-group">
@@ -346,21 +346,21 @@ class="btn btn-primary mr-1 waves-effect waves-light">{{ trans('view_pages.creat
 
             if($('.add_row').length < window.boarding.length){
                 var append_row = "";
-                var tableLength = table.rows.length; 
+                var tableLength = table.rows.length;
             var tableRowCount = tableLength-1;
-          
-            var boarding = window.boarding;  
+
+            var boarding = window.boarding;
 
 
             var pointHtml = "";
-             for (var i = 0; i < boarding.length; i++) 
+             for (var i = 0; i < boarding.length; i++)
              {
                     if (boarding_expt_array.indexOf(boarding[i].id) !== -1) {
                     }
                     else{
                         pointHtml += '<option value="'+boarding[i].id +'">'+boarding[i].boarding_address+'</option>';
                     }
-                    
+
 
             }
 
@@ -405,7 +405,7 @@ class="btn btn-primary mr-1 waves-effect waves-light">{{ trans('view_pages.creat
             else{
                 alert("Selected every boarding points");
             }
-            
+
         });
 
 
@@ -415,8 +415,8 @@ class="btn btn-primary mr-1 waves-effect waves-light">{{ trans('view_pages.creat
              $("tr.select_row").find(".boarding_point_select").append('<option value="'+value+'">'+text+'</option>');
             new_array_data = boarding_expt_array.filter(function(element) {
             return element !== value;
-            }); 
-            boarding_expt_array = new_array_data;   
+            });
+            boarding_expt_array = new_array_data;
             $(this).closest("tr").remove();
         });
 
@@ -425,20 +425,20 @@ class="btn btn-primary mr-1 waves-effect waves-light">{{ trans('view_pages.creat
             var table = document.getElementById("table_drop_points");
             if($('.add_drop_row').length <= window.dropping.length){
                 var append_drop_row = "";
-                var tableLength = table.rows.length; 
+                var tableLength = table.rows.length;
             var tableRowCount = tableLength-1;
 
-            var dropping = window.dropping;  
+            var dropping = window.dropping;
 
             var pointHtml = "";
-             for (var i = 0; i < dropping.length; i++) 
+             for (var i = 0; i < dropping.length; i++)
              {
                     if (dropping_expt_array.indexOf(dropping[i].id) !== -1) {
                     }
                     else{
                         pointHtml += '<option value="'+dropping[i].id +'">'+dropping[i].boarding_address+'</option>';
                     }
-                    
+
 
             }
 
@@ -485,7 +485,7 @@ class="btn btn-primary mr-1 waves-effect waves-light">{{ trans('view_pages.creat
             else{
                 alert("Selected every drop points");
             }
-            
+
         });
 
 
@@ -495,14 +495,14 @@ class="btn btn-primary mr-1 waves-effect waves-light">{{ trans('view_pages.creat
              $("tr.select_drop_row").find(".drop_point_select").append('<option value="'+value+'">'+text+'</option>');
             new_drop_array_data = dropping_expt_array.filter(function(element) {
             return element !== value;
-            }); 
-            dropping_expt_array = new_drop_array_data;   
+            });
+            dropping_expt_array = new_drop_array_data;
             $(this).closest("tr").remove();
 
         });
 
 
-         
+
 </script>
 
 
@@ -643,7 +643,7 @@ this.submit();
 
     $(document).on('change','#fleet_id',function(){
         getFleet($(this).val());
-        
+
     });
 
     $(document).on("change","#boarding_point",function(){
@@ -653,8 +653,8 @@ this.submit();
             $("tr.select_row").addClass("inactv");
             this_dt = $(this);
             $(this).closest("tr.select_row").addClass("actv");
-            $(this).closest("tr.select_row").removeClass("inactv"); 
-            boarding_expt_array = []; 
+            $(this).closest("tr.select_row").removeClass("inactv");
+            boarding_expt_array = [];
            $("tr.select_row").each(function(){
             var selected_value = $(this).find(".boarding_point_select").val();
             boarding_expt_array.push(selected_value);
@@ -662,10 +662,10 @@ this.submit();
             if(selected_value === this_dt.closest("tr.select_row").find(".boarding_point_select").val())
             {
                 $("tr.select_row.inactv").find(".boarding_point_select option[value='"+selected_value+"']").remove();
-            } 
+            }
 
            })
-           
+
 
     });
 
@@ -677,8 +677,8 @@ this.submit();
             $("tr.select_drop_row").addClass("inactv");
             this_dt = $(this);
             $(this).closest("tr.select_drop_row").addClass("actv");
-            $(this).closest("tr.select_drop_row").removeClass("inactv"); 
-            dropping_expt_array = []; 
+            $(this).closest("tr.select_drop_row").removeClass("inactv");
+            dropping_expt_array = [];
            $("tr.select_drop_row").each(function(){
             var selected_drop_value = $(this).find(".drop_point_select").val();
             dropping_expt_array.push(selected_drop_value);
@@ -686,10 +686,10 @@ this.submit();
             if(selected_drop_value === this_dt.closest("tr.select_drop_row").find(".drop_point_select").val())
             {
                 $("tr.select_drop_row.inactv").find(".drop_point_select option[value='"+selected_drop_value+"']").remove();
-            } 
+            }
 
            })
-           
+
 
     });
 
@@ -711,7 +711,7 @@ function getBoarding(value,model=''){
             {
                 window.boarding = result;
                 $('#boarding_point').empty();
-                
+
                 $.each(result, function(key, value) {
                 var selected ='';
                 if(key == 0)
@@ -838,7 +838,7 @@ function getDroping(value,model=''){
                 if (selectedFromCity && selectedFromCity == element.id) {
                     return;
                 }
-                if (model && model == element.id) { 
+                if (model && model == element.id) {
                     selected = 'selected';
                 }
                 $("#to_city_id").append('<option value=' + element.id + ' ' + selected + '>' + element.city + '</option>');
@@ -855,8 +855,8 @@ $(document).on('change', '#service_location_id', function () {
     getCity($(this).val());
 });
 $(document).on('change', '#from_city_id', function () {
-    var selectedFromCity = $(this).val(); 
-    var selectedModel = $('#from_city_id option:selected').val(); 
+    var selectedFromCity = $(this).val();
+    var selectedModel = $('#from_city_id option:selected').val();
     getToCity($('#service_location_id').val(), selectedFromCity, selectedModel);
     getBoarding(selectedFromCity);
 });

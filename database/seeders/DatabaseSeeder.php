@@ -30,8 +30,8 @@ class DatabaseSeeder extends Seeder
         $this->call(HeaderSeeder::class);
         $this->call(PrivacySeeder::class);
         $this->call(TermSeeder::class);
-        
+        $this->call(CitiesTableSeeder::class);
 
-        
+
     }
 }

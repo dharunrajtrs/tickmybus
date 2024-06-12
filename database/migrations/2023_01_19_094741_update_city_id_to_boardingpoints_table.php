@@ -14,11 +14,11 @@ class UpdateCityIdToBoardingpointsTable extends Migration
     public function up()
     {
         Schema::table('boardingpoints', function (Blueprint $table) {
-            $table->uuid('city_id')->after('boarding_lng')->nullable();
 
+            $table->unsignedInteger('city_id')->after('boarding_lng')->nullable();
             $table->foreign('city_id')
                     ->references('id')
-                    ->on('cities')
+                    ->on('all_cities')
                     ->onDelete('cascade');
         });
     }

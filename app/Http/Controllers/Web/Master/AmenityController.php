@@ -28,7 +28,7 @@ class AmenityController extends BaseController
     {
         $page = trans('pages_names.view_amenity');
 
-        $main_menu = 'manage_amentity';
+        $main_menu = 'master';
         $sub_menu = 'amenity';
 
         return view('admin.master.amenity.index', compact('page', 'main_menu', 'sub_menu'));
