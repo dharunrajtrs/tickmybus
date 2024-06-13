@@ -639,6 +639,20 @@ Route::group(['prefix' => 'privacy',  'middleware' => 'permission:manage-privacy
 
 
                 });
+                Route::group(['prefix' => 'admin_boarding_point',  'middleware' => 'permission:manage-fleet-needed-document'], function () {
+                    Route::get('/', 'AdminBoardingPointController@index');
+                    Route::get('/fetch', 'AdminBoardingPointController@fetch');
+                    Route::get('/create', 'AdminBoardingPointController@create');
+                    Route::post('store', 'AdminBoardingPointController@store');
+                    Route::get('/{boarding}', 'AdminBoardingPointController@getById');
+                    Route::post('/update/{boarding}', 'AdminBoardingPointController@update');
+                    Route::get('toggle_status/{boarding_point}', 'AdminBoardingPointController@toggleStatus');
+                    Route::get('delete/{boarding_point}', 'AdminBoardingPointController@delete');
+                    Route::get('get/getCity', 'AdminBoardingPointController@getCity')->name('getCity');
+                    Route::get('/get/getToCity/{cityId}', 'AdminBoardingPointController@getToCity')->name('getToCity');
+
+
+                    });
             //Rest-Stop CRUD
             Route::group(['prefix' => 'rest',  'middleware' => 'permission:manage-rest-stop'], function () {
                 Route::get('/', 'RestStopController@index');

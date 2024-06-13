@@ -104,16 +104,7 @@ flex-direction: row-reverse;
                                      </tbody>
                             </table>
 
-                            </div>
-                                     <div class="col-sm-12" style="display:none">
-                                        <div class="form-group">
-                                            <label for="name">@lang('view_pages.landmark') <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" id="landmark" name="landmark"
-                                                value="model" required
-                                                placeholder="@lang('view_pages.enter') @lang('view_pages.landmark')">
-                                            <span class="text-danger">{{ $errors->first('landmark') }}</span>
-                                        </div>
-                                    </div>
+                        </div>
                                 </div>
 
 

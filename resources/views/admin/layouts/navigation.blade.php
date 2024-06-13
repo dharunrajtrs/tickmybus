@@ -64,7 +64,7 @@ if(str_contains((string)request()->path(),'dashboard')){
       <li class="treeview {{ 'master' == $main_menu ? 'active menu-open' : '' }}">
         <a href="javascript: void(0);">
           <i class="fa fa-code-fork"></i>
-          <span> @lang('pages_names.add_document') </span>
+          <span> @lang('pages_names.set_up') </span>
           <span class="pull-right-container">
             <i class="fa fa-angle-right pull-right"></i>
           </span>
@@ -90,6 +90,11 @@ if(str_contains((string)request()->path(),'dashboard')){
           @if(auth()->user()->can('manage-fleet-needed-document'))
           <li class="{{ 'fleet_needed_document' == $sub_menu ? 'active' : '' }}">
             <a href="{{url('/fleet_needed_doc')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.bus_needed_doc')</a>
+          </li>
+          @endif
+          @if(auth()->user()->can('manage-fleet-needed-document'))
+          <li class="{{ 'boarding_point' == $sub_menu ? 'active' : '' }}">
+            <a href="{{url('/admin_boarding_point')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.rotues')</a>
           </li>
           @endif
           {{-- @if(auth()->user()->can('manage-driver-needed-document'))

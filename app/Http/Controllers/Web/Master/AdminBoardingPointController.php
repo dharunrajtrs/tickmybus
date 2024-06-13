@@ -14,7 +14,7 @@ use App\Base\Services\ImageUploader\ImageUploaderContract;
 use App\Models\AllCities;
 use App\Models\City;
 
-class BoardingPointController extends BaseController
+class AdminBoardingPointController extends BaseController
 {
 
       /**

@@ -198,7 +198,7 @@ return array (
 'edit_bus_operator'=>'Edit Bus Operator',
 'edit_document'=>'Edit Document',
 'bus_needed_doc'=>'Bus Needed Document',
-'set_up'=>'Set Up',
+'set_up'=>'SetUp',
 'rotues'=>'Rotues',
 
 );
