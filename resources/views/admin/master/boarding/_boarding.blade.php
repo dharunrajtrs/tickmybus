@@ -3,8 +3,7 @@
         <tr>
             <th> @lang('view_pages.s_no')</th>
             <th> @lang('view_pages.city')</th>
-            <th> @lang('view_pages.boarding_address')</th>
-            <th> @lang('view_pages.landmark')</th>
+            <th> @lang('view_pages.short_code')</th>
             <th> @lang('view_pages.action')</th>
 
         </tr>
@@ -20,9 +19,7 @@
         <tr>
             <td>{{ $i++ }} </td>
             <td>{{$result->city->name}}</td>
-            <td>{{$result->boarding_address}}</td>
-            <td>{{$result->landmark}}</td>
-
+            <td>{{$result->short_code}}</td>
             <!-- @if($result->active)
             <td><span class="label label-success">@lang('view_pages.active')</span></td>
             @else

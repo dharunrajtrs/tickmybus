@@ -11,6 +11,7 @@ use App\Base\Uuid\UuidModel;
 use App\Models\City;
 use App\Models\Admin\JourneyUser;
 use App\Models\Admin\ServiceLocation;
+use App\Models\Admin\BoardingDropingPoint;
 
 class BoardingPoint extends Model
 {
@@ -43,6 +44,8 @@ class BoardingPoint extends Model
         'service_location_id',
         'landmark',
         'city_id',
+        'owner_id',
+        'short_code'
     ];
 
     /**
@@ -98,9 +101,14 @@ class BoardingPoint extends Model
         return
         $this->belongsTo(ServiceLocation::class, 'service_location_id', 'id');
     }
-    public function journeyBoardingPoint()
+    // public function BoardingDropingPoint()
+    // {
+    //     return $this->belongsTo(BoardingPoint::class, 'boarding_id', 'id');
+    // }
+    public function BoardingDropingPoint()
     {
-        return $this->hasMany(JourneyBoardingPoint::class, 'boardingpoint_id', 'id');
+        return $this->hasMany(BoardingDropingPoint::class, 'boarding_id', 'id');
     }
+
 
 }

@@ -16,6 +16,7 @@ class CreateBoardingpointsTable extends Migration
         Schema::create('boardingpoints', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('boarding_address');
+            $table->string('short_code')->nullable();
             $table->uuid('owner_id')->nullable();
             $table->double('boarding_lat', 15, 8)->nullable();
             $table->double('boarding_lng', 15, 8)->nullable();
@@ -26,6 +27,7 @@ class CreateBoardingpointsTable extends Migration
                     ->references('id')
                     ->on('owners')
                     ->onDelete('cascade');
+
         });
     }
 

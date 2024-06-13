@@ -5,6 +5,8 @@ use App\Base\Filters\Master\CommonMasterFilter;
 use App\Base\Libraries\QueryFilter\QueryFilterContract;
 use App\Http\Controllers\Web\BaseController;
 use App\Models\BoardingPoint;
+
+use App\Models\Admin\BoardingDropingPoint;
 use App\Models\Admin\ServiceLocation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -14,17 +16,27 @@ use App\Models\City;
 
 class BoardingPointController extends BaseController
 {
-     protected $boardingPoint;
 
+      /**
+     * The User Details model instance.
+     *
+     * @var \App\Models\Admin\BoardingDropingPoint $boardingdropingPoint
+     */
+
+
+     protected $boardingPoint;
+     protected $boardingdropingPoint;
     /**
      * BoardingPointControllers constructor.
      *
-     * @param \App\Models\Admin\BoardingPoint $boarding
+     * @param \App\Models\BoardingPoint $boarding
      */
-    public function __construct(BoardingPoint $boardingPoint)
+    public function __construct(BoardingPoint $boardingPoint , BoardingDropingPoint $boardingdropingPoint)
     {
         $this->boardingPoint = $boardingPoint;
+        $this->boardingdropingPoint = $boardingdropingPoint;
     }
+
     public function index()
     {
         $page = trans('pages_names.view_boarding');
@@ -63,30 +75,30 @@ class BoardingPointController extends BaseController
 
     public function store(Request $request)
     {
-        // $journey = $this->journey->create($created_params);
-if($request->has('boarding_point'))
+
+        Validator::make($request->all(), [
+            'landmark' => 'required',
+            'city_id' =>'required',
+            'short_code'=>'required',
+
+
+        ])->validate();
+        $owner_id=auth()->user()->owner->id;
+        $created_params = $request->only(['city_id','boarding_address','boarding_lat','boarding_lng','landmark','short_code']);
+        $created_params['active'] = 1;
+        $created_params['owner_id'] = $owner_id;
+        $boardingPoint= $this->boardingPoint->create($created_params);
+
+        if($request->has('boarding_point'))
 {
     foreach ($request->boarding_point as $key => $point)
     {
-          $boarding_params['boarding_id']   =  $point;
-          $boarding_params['boarding_time'] = $request->boarding_time[$key];
+          $boarding_params['boarding_droping_point_address'] = $request->boarding_point[$key];
 
-          $journey->journeyBoardingPoint()->create($boarding_params);
+          $boardingPoint->BoardingDropingPoint()->create($boarding_params);
     }
 
 }
-        Validator::make($request->all(), [
-            'boarding_address' => 'required',
-            'landmark' => 'required',
-            'city_id' =>'required',
-
-        ])->validate();
-
-        $created_params = $request->only(['city_id','boarding_address','boarding_lat','boarding_lng','landmark']);
-        $created_params['active'] = 1;
-
-        $this->boardingPoint->create($created_params);
-
         $message = trans('succes_messages.boarding_point_added_succesfully');
 
         return redirect('boarding_point')->with('success', $message);

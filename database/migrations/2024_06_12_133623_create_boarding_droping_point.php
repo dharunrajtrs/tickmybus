@@ -16,7 +16,8 @@ class CreateBoardingDropingPoint extends Migration
         Schema::create('boarding_droping_point', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('boarding_id');
-            $table->time('boarding_time');
+            $table->time('boarding_droping_time');
+            $table->text('boarding_droping_point_address');
             $table->timestamps();
 
             $table->foreign('boarding_id')
