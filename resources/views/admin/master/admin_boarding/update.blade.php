@@ -23,7 +23,7 @@
 
                         <div class="col-sm-12">
 
-                            <form method="post" class="form-horizontal" action="{{ url('boarding_point/update',$item->id) }}">
+                            <form method="post" class="form-horizontal" action="{{ url('admin_boarding_point/update',$item->id) }}">
                                 @csrf
 <div class="row">
 

@@ -105,7 +105,7 @@ class AdminBoardingPointController extends BaseController
     }
 
 
-    public function getById(BoardingPoint $boarding)
+    public function getById(adminboardingPoint $boarding)
     {
 
 
@@ -117,7 +117,7 @@ class AdminBoardingPointController extends BaseController
 
         $cities = AllCities::whereActive(true)->get();
 
-        $boarding_droping_points = BoardingDropingPoint::where('boarding_id',$item->id)->get();
+        $boarding_droping_points = BoardingDropingPoint::where('admin_boarding_id',$item->id)->get();
 
 
         return view('admin.master.admin_boarding.update', compact('item', 'page', 'main_menu', 'sub_menu','cities','boarding_droping_points'));
@@ -125,7 +125,7 @@ class AdminBoardingPointController extends BaseController
 
 
 
-    public function update(Request $request, BoardingPoint $boarding)
+    public function update(Request $request, adminboardingPoint $boarding)
     {
         Validator::make($request->all(), [
             'city_id' => 'required',
@@ -137,18 +137,23 @@ class AdminBoardingPointController extends BaseController
 
         if ($request->has('boarding_points')) {
 
-
             foreach ($request->boarding_points as $id => $point) {
+
                 $boardingDropingPoint = BoardingDropingPoint::find($id);
+
                 if ($boardingDropingPoint) {
+
                     $boardingDropingPoint->update([
                         'boarding_droping_point_address' => $point['address'],
                     ]);
-                } else {
+                }
+
+                else {
 
                     $boarding->BoardingDropingPoint()->create([
                         'boarding_droping_point_address' => $point['address'],
                     ]);
+
                 }
             }
         }
@@ -169,7 +174,7 @@ class AdminBoardingPointController extends BaseController
 
     public function delete(Request $request, $id)
 {
-    $boarding = BoardingPoint::findOrFail($id);
+    $boarding = adminboardingPoint::findOrFail($id);
 
     $boarding->delete();
 
