@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web\Master;
 use App\Base\Filters\Master\CommonMasterFilter;
 use App\Base\Libraries\QueryFilter\QueryFilterContract;
 use App\Http\Controllers\Web\BaseController;
-use App\Models\BoardingPoint;
+use App\Models\AdminBoardingPoint;
 
 use App\Models\Admin\BoardingDropingPoint;
 use App\Models\Admin\ServiceLocation;
@@ -24,16 +24,16 @@ class AdminBoardingPointController extends BaseController
      */
 
 
-     protected $boardingPoint;
+     protected $adminboardingPoint;
      protected $boardingdropingPoint;
     /**
      * BoardingPointControllers constructor.
      *
-     * @param \App\Models\BoardingPoint $boarding
+     * @param \App\Models\AdminBoardingPoint $boarding
      */
-    public function __construct(BoardingPoint $boardingPoint , BoardingDropingPoint $boardingdropingPoint)
+    public function __construct(AdminBoardingPoint $boardingPoint , BoardingDropingPoint $boardingdropingPoint)
     {
-        $this->boardingPoint = $boardingPoint;
+        $this->adminboardingPoint = $boardingPoint;
         $this->boardingdropingPoint = $boardingdropingPoint;
     }
 
@@ -44,7 +44,7 @@ class AdminBoardingPointController extends BaseController
         $main_menu = 'master';
         $sub_menu = 'boardingpoint';
 
-        return view('admin.master.boarding.index', compact('page', 'main_menu', 'sub_menu'));
+        return view('admin.master.admin_boarding.index', compact('page', 'main_menu', 'sub_menu'));
     }
 
     /**
@@ -60,16 +60,16 @@ class AdminBoardingPointController extends BaseController
         $sub_menu = 'boarding';
         $cities=AllCities::all();
 
-        return view('admin.master.boarding.create', compact('page', 'main_menu', 'sub_menu','cities'));
+        return view('admin.master.admin_boarding.create', compact('page', 'main_menu', 'sub_menu','cities'));
     }
 
 
     public function fetch(QueryFilterContract $queryFilter)
     {
 
-        $query = $this->boardingPoint->query();//->active()
+        $query = $this->adminboardingPoint->query();//->active()
         $results = $queryFilter->builder($query)->customFilter(new CommonMasterFilter)->paginate();
-        return view('admin.master.boarding._boarding', compact('results'));
+        return view('admin.master.admin_boarding._boarding', compact('results'));
     }
 
 
@@ -82,11 +82,12 @@ class AdminBoardingPointController extends BaseController
 
 
         ])->validate();
-        $owner_id=auth()->user()->owner->id;
+
+        $user_id=auth()->user()->id;
         $created_params = $request->only(['city_id','boarding_address','boarding_lat','boarding_lng','landmark','short_code']);
         $created_params['active'] = 1;
-        $created_params['owner_id'] = $owner_id;
-        $boardingPoint= $this->boardingPoint->create($created_params);
+        $created_params['user_id'] = $user_id;
+        $boardingPoint= $this->adminboardingPoint->create($created_params);
 
         if($request->has('boarding_point'))
 {
@@ -100,7 +101,7 @@ class AdminBoardingPointController extends BaseController
 }
         $message = trans('succes_messages.boarding_point_added_succesfully');
 
-        return redirect('boarding_point')->with('success', $message);
+        return redirect('admin_boarding_point')->with('success', $message);
     }
 
 
@@ -119,7 +120,7 @@ class AdminBoardingPointController extends BaseController
         $boarding_droping_points = BoardingDropingPoint::where('boarding_id',$item->id)->get();
 
 
-        return view('admin.master.boarding.update', compact('item', 'page', 'main_menu', 'sub_menu','cities','boarding_droping_points'));
+        return view('admin.master.admin_boarding.update', compact('item', 'page', 'main_menu', 'sub_menu','cities','boarding_droping_points'));
     }
 
 
@@ -153,7 +154,7 @@ class AdminBoardingPointController extends BaseController
         }
 
         $message = trans('success_messages.boarding_updated_successfully');
-        return redirect('boarding_point')->with('success', $message);
+        return redirect('admin_boarding_point')->with('success', $message);
     }
 
 
@@ -163,7 +164,7 @@ class AdminBoardingPointController extends BaseController
         $boarding->update(['active' => $status]);
 
         $message = trans('succes_messages.boarding_status_changed_succesfully');
-        return redirect('boarding_point')->with('success', $message);
+        return redirect('admin_boarding_point')->with('success', $message);
     }
 
     public function delete(Request $request, $id)
@@ -173,7 +174,7 @@ class AdminBoardingPointController extends BaseController
     $boarding->delete();
 
     $message = trans('success_messages.boarding_deleted_successfully');
-    return redirect('boarding_point')->with('success', $message);
+    return redirect('admin_boarding_point')->with('success', $message);
 }
     public function getCity()
     {

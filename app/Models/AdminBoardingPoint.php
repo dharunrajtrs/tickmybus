@@ -23,7 +23,7 @@ class AdminBoardingPoint extends Model
      *
      * @var string
      */
-    protected $table = 'adminboardingpoints';
+    protected $table = 'admin_boarding_points';
 
     /**
      * Indicates if the model should be timestamped.
@@ -44,7 +44,7 @@ class AdminBoardingPoint extends Model
         'service_location_id',
         'landmark',
         'city_id',
-        'owner_id',
+        'user_id',
         'short_code'
     ];
 
@@ -107,7 +107,7 @@ class AdminBoardingPoint extends Model
     // }
     public function BoardingDropingPoint()
     {
-        return $this->hasMany(BoardingDropingPoint::class, 'boarding_id', 'id');
+        return $this->hasMany(BoardingDropingPoint::class, 'admin_boarding_id', 'id');
     }
 
 

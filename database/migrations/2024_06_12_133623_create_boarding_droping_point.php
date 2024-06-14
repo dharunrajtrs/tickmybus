@@ -15,7 +15,8 @@ class CreateBoardingDropingPoint extends Migration
     {
         Schema::create('boarding_droping_point', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('boarding_id');
+            $table->uuid('boarding_id')->nullable();
+            $table->uuid('admin_boarding_id')->nullable();
             $table->time('boarding_droping_time');
             $table->text('boarding_droping_point_address');
             $table->timestamps();
@@ -23,6 +24,10 @@ class CreateBoardingDropingPoint extends Migration
             $table->foreign('boarding_id')
                     ->references('id')
                     ->on('boardingpoints')
+                    ->onDelete('cascade');
+            $table->foreign('admin_boarding_id')
+                    ->references('id')
+                    ->on('admin_boarding_points')
                     ->onDelete('cascade');
         });
     }

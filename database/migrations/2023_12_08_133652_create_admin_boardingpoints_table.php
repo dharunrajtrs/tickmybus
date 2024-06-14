@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBoardingpointsTable extends Migration
+class CreateAdminBoardingpointsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,25 @@ class CreateBoardingpointsTable extends Migration
      */
     public function up()
     {
-        Schema::create('adminboardingpoints', function (Blueprint $table) {
+        Schema::create('admin_boarding_points', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('boarding_address');
+            $table->unsignedInteger('user_id')->nullable();
+            $table->unsignedInteger('city_id')->nullable();
             $table->string('short_code')->nullable();
-            $table->uuid('owner_id')->nullable();
             $table->double('boarding_lat', 15, 8)->nullable();
             $table->double('boarding_lng', 15, 8)->nullable();
             $table->timestamps();
 
 
-            $table->foreign('owner_id')
+            $table->foreign('city_id')
                     ->references('id')
-                    ->on('owners')
+                    ->on('all_cities')
+                    ->onDelete('cascade');
+
+                    $table->foreign('user_id')
+                    ->references('id')
+                    ->on('users')
                     ->onDelete('cascade');
 
         });
@@ -38,6 +44,6 @@ class CreateBoardingpointsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('boardingpoints');
+        Schema::dropIfExists('admin_boarding_points');
     }
 }
