@@ -12,6 +12,7 @@ use URL;
 use App\Models\Admin\Owner;
 use Illuminate\Http\Request;
 use App\Models\Admin\Fleet;
+use App\Models\Admin\CommanFleet;
 use App\Models\Admin\FleetSeatLayout;
 use Illuminate\Validation\ValidationException;
 use App\Base\Filters\Master\CommonMasterFilter;
@@ -76,8 +77,8 @@ class SeatLayoutController extends BaseController
         $find_owner_id = Owner::where('user_id', $user_checking_id)->first();
         $owner_id = $find_owner_id->id;
 
-        $query = FleetSeatLayout::join('fleets', 'fleet_seat_layouts.fleet_id', '=', 'fleets.id')
-            ->where('fleets.owner_id', $owner_id)
+        $query = FleetSeatLayout::join('comman_fleets', 'fleet_seat_layouts.fleet_id', '=', 'comman_fleets.id')
+            ->where('comman_fleets.owner_id', $owner_id)
             ->where(function($q) {
                 $q->where('deck_type', 'upper')
                   ->orWhere('deck_type', 'lower');
@@ -101,79 +102,82 @@ class SeatLayoutController extends BaseController
         return $fleet;
     }
 
-    public function store(SeatLayoutCreateRequest $request)
+public function store(SeatLayoutCreateRequest $request)
+{
+
+// dd($request->all());
+  //json decode the seat layout
+  $onwer = auth()->user()->id;
+  $onwer_id=Owner::where('user_id',$onwer)->first()->id;
+  $created_params['owner_id'] = $onwer_id;
+  $created_params['seat_layout_name'] = $request->seat_layout_name;
+  $seat_layouts = json_decode($request->seatLayoutValue);
+
+  $fleet = CommanFleet::create($created_params);
+  //$fleet = Fleet::whereId($request->fleet_id)->first();
+
+  $left_rows = $request->left_row;
+  $right_rows = $request->right_row;
+  $column = $request->column;
+  if($request->back_seat == "vacant"){
+      $total_back_seats = 0;
+  }else{
+      $total_back_seats = 1;
+  }
+  $total_seats = 0;
+  $seat_type = [$request->left_seat_type,$request->right_seat_type,$request->upper_left_seat_type,$request->upper_right_seat_type,];
+  $seat_type = array_unique($seat_type);
+  $seat_type = implode(',',$seat_type);
+
+
+  $fleet->update([
+      'left_rows' => $column,
+      'right_rows' => $column,
+      'left_columns' => $left_rows,
+      'right_columns' => $right_rows,
+      'total_back_seats' => $total_back_seats,
+      'seat_type' => $seat_type,
+  ]);
+
+  $fleetSeatLayout = FleetSeatLayout::where('fleet_id', $fleet->id)->whereIn('deck_type',['lower','upper'])->first();
+  $user_checking_id = auth()->user()->id;
+        $find_owner_id = Owner::where('user_id', $user_checking_id)->first();
+        $owner_id = $find_owner_id->id;
+
+  if ($fleetSeatLayout != null)
+  {
+    throw ValidationException::withMessages(['license_number' => __('Layout exists for Bus')]);
+  }else{
+
+      foreach ($seat_layouts as $seat_layout)
       {
-
-
-        //json decode the seat layout
-        $seat_layouts = json_decode($request->seatLayoutValue);
-
-        $fleet = Fleet::whereId($request->fleet_id)->first();
-
-        $left_rows = $request->left_row;
-        $right_rows = $request->right_row;
-        $column = $request->column;
-        if($request->back_seat == "vacant"){
-            $total_back_seats = 0;
-        }else{
-            $total_back_seats = 1;
-        }
-        $total_seats = 0;
-        $seat_type = [$request->left_seat_type,$request->right_seat_type,$request->upper_left_seat_type,$request->upper_right_seat_type,];
-        $seat_type = array_unique($seat_type);
-        $seat_type = implode(',',$seat_type);
-
-
-        // $fleet->update([
-        //     'left_rows' => $column,
-        //     'right_rows' => $column,
-        //     'left_columns' => $left_rows,
-        //     'right_columns' => $right_rows,
-        //     'total_back_seats' => $total_back_seats,
-        //     'seat_type' => $seat_type,
-        // ]);
-
-        //$fleetSeatLayout = FleetSeatLayout::where('fleet_id', $fleet->id)->whereIn('deck_type',['lower','upper'])->first();
-
-
-        // if ($fleetSeatLayout != null)
-        // {
-        //   throw ValidationException::withMessages(['license_number' => __('Layout exists for Bus')]);
-        // }else{
-
-            foreach ($seat_layouts as $seat_layout)
-            {
-                $total_seats ++;
-                $seats['position'] = $seat_layout->position;
-                $seats['seat_no'] = $seat_layout->seat_no;
-                $seats['seat_type'] = $seat_type;
-                $seats['left_rows'] = $column;
-                $seats['right_rows'] = $column;
-                $seats['left_columns'] = $left_rows;
-                $seats['right_columns'] = $right_rows;
-                $seats['total_back_seats'] =  $total_back_seats;
-                $seats['total_seats'] = $total_seats;
-                if(str_starts_with($seat_layout->seat_no,'U')){
-                    $seats['deck_type'] = 'upper';
-                }else{
-                    $seats['deck_type'] = 'lower';
-                }
-               // $seats['fleet_id'] = $request->fleet_id;
-                FleetSeatLayout::create($seats);
-            }
-
-        // //}
-        // $fleet->update([
-        //     'total_seats' => $total_seats,
-        // ]);
-
-        $message = trans('succes_messages.seat_layot_created_succesfully');
-
-
-        return redirect('fleet_seat_layout')->with('success', $message);
+          $total_seats ++;
+          $seats['position'] = $seat_layout->position;
+           $seats['owner_id'] = $owner_id;
+          $seats['seat_no'] = $seat_layout->seat_no;
+          $seats['seat_type'] = $seat_layout->seat_type;
+          $seats['order'] = $seat_layout->order;
+          if(str_starts_with($seat_layout->seat_no,'U')){
+              $seats['deck_type'] = 'upper';
+          }else{
+              $seats['deck_type'] = 'lower';
+          }
+          $seats['fleet_id'] = $fleet->id;
+          FleetSeatLayout::create($seats);
+      }
 
   }
-    public function getById(Fleet $fleet)
+  $fleet->update([
+      'total_seats' => $total_seats,
+  ]);
+
+  $message = trans('succes_messages.seat_layot_created_succesfully');
+
+
+  return redirect('fleet_seat_layout')->with('success', $message);
+
+}
+    public function getById(CommanFleet $fleet)
     {
 
         $seatLayoutView = [

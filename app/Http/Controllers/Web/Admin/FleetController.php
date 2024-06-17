@@ -25,6 +25,7 @@ use App\Models\Amenity;
 use Illuminate\Validation\ValidationException;
 use Prewk\XmlStringStreamer;
 use App\Http\Requests\Admin\Fleet\FleetUpdateRequest;
+use App\Models\Admin\CommanFleet;
 use Illuminate\Support\Facades\Validator;
 use App\Models\FleetAmenity;
 
@@ -90,10 +91,11 @@ class FleetController extends BaseController
         $owner = Owner::where('user_id',$user_checking_id)->first();
 
         $amenties = Amenity::where('owner_id',$owner->id)->get();
+        $seat_layout_options = CommanFleet::where('owner_id',$owner->id)->get();
 
         // dd($amenties);
 
-        return view('admin.fleets.create', compact('page', 'main_menu', 'sub_menu','owner','amenties'));
+        return view('admin.fleets.create', compact('page', 'main_menu', 'sub_menu','owner','amenties','seat_layout_options'));
     }
 
     public function store(FleetStoreRequest $request)
@@ -101,10 +103,6 @@ class FleetController extends BaseController
         $created_params = $request->only(['brand','model','license_number','owner_id','total_seats','bus_type']);
 
         $seat = implode(',', $request->seat_type);
-
-
-        $created_params['seat_type'] = $seat;
-
 
         $fleet = Fleet::create($created_params);
 

@@ -890,5 +890,7 @@ return array(
    'headquarters_pincode'=>'Headquarters Pincode',
    'headquarters_city'=>'Headquarters City',
    'upi_id'=>'UPI ID',
-'boarding_point_droping_point'=> 'Boarding Point /Droping Point'
+'boarding_point_droping_point'=> 'Boarding Point /Droping Point',
+'seat_layout_name'=> 'Seat Layout Name',
+'seat_layout_options'=> 'Seat Layout Options',
 );

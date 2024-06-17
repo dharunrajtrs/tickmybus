@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Admin\Fleet;
 use App\Models\Admin\Owner;
-
+use App\Models\Admin\CommanFleet;
 class FleetSeatLayout extends Model
 {
     use UuidModel,SoftDeletes,HasActive,SoftDeletes;
@@ -21,7 +21,7 @@ class FleetSeatLayout extends Model
 
     public function fleet()
     {
-        return $this->belongsTo(Fleet::class,'fleet_id','id');
+        return $this->belongsTo(CommanFleet::class,'fleet_id','id');
     }
 
 

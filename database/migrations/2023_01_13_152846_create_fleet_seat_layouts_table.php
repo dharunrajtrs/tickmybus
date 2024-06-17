@@ -33,7 +33,7 @@ class CreateFleetSeatLayoutsTable extends Migration
 
             $table->foreign('fleet_id')
                 ->references('id')
-                ->on('fleets')
+                ->on('comman_fleets')
                 ->onDelete('cascade');
             $table->foreign('owner_id')
                 ->references('id')

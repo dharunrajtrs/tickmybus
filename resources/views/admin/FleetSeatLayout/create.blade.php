@@ -234,8 +234,8 @@ $blocker = [
                       </label><br>
                       <input type="radio" name="left_seat_type" class="form-control" id="left_seater" value="seater">
                       <label for="left_seater">Seater </label> &ensp;
-                      <input type="radio" name="left_seat_type" class="form-control" id="left_semi" value="semi_sleeper">
-                      <label for="left_semi">Semi-Sleeper </label>&ensp;
+                      {{-- <input type="radio" name="left_seat_type" class="form-control" id="left_semi" value="semi_sleeper">
+                      <label for="left_semi">Semi-Sleeper </label>&ensp; --}}
                       <input type="radio" name="left_seat_type" class="form-control" id="left_sleeper" value="sleeper">
                       <label for="left_sleeper">Sleeper </label>
                     </div>
@@ -246,8 +246,8 @@ $blocker = [
                       </label><br>
                       <input type="radio" name="right_seat_type" class="form-control" id="right_seater" value="seater">
                       <label for="right_seater">Seater </label> &ensp;
-                      <input type="radio" name="right_seat_type" class="form-control" id="right_semi" value="semi_sleeper">
-                      <label for="right_semi">Semi-Sleeper </label>&ensp;
+                      {{-- <input type="radio" name="right_seat_type" class="form-control" id="right_semi" value="semi_sleeper">
+                      <label for="right_semi">Semi-Sleeper </label>&ensp; --}}
                       <input type="radio" name="right_seat_type" class="form-control" id="right_sleeper" value="sleeper">
                       <label for="right_sleeper">Sleeper </label>
                     </div>

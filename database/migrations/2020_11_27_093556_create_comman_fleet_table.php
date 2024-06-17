@@ -13,10 +13,11 @@ class CreateCommanFleetTable extends Migration
      */
     public function up()
     {
-        Schema::create('comman_fleet', function (Blueprint $table) {
+        Schema::create('comman_fleets', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('owner_id');
             $table->string('brand')->nullable();
+            $table->string('seat_layout_name')->nullable();
             $table->string('model')->nullable();
             $table->string('license_number');
             $table->string('permission_number');
@@ -47,6 +48,6 @@ class CreateCommanFleetTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fleets');
+        Schema::dropIfExists('comman_fleet');
     }
 }

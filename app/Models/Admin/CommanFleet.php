@@ -18,7 +18,7 @@ class CommanFleet extends Model
     use UuidModel,SoftDeletes,HasActive;
 
     protected $fillable = [
-        'owner_id','brand','model','license_number','permission_number','active','fleet_id','approve','car_color','driver_id','add_photos','left_columns','right_columns','left_rows','right_rows','total_back_seats','seat_type','total_seats','bus_type','fleet_seat_layouts_id'
+        'owner_id','brand','model','license_number','permission_number','active','fleet_id','approve','car_color','driver_id','add_photos','left_columns','right_columns','left_rows','right_rows','total_back_seats','seat_type','total_seats','bus_type','fleet_seat_layouts_id','seat_layout_name'
         ];
 
 

@@ -8,9 +8,7 @@
                         <thead>
                             <tr>
                                  <th>{{ trans('view_pages.s_no')}}</th>
-                                 <th>{{ trans('view_pages.bus_brand')}}</th>
-                                 <th>{{ trans('view_pages.bus_model')}}</th>
-                                 <th>{{ trans('view_pages.license_number')}}</th>
+                                 <th>{{ trans('view_pages.seat_layout_name')}}</th>
                                 <th>{{ trans('view_pages.action')}}</th>
 
                             </tr>
@@ -36,9 +34,7 @@
                             @foreach ($results as $key => $result)
                                 <tr>
                                   <td>{{ $i++ }}</td>
-                                  <td>{{ $result->fleet->brand ?? '-'}}</td>
-                                  <td>{{ $result->fleet->model ?? '-'}}</td>
-                                  <td>{{ $result->fleet->license_number ?? '-' }}</td>
+                                  <td>{{ $result->fleet->seat_layout_name ?? '-'}}</td>
                                   <td>
                                   <div class="dropdown">
                                             <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@lang('view_pages.action')
