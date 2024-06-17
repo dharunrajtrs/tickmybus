@@ -24,6 +24,9 @@ class BoardingPoint extends Model
      * @var string
      */
     protected $table = 'boardingpoints';
+    public $includes = [
+        'boarding_droping_point'
+    ];
 
     /**
      * Indicates if the model should be timestamped.

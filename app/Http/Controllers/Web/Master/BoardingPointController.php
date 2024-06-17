@@ -11,6 +11,7 @@ use App\Models\Admin\ServiceLocation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Base\Services\ImageUploader\ImageUploaderContract;
+use App\Models\AdminBoardingPoint;
 use App\Models\AllCities;
 use App\Models\City;
 
@@ -67,7 +68,7 @@ class BoardingPointController extends BaseController
     public function fetch(QueryFilterContract $queryFilter)
     {
 
-        $query = $this->boardingPoint->query();//->active()
+        $query = BoardingPoint::where('owner_id', auth()->user()->owner->id)->orderBy('created_at', 'desc');
         $results = $queryFilter->builder($query)->customFilter(new CommonMasterFilter)->paginate();
         return view('admin.master.boarding._boarding', compact('results'));
     }
@@ -126,34 +127,43 @@ class BoardingPointController extends BaseController
 
     public function update(Request $request, BoardingPoint $boarding)
     {
-        Validator::make($request->all(), [
-            'city_id' => 'required',
-            'short_code' => 'required',
-        ])->validate();
 
-        $updated_params = $request->all();
-        $boarding->update($updated_params);
+            Validator::make($request->all(), [
+                'city_id' => 'required',
+                'short_code' => 'required',
+            ])->validate();
 
-        if ($request->has('boarding_points')) {
+            $updated_params = $request->all();
+            $boarding->update($updated_params);
 
-
-            foreach ($request->boarding_points as $id => $point) {
-                $boardingDropingPoint = BoardingDropingPoint::find($id);
-                if ($boardingDropingPoint) {
-                    $boardingDropingPoint->update([
-                        'boarding_droping_point_address' => $point['address'],
-                    ]);
-                } else {
-
-                    $boarding->BoardingDropingPoint()->create([
-                        'boarding_droping_point_address' => $point['address'],
-                    ]);
+            if ($request->has('boarding_points')) {
+                foreach ($request->boarding_points as $id => $point) {
+                    // Check if the ID is a valid UUID or if it should be created as new
+                    if (is_string($id) && !empty($id)) {
+                        $boardingDropingPoint = BoardingDropingPoint::find($id);
+                        if ($boardingDropingPoint) {
+                            // Update existing boarding point
+                            $boardingDropingPoint->update([
+                                'boarding_droping_point_address' => $point['address'],
+                            ]);
+                        } else {
+                            // Create new boarding point with given ID
+                            $boarding->BoardingDropingPoint()->create([
+                                'id' => $id,
+                                'boarding_droping_point_address' => $point['address'],
+                            ]);
+                        }
+                    } else {
+                        // Create new boarding point without an ID
+                        $boarding->BoardingDropingPoint()->create([
+                            'boarding_droping_point_address' => $point['address'],
+                        ]);
+                    }
                 }
             }
-        }
 
-        $message = trans('success_messages.boarding_updated_successfully');
-        return redirect('boarding_point')->with('success', $message);
+            $message = trans('success_messages.boarding_updated_successfully');
+            return redirect('boarding_point')->with('success', $message);
     }
 
 
@@ -178,10 +188,12 @@ class BoardingPointController extends BaseController
     public function getCity()
     {
 
-        $service_location = request()->service_location_id;
+        $service_location = request()->city_id;
 
-        $city = City::where('service_location_id', $service_location)->get();
-        // dd($city);
+           $city1 = AdminBoardingPoint::where('city_id', $service_location)->first();
+$id=$city1->id;
+           $city= BoardingDropingPoint::where('admin_boarding_id', $id)->get();
+
         return $city;
 
     }

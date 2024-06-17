@@ -14,9 +14,8 @@ class SeatLayoutCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'fleet_id' => 'required',
             'deck_type' => 'required',
-            'owner_id' => 'required',
+            //'owner_id' => 'required',
          ];
     }
 

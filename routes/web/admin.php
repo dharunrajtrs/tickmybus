@@ -634,7 +634,7 @@ Route::group(['prefix' => 'privacy',  'middleware' => 'permission:manage-privacy
                 Route::post('/update/{boarding}', 'BoardingPointController@update');
                 Route::get('toggle_status/{boarding_point}', 'BoardingPointController@toggleStatus');
                 Route::get('delete/{boarding_point}', 'BoardingPointController@delete');
-                Route::get('get/getCity', 'BoardingPointController@getCity')->name('getCity');
+                Route::get('get/getCity', 'BoardingPointController@getCity')->name('admingetCity');
                 Route::get('/get/getToCity/{cityId}', 'BoardingPointController@getToCity')->name('getToCity');
 
 

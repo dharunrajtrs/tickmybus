@@ -156,7 +156,7 @@ $blocker = [
                  <h3> Bus Details </h3>
 
               <div class="row busForm ">
-                <div class="col-sm-6 float-left mb-md-3" style="display: none">
+                {{-- <div class="col-sm-6 float-left mb-md-3" style="display: none">
                   <div class="form-group">
                     <label for="bus_company">{{ trans('view_pages.bus_company')}}
                       <span class="text-danger">*</span>
@@ -166,14 +166,23 @@ $blocker = [
                     </select>
                     <span class="text-danger">{{ $errors->first('owner_id') }}</span>
                   </div>
-                </div>
-                <div class="col-sm-6 float-left mb-md-3">
+                </div> --}}
+                {{-- <div class="col-sm-6 float-left mb-md-3">
                   <div class="form-group">
                     <label for="license_number">{{ trans('view_pages.license_number')}}
                       <span class="text-danger">*</span>
                     </label>
                     <select name="fleet_id" id="license_number" class="form-control"></select>
                     <span class="text-danger">{{ $errors->first('license_number') }}</span>
+                  </div>
+                </div> --}}
+                <div class="col-sm-6 float-left mb-md-3 form-group ">
+                    <label for="">Seat Layout Name
+                    <span class="text-danger">*</span>
+                    </label><br>
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="seat_layout_name" id="seat_layout_name" value="">
+
                   </div>
                 </div>
                 <div class="col-sm-6 float-left mb-md-3">

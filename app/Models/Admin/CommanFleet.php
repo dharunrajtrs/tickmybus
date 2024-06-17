@@ -13,7 +13,7 @@ use App\Models\FleetAmenity;
 use App\Models\Amenity;
 
 
-class Fleet extends Model
+class CommanFleet extends Model
 {
     use UuidModel,SoftDeletes,HasActive;
 

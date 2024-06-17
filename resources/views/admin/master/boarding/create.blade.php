@@ -17,6 +17,24 @@ type="text/css" />
 .btn-group {
 flex-direction: row-reverse;
 }
+
+</style>
+<style>
+    .city-recommendations {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        max-height: 150px; /* Set a max height for scrollability */
+        overflow-y: auto; /* Enable vertical scrolling if needed */
+    }
+    .city-recommendations li {
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+    .city-recommendations li:hover {
+        background-color: #f2f2f2;
+    }
 </style>
     <div class="content">
         <div class="container-fluid">
@@ -83,28 +101,27 @@ flex-direction: row-reverse;
                                     <div class="col-sm-12" id="boarding_points">
                                         <table class="table surgeTable" id="table">
                                             <thead>
-                                                <th> @lang('view_pages.boarding_point_droping_point') <span class="text-danger">*</span></th>
-
+                                                <th>@lang('view_pages.boarding_point_droping_point') <span class="text-danger">*</span></th>
                                             </thead>
-                                         <tbody class="append_row">
-                                            <tr class="default_select select_row actv">
-                                                <td>
-                                                    <div class="form-group">
-                                                        <input type="text" name="boarding_point[]" id="boarding_point" class="form-control boarding_point_input" placeholder="@lang('view_pages.boarding_point_droping_point')" required>
-                                                    </div>
-                                                </td>
+                                            <tbody class="append_row">
+                                                <tr class="default_select select_row actv">
                                                     <td>
-                                                    <div class="col-sm-4 flo mb-md-3">
+                                                        <div class="form-group">
+                                                            <input type="text" name="boarding_point[]" id="boarding_point_0" class="form-control boarding_point_input" placeholder="@lang('view_pages.boarding_point_droping_point')" required>
+                                                        </div>
+                                                        <div class="city-recommendations" id="city_recommendations"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="col-sm-4 flo mb-md-3">
                                                             <div class="form-group">
                                                                 <button type="button" class="btn btn-success btn-sm add_row"> + </button>
-                                                             </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                     </tbody>
-                            </table>
-
-                        </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
 
 
@@ -126,13 +143,12 @@ flex-direction: row-reverse;
 </div>
     <!-- content -->
 
-{{--
-<script src="https://maps.google.com/maps/api/js?key={{get_settings('google_map_key')}}&libraries=drawing,geometry,places"></script>
+{{-- <script src="https://maps.google.com/maps/api/js?key={{get_settings('google_map_key')}}&libraries=drawing,geometry,places"></script>
 
 <script src="{{ asset('assets/build/js/intlTelInput.js') }}"></script>
-    <script type="text/javascript"></script> --}}
+    <script type="text/javascript"></script>
 
-{{--
+
     <script>
     function initialize() {
         var input = document.getElementById('boarding_address');
@@ -202,43 +218,8 @@ flex-direction: row-reverse;
 
     google.maps.event.addDomListener(window, 'load', initialize2);
 
-</script>
-
-<script type="text/javascript">
- function getCity(value,model=''){
-        var selected = '';
-        $.ajax({
-            url: "{{ route('getCity') }}",
-            type:  'GET',
-            data: {
-                'service_location_id': value,
-            },
-            success: function(result)
-            {
-                $('#city_id').empty();
-                $("#city_id").append('<option value="" selected disabled>Select</option>');
-                result.forEach(element => {
-
-                    if(model == element.id){
-                        selected = 'selected';
-                    }else{
-                        selected='';
-                    }
-
-                    $("#city_id").append('<option value='+element.id+' '+selected+'>'+element.city+'</option>')
-                });
-                $('#city_id').select();
-            }
-        });
-        // alert("count==="+count);
-    }
-
-    $(document).on('change','#service_location_id',function(){
-
-        // alert($(this).val());
-        getCity($(this).val());
-    });
 </script> --}}
+
 
 <!-- twitter-bootstrap-wizard js -->
 <script src="{{ asset('taxi/assets/libs/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js') }}"></script>
@@ -250,160 +231,107 @@ flex-direction: row-reverse;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
  <!-- bootstrap time picker -->
  </script>
- <script>
+ <script type="text/javascript">
     var boarding_expt_array = [];
     var dropping_expt_array = [];
+    var city_option = [];
 
+    $(document).on("click", ".add_row", function() {
+        var table = document.getElementById("table");
+        if ($('.add_row').length < 20) {
+            var tableLength = table.rows.length;
+            var newRowId = tableLength - 1;
 
-        $(document).on("click",".add_row",function(){
-            var table = document.getElementById("table");
-
-            if($('.add_row').length < 20){
-                var append_row = "";
-                var tableLength = table.rows.length;
-            var tableRowCount = tableLength-1;
-
-            var boarding = 1;
-
-
-            var pointHtml = "";
-             for (var i = 0; i < boarding.length; i++)
-             {
-                    if (boarding_expt_array.indexOf(boarding[i].id) !== -1) {
-                    }
-                    else{
-                        pointHtml += '<option value="'+boarding[i].id +'">'+boarding[i].boarding_address+'</option>';
-                    }
-
-
-            }
-
-              append_row +='<tr class="add_new_row select_row inactv">';
-                append_row += '<td>\
-                    <div class="form-group">\
-                      <input type="text" name="boarding_point[]" id="boarding_point" class="form-control boarding_point_input" placeholder="@lang('view_pages.boarding_point_droping_point')" required>\
-                        </div>\
-                    </td>';
-                append_row +='<td>\
-                                    <div class="form-group">\
-                                        <button type="button" class="btn btn-success btn-sm add_row"> + </button>\
-                                        <button type="button" class="btn btn-danger btn-sm remove_row"> - </button>\
-                                    </div>\
-                                </td>\
-                        </tr>';
+            var append_row = `
+                <tr class="add_new_row select_row inactv">
+                    <td>
+                        <div class="form-group">
+                            <input type="text" name="boarding_point[]" id="boarding_point_${newRowId}" class="form-control boarding_point_input" placeholder="@lang('view_pages.boarding_point_droping_point')" required>
+                        </div>
+                        <div class="city-recommendations" id="city_recommendations_${newRowId}"></div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-success btn-sm add_row"> + </button>
+                            <button type="button" class="btn btn-danger btn-sm remove_row"> - </button>
+                        </div>
+                    </td>
+                </tr>`;
             $(".append_row").append(append_row);
-                $(".select2").select2({
-                    tags: true,
-                    tokenSeparators: [',', ' '],
-                    selectOnClose: true,
-                    placeholder: "select a day",
-                    allowClear: true
-                })
-            }
-            else{
-                alert("Selected every boarding points");
-            }
+        } else {
+            alert("Selected every boarding points");
+        }
+    });
 
+    $(document).on("click", ".remove_row", function() {
+        $(this).closest("tr").remove();
+    });
+
+    // Function to get city options via AJAX
+    function getCity(value) {
+        $.ajax({
+            url: "{{ route('admingetCity') }}",
+            type: 'GET',
+            data: { 'city_id': value },
+            success: function(result) {
+                city_option = result;
+                console.log('City options:', city_option);
+            },
+            error: function(error) {
+                console.log('Error fetching city options:', error);
+            }
         });
+    }
 
+    // Call getCity when city selection changes
+    $('#city_id').on('change', function() {
+        var cityId = $(this).val();
+        if (cityId) {
+            getCity(cityId);
+        }
+    });
 
-        $(document).on("click",".remove_row",function(){
-            var value = $(this).closest("tr.select_row").find(".boarding_point_select").val();
-            var text = $(this).closest("tr.select_row").find(".boarding_point_select option[value="+value+"]").text();
-             $("tr.select_row").find(".boarding_point_select").append('<option value="'+value+'">'+text+'</option>');
-            new_array_data = boarding_expt_array.filter(function(element) {
-            return element !== value;
+    // Initial call if there is a pre-selected city
+    $(document).ready(function() {
+        var initialCityId = $('#city_id').val();
+        if (initialCityId) {
+            getCity(initialCityId);
+        }
+    });
+
+    // Event listener for input on dynamically added elements
+    $(document).on('input', '.boarding_point_input', function() {
+        var inputText = $(this).val().toLowerCase();
+        var recommendationsContainer = $(this).closest('td').find('.city-recommendations');
+        recommendationsContainer.empty();
+
+        console.log('Input text:', inputText);
+        console.log('City options for filtering:', city_option);
+
+        if (Array.isArray(city_option) && city_option.length > 0) {
+            var list = $('<ul class="list-unstyled"></ul>');
+            city_option.forEach(function(option) {
+                if (option.boarding_droping_point_address.toLowerCase().includes(inputText)) {
+                    var listItem = $('<li>' + option.boarding_droping_point_address + '</li>');
+                    listItem.on('click', function() {
+                        $(this).closest('td').find('.boarding_point_input').val($(this).text()); // Update input with clicked value
+                        recommendationsContainer.empty(); // Clear recommendations after selection
+                    });
+                    list.append(listItem);
+                }
             });
-            boarding_expt_array = new_array_data;
-            $(this).closest("tr").remove();
-        });
 
-        $(document).on("click",".add_drop_row",function(){
-            dropping = window.dropping;
-            var table = document.getElementById("table_drop_points");
-            if($('.add_drop_row').length <= window.dropping.length){
-                var append_drop_row = "";
-                var tableLength = table.rows.length;
-            var tableRowCount = tableLength-1;
-
-            var dropping = window.dropping;
-
-            var pointHtml = "";
-             for (var i = 0; i < dropping.length; i++)
-             {
-                    if (dropping_expt_array.indexOf(dropping[i].id) !== -1) {
-                    }
-                    else{
-                        pointHtml += '<option value="'+dropping[i].id +'">'+dropping[i].boarding_address+'</option>';
-                    }
-
-
+            // Append list only if it has items
+            if (list.children().length > 0) {
+                recommendationsContainer.append(list);
+            } else {
+                recommendationsContainer.append('<p>No matching options found</p>');
             }
-
-            append_drop_row +='<tr class="add_drop_new_row select_drop_row inactv">';
-            append_drop_row +='<tr class="add_drop_new_row select_drop_row inactv">';
-            append_drop_row += '<td>\
-                    <div class="form-group">\
-                      <select name="drop_point[]" id="drop_point" class="form-control drop_point_select" required>\
-                      ' +pointHtml+ ', \
-                      <option selected disabled>Select Drop Point</option>\
-                        </select>\
-                        </div>\
-                    </td>';
-
-            append_drop_row += '<td>\
-                                <div class="bootstrap-timepicker">\
-                                            <div class="form-group">\
-                                                <div class="input-group">\
-                                                    <div class="input-group-addon">\
-                                                     <i class="fa fa-clock-o"></i>\
-                                                    </div>\
-                                                    <input type="time" name="droping_time[]" value="{{old('droping_time.0')}}" class="droping_time form-control">\
-                                                </div>\
-                                                <span class="text-danger">{{ $errors->first('droping_time') }}</span>\
-                                            </div>\
-                                        </div>\
-                                    </td>';
-                                    append_drop_row +='<td>\
-                                    <div class="form-group">\
-                                        <button type="button" class="btn btn-success btn-sm add_drop_row"> + </button>\
-                                        <button type="button" class="btn btn-danger btn-sm remove_drop_row"> - </button>\
-                                    </div>\
-                                </td>\
-                        </tr>';
-        $(".append_drop_row").append(append_drop_row);
-                $(".select2").select2({
-                    tags: true,
-                    tokenSeparators: [',', ' '],
-                    selectOnClose: true,
-                    placeholder: "select a day",
-                    allowClear: true
-                });
-            }
-            else{
-                alert("Selected every drop points");
-            }
-
-        });
-
-
-        $(document).on("click",".remove_drop_row",function(){
-            var value = $(this).closest("tr.select_drop_row").find(".drop_point_select").val();
-            var text = $(this).closest("tr.select_drop_row").find(".drop_point_select option[value="+value+"]").text();
-             $("tr.select_drop_row").find(".drop_point_select").append('<option value="'+value+'">'+text+'</option>');
-            new_drop_array_data = dropping_expt_array.filter(function(element) {
-            return element !== value;
-            });
-            dropping_expt_array = new_drop_array_data;
-            $(this).closest("tr").remove();
-
-        });
-
-
-
+        } else {
+            recommendationsContainer.append('<p>No options available</p>');
+        }
+    });
 </script>
-
-
 
 
 @endsection

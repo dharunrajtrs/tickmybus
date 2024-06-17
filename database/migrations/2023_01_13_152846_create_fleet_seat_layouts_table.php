@@ -15,11 +15,18 @@ class CreateFleetSeatLayoutsTable extends Migration
     {
         Schema::create('fleet_seat_layouts', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('fleet_id');
+            $table->uuid('fleet_id')->nullable();
+            $table->uuid('owner_id')->nullable();
             $table->string('position');
             $table->string('seat_no');
+            $table->string('seat_layout_name');
             $table->double('that_seat_price',8,2)->default(0)->nullable();
-            $table->string('seat_type');
+            $table->string('seat_type')->nullable();
+            $table->integer('left_columns')->nullable();
+            $table->integer('right_columns')->nullable();
+            $table->integer('left_rows')->nullable();
+            $table->integer('right_rows')->nullable();
+            $table->integer('total_back_seats')->nullable();
             $table->string('deck_type')->nullable();
             $table->timestamps();
             $table->softDeletes();
@@ -27,6 +34,10 @@ class CreateFleetSeatLayoutsTable extends Migration
             $table->foreign('fleet_id')
                 ->references('id')
                 ->on('fleets')
+                ->onDelete('cascade');
+            $table->foreign('owner_id')
+                ->references('id')
+                ->on('owners')
                 ->onDelete('cascade');
         });
     }

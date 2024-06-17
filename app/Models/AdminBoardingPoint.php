@@ -109,6 +109,9 @@ class AdminBoardingPoint extends Model
     {
         return $this->hasMany(BoardingDropingPoint::class, 'admin_boarding_id', 'id');
     }
-
+    public function AdminCities()
+    {
+        return $this->belongsToMany(BoardingDropingPoint::class, 'admin_boarding_id', 'id');
+    }
 
 }

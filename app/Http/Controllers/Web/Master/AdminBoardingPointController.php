@@ -125,7 +125,7 @@ class AdminBoardingPointController extends BaseController
 
 
 
-    public function update(Request $request, adminboardingPoint $boarding)
+    public function update(Request $request, AdminBoardingPoint $boarding)
     {
         Validator::make($request->all(), [
             'city_id' => 'required',
@@ -136,24 +136,27 @@ class AdminBoardingPointController extends BaseController
         $boarding->update($updated_params);
 
         if ($request->has('boarding_points')) {
-
             foreach ($request->boarding_points as $id => $point) {
-
-                $boardingDropingPoint = BoardingDropingPoint::find($id);
-
-                if ($boardingDropingPoint) {
-
-                    $boardingDropingPoint->update([
-                        'boarding_droping_point_address' => $point['address'],
-                    ]);
-                }
-
-                else {
-
+                // Check if the ID is a valid UUID or if it should be created as new
+                if (is_string($id) && !empty($id)) {
+                    $boardingDropingPoint = BoardingDropingPoint::find($id);
+                    if ($boardingDropingPoint) {
+                        // Update existing boarding point
+                        $boardingDropingPoint->update([
+                            'boarding_droping_point_address' => $point['address'],
+                        ]);
+                    } else {
+                        // Create new boarding point with given ID
+                        $boarding->BoardingDropingPoint()->create([
+                            'id' => $id,
+                            'boarding_droping_point_address' => $point['address'],
+                        ]);
+                    }
+                } else {
+                    // Create new boarding point without an ID
                     $boarding->BoardingDropingPoint()->create([
                         'boarding_droping_point_address' => $point['address'],
                     ]);
-
                 }
             }
         }

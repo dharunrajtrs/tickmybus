@@ -104,7 +104,7 @@ class SeatLayoutController extends BaseController
     public function store(SeatLayoutCreateRequest $request)
       {
 
-// dd($request->all());
+
         //json decode the seat layout
         $seat_layouts = json_decode($request->seatLayoutValue);
 
@@ -124,43 +124,48 @@ class SeatLayoutController extends BaseController
         $seat_type = implode(',',$seat_type);
 
 
-        $fleet->update([
-            'left_rows' => $column,
-            'right_rows' => $column,
-            'left_columns' => $left_rows,
-            'right_columns' => $right_rows,
-            'total_back_seats' => $total_back_seats,
-            'seat_type' => $seat_type,
-        ]);
+        // $fleet->update([
+        //     'left_rows' => $column,
+        //     'right_rows' => $column,
+        //     'left_columns' => $left_rows,
+        //     'right_columns' => $right_rows,
+        //     'total_back_seats' => $total_back_seats,
+        //     'seat_type' => $seat_type,
+        // ]);
 
-        $fleetSeatLayout = FleetSeatLayout::where('fleet_id', $fleet->id)->whereIn('deck_type',['lower','upper'])->first();
+        //$fleetSeatLayout = FleetSeatLayout::where('fleet_id', $fleet->id)->whereIn('deck_type',['lower','upper'])->first();
 
 
-        if ($fleetSeatLayout != null)
-        {
-          throw ValidationException::withMessages(['license_number' => __('Layout exists for Bus')]);
-        }else{
+        // if ($fleetSeatLayout != null)
+        // {
+        //   throw ValidationException::withMessages(['license_number' => __('Layout exists for Bus')]);
+        // }else{
 
             foreach ($seat_layouts as $seat_layout)
             {
                 $total_seats ++;
                 $seats['position'] = $seat_layout->position;
                 $seats['seat_no'] = $seat_layout->seat_no;
-                $seats['seat_type'] = $seat_layout->seat_type;
-                $seats['order'] = $seat_layout->order;
+                $seats['seat_type'] = $seat_type;
+                $seats['left_rows'] = $column;
+                $seats['right_rows'] = $column;
+                $seats['left_columns'] = $left_rows;
+                $seats['right_columns'] = $right_rows;
+                $seats['total_back_seats'] =  $total_back_seats;
+                $seats['total_seats'] = $total_seats;
                 if(str_starts_with($seat_layout->seat_no,'U')){
                     $seats['deck_type'] = 'upper';
                 }else{
                     $seats['deck_type'] = 'lower';
                 }
-                $seats['fleet_id'] = $request->fleet_id;
+               // $seats['fleet_id'] = $request->fleet_id;
                 FleetSeatLayout::create($seats);
             }
 
-        }
-        $fleet->update([
-            'total_seats' => $total_seats,
-        ]);
+        // //}
+        // $fleet->update([
+        //     'total_seats' => $total_seats,
+        // ]);
 
         $message = trans('succes_messages.seat_layot_created_succesfully');
 
