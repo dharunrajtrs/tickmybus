@@ -101,7 +101,7 @@ class FleetController extends BaseController
     public function store(FleetStoreRequest $request)
     {
         $created_params = $request->only(['brand','model','license_number','owner_id','total_seats','bus_type']);
-
+        $created_params['comman_fleet_id']= $request->seat_layout_options;
         $seat = implode(',', $request->seat_type);
 
         $fleet = Fleet::create($created_params);
@@ -347,6 +347,120 @@ class FleetController extends BaseController
         $message = trans('succes_messages.driver_assigned_succesfully');
 
         return redirect('fleets')->with('success', $message);
+    }
+    public function getByIdSeat(CommanFleet $fleet)
+    {
+
+        $seatLayoutView = [
+            'left' => [],
+            'right' => [],
+            'back' => [],
+            'upper_left' => [],
+            'upper_right' => [],
+        ];
+
+        if($fleet){
+            $layout_type = [];
+            // left lower deck
+            $seatLayoutView['left'] = $fleet->fleetSeatLayout()->where("position",'left')
+            ->where("deck_type",'lower')->orderByRaw('CAST(`order` AS UNSIGNED)')->get();
+
+            $seat_type = $seatLayoutView['left']->pluck('seat_type')->toArray();
+            $seat_type = array_unique($seat_type);
+            if (count($seat_type) > 1){  rsort($seat_type); }
+            if(count($seat_type)>0){
+                array_push($layout_type,$seat_type[0]);
+            }else{
+                array_push($layout_type,0);
+            }
+
+            // back lower deck
+            $seatLayoutView['back'] = $fleet->fleetSeatLayout()->where("position",'back')
+            ->where("deck_type",'lower')->orderByRaw('CAST(`order` AS UNSIGNED)')->get();
+
+            $seat_type = $seatLayoutView['back']->pluck('seat_type')->toarray();
+            $seat_type = array_unique($seat_type);
+            if (count($seat_type) > 1){  rsort($seat_type); }
+            if(count($seat_type)>0){
+                array_push($layout_type,$seat_type[0]);
+            }else{
+                array_push($layout_type,0);
+            }
+
+            // right lower deck
+            $seatLayoutView['right'] = $fleet->fleetSeatLayout()->where("position",'right')
+            ->where("deck_type",'lower')->orderByRaw('CAST(`order` AS UNSIGNED)')->get();
+
+            $seat_type = $seatLayoutView['right']->pluck('seat_type')->toArray();
+            $seat_type = array_unique($seat_type);
+            if (count($seat_type) > 1){  rsort($seat_type); }
+            if(count($seat_type)>0){
+                array_push($layout_type,$seat_type[0]);
+            }else{
+                array_push($layout_type,0);
+            }
+
+
+            $upper_deck = $fleet->fleetSeatLayout()->where("deck_type",'upper')->orderByRaw('CAST(`order` AS UNSIGNED)')->get();
+            if(count($upper_deck)){
+
+                // left upper deck
+                $seatLayoutView['upper_left'] = $fleet->fleetSeatLayout()->where("position",'left')
+                ->where("deck_type",'upper')->orderByRaw('CAST(`order` AS UNSIGNED)')->get();
+
+
+                $seat_type = $seatLayoutView['upper_left']->pluck('seat_type')->toarray();
+                $seat_type = array_unique($seat_type);
+                if (count($seat_type) > 1){  rsort($seat_type); }
+                if(count($seat_type)>0){
+                    array_push($layout_type,$seat_type[0]);
+                }else{
+                    array_push($layout_type,0);
+                }
+
+
+                // back upper deck
+                $seatLayoutView['upper_back'] = $fleet->fleetSeatLayout()->where("position",'back')
+                ->where("deck_type",'upper')->orderByRaw('CAST(`order` AS UNSIGNED)')->get();
+
+                $seat_type = $seatLayoutView['upper_back']->pluck('seat_type')->toarray();
+                $seat_type = array_unique($seat_type);
+                if (count($seat_type) > 1){  rsort($seat_type); }
+                if(count($seat_type)>0){
+                    array_push($layout_type,$seat_type[0]);
+                }else{
+                    array_push($layout_type,0);
+                }
+
+                // left upper deck
+                $seatLayoutView['upper_right'] = $fleet->fleetSeatLayout()->where("position",'right')
+                ->where("deck_type",'upper')->orderByRaw('CAST(`order` AS UNSIGNED)')->get();
+
+                $seat_type = $seatLayoutView['upper_right']->pluck('seat_type')->toarray();
+                $seat_type = array_unique($seat_type);
+                if (count($seat_type) > 1){  rsort($seat_type); }
+                if(count($seat_type)>0){
+                    array_push($layout_type,$seat_type[0]);
+                }else{
+                    array_push($layout_type,0);
+                }
+            }else{
+                $seatLayoutView['upper_right'] = [];
+                $seatLayoutView['upper_left'] = [];
+                $seatLayoutView['upper_back'] = [];
+            }
+
+        }
+        $page = trans('pages_names.seat_layout');
+        $main_menu = 'seat_layout';
+        $sub_menu = null;
+
+        $bus = $fleet;
+
+
+
+     return view('admin.fleets.seat_layout_view', compact('page', 'main_menu','sub_menu','layout_type','bus', 'seatLayoutView'));
+
     }
 
 

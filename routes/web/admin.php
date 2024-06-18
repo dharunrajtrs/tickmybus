@@ -102,7 +102,7 @@ Route::middleware('auth:web')->group(function () {
         Route::post('upload/document/{fleet}/{needed_document}', 'FleetDocumentController@uploadDocument')->name('updateFleetDocument');
         Route::post('approve/documents', 'FleetDocumentController@approveFleetDocument')->name('approveFleetDocument');
         Route::get('/add_photos', 'FleetController@addPhoto')->name('addPhotos');
-
+        Route::get('show/{fleet}', 'FleetController@getByIdSeat');
     });
 //Fleet drivers
 

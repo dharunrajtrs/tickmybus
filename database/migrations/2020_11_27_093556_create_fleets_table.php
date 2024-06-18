@@ -15,7 +15,8 @@ class CreateFleetsTable extends Migration
     {
         Schema::create('fleets', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('owner_id');
+            $table->uuid('owner_id')->nullable();
+            $table->uuid('comman_fleet_id')->nullable();
             $table->string('brand')->nullable();
             $table->string('model')->nullable();
             $table->string('license_number');
@@ -36,6 +37,11 @@ class CreateFleetsTable extends Migration
                     ->references('id')
                     ->on('owners')
                     ->onDelete('cascade');
+                    $table->foreign('comman_fleet_id')
+                    ->references('id')
+                    ->on('comman_fleets')
+                    ->onDelete('cascade');
+
 
         });
     }

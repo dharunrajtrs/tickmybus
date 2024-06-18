@@ -126,15 +126,24 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                <label for="seat_layout_options" class="">@lang('view_pages.seat_layout_options') <sup>*</sup></label>
-                                <select name="seat_layout_options" id="seat_layout_options" class="form-control" required>
-                                <option value="" >@lang('view_pages.seat_layout_options')</option>
-                                @foreach($seat_layout_options as $key=>$seat_layout_option)
-                                <option value="{{$seat_layout_option->id}}">{{$seat_layout_option->seat_layout_name}}</option>
-                                @endforeach
-                                </select>
+                                    <label for="seat_layout_options" class="">
+                                        @lang('view_pages.seat_layout_options') <sup>*</sup>
+                                    </label>
+                                    <select name="seat_layout_options" id="seat_layout_options" class="form-control" required>
+                                        <option value="">@lang('view_pages.seat_layout_options')</option>
+                                        @foreach($seat_layout_options as $key=>$seat_layout_option)
+                                            <option value="{{$seat_layout_option->id}}">{{$seat_layout_option->seat_layout_name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                </div>
+                            </div>
+
+                            <div id="js-project-partial-target">
+                                <include-fragment src="fleets/show/">
+                                    <span style="text-align: center; font-weight: bold;">@lang('view_pages.loading')</span>
+                                </include-fragment>
+                            </div>
+
 
                         <div class="col-sm-6 float-left mb-md-3">
                             <div class="form-group">
@@ -166,6 +175,15 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    document.getElementById('seat_layout_options').addEventListener('change', function() {
+        var selectedId = this.value;
+        if (selectedId) {
+            var fragment = document.querySelector('#js-project-partial-target include-fragment');
+            fragment.setAttribute('src', 'show/' + selectedId);
+        }
+    });
+</script>
 <script>
     $('.select2').select2({
         placeholder : "Select ...",
