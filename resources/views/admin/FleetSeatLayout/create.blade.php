@@ -267,8 +267,6 @@ $blocker = [
                       </label><br>
                       <input type="radio" name="upper_left_seat_type" class="form-control" id="upper_left_seater" value="seater">
                       <label for="upper_left_seater">Seater </label> &ensp;
-                      <input type="radio" name="upper_left_seat_type" class="form-control" id="upper_left_semi" value="semi_sleeper">
-                      <label for="upper_left_semi">Semi-Sleeper </label>&ensp;
                       <input type="radio" name="upper_left_seat_type" class="form-control" id="upper_left_sleeper" value="sleeper">
                       <label for="upper_left_sleeper">Sleeper </label>
                     </div>
@@ -278,8 +276,6 @@ $blocker = [
                       </label><br>
                       <input type="radio" name="upper_right_seat_type" class="form-control" id="upper_right_seater" value="seater">
                       <label for="upper_right_seater">Seater </label> &ensp;
-                      <input type="radio" name="upper_right_seat_type" class="form-control" id="upper_right_semi" value="semi_sleeper">
-                      <label for="upper_right_semi">Semi-Sleeper </label>&ensp;
                       <input type="radio" name="upper_right_seat_type" class="form-control" id="upper_right_sleeper" value="sleeper">
                       <label for="upper_right_sleeper">Sleeper </label>
                     </div>
@@ -288,11 +284,20 @@ $blocker = [
                 <!-- Upper deck end ------------------------------------>
                 <div class="col-sm-12 float-left mb-md-3"></div>
                 <div class="col-sm-6 float-left mb-md-3 form-group ">
-                    <label for="">Layout Type (per column)
+                    <label for="">Layout Type Left (per column)
                     <span class="text-danger">*</span>
                     </label><br>
                   <div class="form-group">
-                    <input type="text" class="form-control" name="column" id="5" value="">
+                    <input type="text" class="form-control" name="left_column" id="5" value="">
+                    <label for="5"></label>&emsp;
+                  </div>
+                </div>
+                <div class="col-sm-6 float-left mb-md-3 form-group ">
+                    <label for="">Layout Type Right(per column)
+                    <span class="text-danger">*</span>
+                    </label><br>
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="right_column" id="5" value="">
                     <label for="5"></label>&emsp;
                   </div>
                 </div>
@@ -545,23 +550,28 @@ $blocker = [
     var right_seat_type =$('input[name="right_seat_type"]:checked').val();
     seat_type.push(left_seat_type);
     seat_type.push(right_seat_type);
-    var column =$('input[name="column"]').val();
+    var column_left =$('input[name="left_column"]').val();
+    var column_right =$('input[name="right_column"]').val();
     var back_seat = $('input[name="back_seat"]:checked').val();
     // true if single deck is selected or both  upper deck seat types are selected
     var deck_type_select_condition = ((single_deck !== undefined) || [(upper_left_seat_type !== undefined) && (upper_right_seat_type !== undefined)]);
 
     //#todo vailidation...!
-    if( (left_row !== undefined) && (right_row !== undefined) && (column !== undefined) && (left_seat_type !== undefined) && (right_seat_type !== undefined) && deck_type_select_condition ){
+    if( (left_row !== undefined) && (right_row !== undefined) && (column_left !== undefined) && (column_right !== undefined) && (left_seat_type !== undefined) && (right_seat_type !== undefined) && deck_type_select_condition ){
       $(".busForm").addClass("hide");
       $(".busPreview").removeClass("hide");
       // building the layout
       //#block to build the right...!
+      console.log(column_right);
+      column = column_right
       seatcount = buildSeatLayout(column,right_row,right_seat_type,rightPreview,'R');
       //#block to build the back...!
       if(back_seat == "back_seater"){
         seatcount = buildSeatLayout(1,1,'seater',null,'B');
       }
       //#block to build the left...!
+      console.log(column_left);
+      column = column_left
       seatcount = buildSeatLayout(column,left_row,left_seat_type,leftPreview,'L');
 
       if ($('#double').is(':checked')) {
