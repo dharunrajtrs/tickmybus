@@ -89,9 +89,9 @@
               <p class="text-center">Left</p>
               <div class="row">
                 <!-- left seat arrangements row-1 -->
-                 @for ($i = 0; $i < $leftcolumns; $i++) 
-                 <div class="col-lg-1"> 
-                  @for ($j = 0; $j < $leftrows; $j++) 
+                 @for ($i = 0; $i < $leftcolumns; $i++)
+                 <div class="col-lg-1">
+                  @for ($j = 0; $j < $leftrows; $j++)
                  <div class="form-check p-2">
                     <label for="defaultCheck-L1" class="form-check-label" data-bs-toggle="modal" data-bs-target="#exampleModal">
                       <input class="form-check-input" type="checkbox" role="checkbox" id="defaultCheck-L1">

@@ -1,4 +1,4 @@
-@php 
+@php
 use App\Models\Admin\FleetSeatLayout;
 //#seat type color...!
 
@@ -116,7 +116,7 @@ $blocker = [
 
 
 </style>
-<form method="post" action="{{url('fleet_seat_layout/update')}}"> 
+<form method="post" action="{{url('fleet_seat_layout/update')}}">
   @csrf
   <div class="container">
     <div class="card">
@@ -138,7 +138,7 @@ $blocker = [
             <div class="pull-right">
               <h4 class="panel-title">Left</h4>
               @foreach($seatLayoutView[FleetSeatLayout::LEFT_SIDE] as $key => $value)
-                <?php 
+                <?php
                   $divideValue = $key%$bus->left_columns;
                   $seatLabel = "";
                   switch($value->seat_type){
@@ -153,7 +153,7 @@ $blocker = [
                       break;
                     default:
                       $seatImage = $blocker['image'];
-                  } 
+                  }
                 ?>
                 @if ($divideValue==0)
                   <div class="row m-2">
@@ -163,7 +163,7 @@ $blocker = [
                       <input type="hidden" class="seat_id" value="{{$value->id}}">
                       <input type="hidden" class="seat_type" value="{{$value->seat_type}}">
                       <img class="{{$layout_type[0]}}-image"  src="{{$seatImage}}" alt="seat image">
-                    </div>           
+                    </div>
                 @if ($divideValue + 1 == $bus->left_columns)
                   </div>
                 @endif
@@ -173,7 +173,7 @@ $blocker = [
           <div class="col-lg-1  p-0 d-flex align-items-end flex-column" value = ''>
             <div class="pull-right mt-auto" style="padding-bottom:5px">
               @foreach($seatLayoutView[FleetSeatLayout::BACK_SIDE] as $key => $value)
-                <?php 
+                <?php
                   $seatImage = "";
                   switch($value->seat_type){
                     case $seater['value']:
@@ -188,13 +188,13 @@ $blocker = [
                     default:
                     $seatImage = $blocker['image'];
                   }
-                ?>               
+                ?>
                 <div class="seat  ml-2 {{$layout_type[1]}}" id="{{$value->id}}">
                   <small class="seat_no">{{$value->seat_no}}</small>
                   <input type="hidden" class="seat_id" value="{{$value->id}}">
                   <input type="hidden" class="seat_type" value="{{$value->seat_type}}">
                   <img class="{{$layout_type[1]}}-image"  src="{{$seatImage}}" alt="seat image">
-                </div>                             
+                </div>
               @endforeach
                 </div>
           </div>
@@ -202,7 +202,7 @@ $blocker = [
             <div class="pull-left">
               <h4 class="panel-title">Right</h4>
               @foreach($seatLayoutView[FleetSeatLayout::RIGHT_SIDE] as $key => $value)
-                <?php 
+                <?php
                   $divideValue = $key%$bus->right_columns;
                   $seatImage = "";
                   switch($value->seat_type){
@@ -217,7 +217,7 @@ $blocker = [
                       break;
                     default:
                       $seatImage = $blocker['image'];
-                  } 
+                  }
                 ?>
                 @if ($divideValue==0)
                   <div class="row m-2" value ="{{$value->seat_type}}">
@@ -257,7 +257,7 @@ $blocker = [
                         break;
                       default:
                         $seatImage = $blocker['image'];
-                    } 
+                    }
                   ?>
                   @if ($divideValue==0)
                     <div class="row m-2" value ="{{$value->seat_type}}">
@@ -291,13 +291,13 @@ $blocker = [
                       default:
                       $seatImage = $blocker['image'];
                     }
-                  ?> 
+                  ?>
                   <div class="seat  ml-2 {{$layout_type[4]}}" id="{{$value->id}}">
                     <small class="seat_no">{{$value->seat_no}}</small>
                     <input type="hidden" class="seat_id" value="{{$value->id}}">
                     <input type="hidden" class="seat_type" value="{{$value->seat_type}}">
                     <img class="{{$layout_type[4]}}-image"  src="{{$seatImage}}" alt="seat image">
-                  </div>                    
+                  </div>
                 @endforeach
               </div>
             </div>
@@ -320,7 +320,7 @@ $blocker = [
                         break;
                       default:
                         $seatImage = $blocker['image'];
-                    } 
+                    }
                   ?>
                   @if ($divideValue==0)
                     <div class="row m-2" value ="{{$value->seat_type}}">
@@ -362,7 +362,7 @@ $blocker = [
       <input type="hidden" class="seat_id" >
         <div class="container-fluid">
         <div class="row p-2">
-              <div class="col-lg-12 text-center update_seat">   
+              <div class="col-lg-12 text-center update_seat">
               </div>
             </div>
             <div class="form-group">
@@ -389,7 +389,7 @@ $blocker = [
     const semiSleeperClass  = {!! json_encode($semiSleeper) !!};
     const sleeperClass  = {!! json_encode($sleeper) !!};
     const blockerClass  = {!! json_encode($blocker) !!};
-    
+
     //console
 $(function() {
     $.ajaxSetup({
@@ -428,7 +428,7 @@ $(".seat").click(function(){
     modelBody.find(".modal-header .modal-title .seat_no").text(seatLabel);
     modelBody.find(".seat_id").val(seatId);
     $("input[name='selectedSeat']").prop('checked', false);
-    seatSelectorModelPopUp.modal('show');  
+    seatSelectorModelPopUp.modal('show');
 });
 
 });
@@ -438,24 +438,24 @@ function saveModelForm(){
       const selectedseatLabel = $('input[name="selectedSeat"]:checked').val();
 
       if(updateSeat && selectedseatLabel){
-        if(seaterClass?.value  == selectedseatLabel)          
+        if(seaterClass?.value  == selectedseatLabel)
           updateSeat.find("img").attr("src",seaterClass?.image);
 
-          if(semiSleeperClass?.value  == selectedseatLabel)          
-          updateSeat.find("img").attr("src",semiSleeperClass?.image);      
+          if(semiSleeperClass?.value  == selectedseatLabel)
+          updateSeat.find("img").attr("src",semiSleeperClass?.image);
 
-          if(sleeperClass?.value  == selectedseatLabel)          
-          updateSeat.find("img").attr("src",sleeperClass?.image);      
+          if(sleeperClass?.value  == selectedseatLabel)
+          updateSeat.find("img").attr("src",sleeperClass?.image);
 
-        if(blockerClass?.value  == selectedseatLabel)          
-          updateSeat.find("img").attr("src",blockerClass?.image);         
-          
+        if(blockerClass?.value  == selectedseatLabel)
+          updateSeat.find("img").attr("src",blockerClass?.image);
+
         updateSeat.find(".seat_type").val(selectedseatLabel);
       }
       closeModelForm();
     }
 function closeModelForm(){
-    seatSelectorModelPopUp.modal('hide');  
+    seatSelectorModelPopUp.modal('hide');
 }
 function submitFormData(){
     let postData = [];

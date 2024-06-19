@@ -34,7 +34,7 @@ $blocker = [
 ];
 
 @endphp
-@extends('admin.layouts.app')
+
 
 
 
@@ -123,7 +123,9 @@ $blocker = [
       <div class="card-body">
         <div class="row p-2">
         </div>
+        <h4 class="panel-title">Lower Deck</h4>
         <div class="row">
+
           <div class="col-lg-5 p-0">
             <div class="pull-right">
               <h4 class="panel-title">Left</h4>
