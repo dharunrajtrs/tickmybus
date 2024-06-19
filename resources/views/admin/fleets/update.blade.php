@@ -22,20 +22,6 @@
                 <form  method="post" action="{{url('fleets/update', $item->id)}}" enctype="multipart/form-data">
                 @csrf
                     <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="type">@lang('view_pages.select_bus_company')
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <select name="owner_id" id="owner" class="form-control" required>
-                                    <option value="" >@lang('view_pages.select_bus_company')</option>
-                                    @foreach($owners as $key=>$owner)
-                                    <option value="{{ $owner->id }}" {{ old('owner_id', $item->owner_id) == $owner->id ? 'selected' : '' }}>
-                                    {{ $owner->name }}</option>
-                                    @endforeach
-                                </select>
-                                </div>
-                        </div>
 <div class="col-sm-6">
 <div class="form-group">
 <label for="seat_type">@lang('view_pages.seat_type')
@@ -44,7 +30,6 @@
 @php
     $seater = '';
     $sleeper = '';
-    $semi_sleeper = '';
 @endphp
 @if (old('seat_type'))
     @foreach (old('seat_type') as $item)
@@ -55,10 +40,6 @@
         @elseif($item == 'sleeper')
             @php
                 $sleeper = 'selected';
-            @endphp
-        @elseif($item == 'semi_sleeper')
-            @php
-                $semi_sleeper = 'selected';
             @endphp
         @endif
     @endforeach
@@ -75,22 +56,18 @@
             @php
                 $sleeper = 'selected';
             @endphp
-        @elseif($val == 'semi_sleeper')
-            @php
-                $semi_sleeper = 'selected';
-            @endphp
         @endif
     @endforeach
 @endif
 <select name="seat_type[]" id="seat_type" class="form-control select2" multiple="multiple" required>
     <option value="seater" {{ $seater }}>@lang('view_pages.seater')</option>
     <option value="sleeper" {{ $sleeper }}>@lang('view_pages.sleeper')</option>
-    <option value="semi_sleeper" {{ $semi_sleeper }}>@lang('view_pages.semi_sleeper')</option>
+
 </select>
 </div>
 </div>
 
-</div>
+
 
     <div class="col-sm-6 float-left mb-md-3">
          <div class="form-group">
@@ -136,19 +113,22 @@
                         <span class="text-danger">{{ $errors->first('total_seats') }}</span>
                   </div>
                 </div>
-                    <div class="col-sm-6 float-left mb-md-3">
-                             <div class="form-group">
-                                <label for="bus_amenties">@lang('view_pages.bus_amenties')
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <select name="bus_amenties[]" id="bus_amenties" class="form-control select2" multiple="multiple" required>
-                               @foreach($amenties as $key=>$amenity)
-                                    <option value="{{ $amenity }}" {{ old('bus_amenties[]',$item->fleetAmenity()->where('amenity_id',$amenity->id)->pluck('amenity_id')->first()) ? 'selected' : '' }}>
-                                    {{ $amenity->name }}</option>
-                               @endforeach
-                                  </select>
-                                </div>
-                            </div>
+                <div class="col-sm-6 float-left mb-md-3">
+                    <div class="form-group">
+                        <label for="seat_layout_options">@lang('view_pages.seat_layout_options')
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select name="seat_layout_options" id="seat_layout_options" class="form-control select2" required>
+                            <option value="">@lang('view_pages.seat_layout_options')</option>
+                            @foreach($seat_layout_options as $seat_layout_option)
+                                <option value="{{ $seat_layout_option->id }}" {{ old('seat_layout_options', $item->comman_fleet_id) == $seat_layout_option->id ? 'selected' : '' }}>
+                                    {{ $seat_layout_option->seat_layout_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
                         <div class="col-sm-6 float-left mb-md-3">
                             {{-- <div class="form-group">
                                 <h5>Multiple Image <span class="text-danger">*</span></h5>
@@ -164,41 +144,44 @@
                                  Multiple Image<span class="text-danger">*</span>
                                 </label>
                                 <input type="file" id="multiImg" name="multi_img[]" class="form-control" multiple="">
-                                    @error('multi_img') 
+                                    @error('multi_img')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                     <div class="row" id="preview_img" >
-                                    
+
                                     </div>
                                     <div class="row row-sm">
                                         @foreach($multiImgs as $img)
                                         <div class="col-md-3">
                                             <div class="card">
                                                 <img src="{{ asset($img->image_name) }}" class="card-img-top"  height="100" width="100" >
-                                            
+
                                                 <div class="card-body">
-                                                    <h5 class="card-title">  
-                                                                                          
+                                                    <h5 class="card-title">
+
                                                     <a href="{{ route('multiimgDelete',$img->id) }} " class="btn-sm btn-danger" id="delete" title="Delete Data"><i class="fa fa-trash"></i> </a>
                                                     </h5>
-                                                    {{-- <p class="card-text"> 
+                                                    {{-- <p class="card-text">
                                                         <div class="form-group">
                                                             <label class="form-control-label">Change Image <span class="tx-danger">*</span></label>
                                                             <input class="form-control" type="file"  id="multiImg" name="multi_img[{{ $img->id }}]">
-                                                        </div> 
+                                                        </div>
                                                     </p>	 --}}
                                                 </div>
-                                            </div> 		
-                                        
-                                        </div><!--  end col md 3		 -->	
+                                            </div>
+
+                                        </div><!--  end col md 3		 -->
                                         @endforeach
-                                    </div>	
-            
-                                
+                                    </div>
+
+
                             </div>
                         </div>
 
                         </div>
+
+
+
 
                         <div class="form-group">
                             <div class="col-12">
