@@ -115,6 +115,19 @@
                 </div>
                 <div class="col-sm-6 float-left mb-md-3">
                     <div class="form-group">
+                       <label for="bus_amenties">@lang('view_pages.bus_amenties')
+                           <span class="text-danger">*</span>
+                       </label>
+                       <select name="bus_amenties[]" id="bus_amenties" class="form-control select2" multiple="multiple" required>
+                      @foreach($amenties as $key=>$amenity)
+                           <option value="{{ $amenity }}" {{ old('bus_amenties[]',$item->fleetAmenity()->where('amenity_id',$amenity->id)->pluck('amenity_id')->first()) ? 'selected' : '' }}>
+                           {{ $amenity->name }}</option>
+                      @endforeach
+                         </select>
+                       </div>
+                   </div>
+                <div class="col-sm-6 float-left mb-md-3">
+                    <div class="form-group">
                         <label for="seat_layout_options">@lang('view_pages.seat_layout_options')
                             <span class="text-danger">*</span>
                         </label>

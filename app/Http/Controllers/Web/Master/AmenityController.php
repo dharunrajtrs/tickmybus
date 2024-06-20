@@ -61,7 +61,7 @@ class AmenityController extends BaseController
      public function fetch(QueryFilterContract $queryFilter)
     {
 
-        $query = Amenity::where('owner_id', auth()->user()->owner->id)->orderBy('created_at', 'desc');
+        $query = Amenity::query()->orderBy('created_at', 'desc');
         $results = $queryFilter->builder($query)->customFilter(new CommonMasterFilter)->paginate();
          return view('admin.master.amenity._amenity', compact('results'));
 

@@ -200,5 +200,5 @@ return array (
 'bus_needed_doc'=>'Bus Needed Document',
 'set_up'=>'SetUp',
 'rotues'=>'Rotues',
-
+'add_journey'=>'Add Journey',
 );

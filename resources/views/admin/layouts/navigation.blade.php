@@ -97,6 +97,13 @@ if(str_contains((string)request()->path(),'dashboard')){
             <a href="{{url('/admin_boarding_point')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.rotues')</a>
           </li>
           @endif
+
+         @if(auth()->user()->can('manage_amentity'))
+         <li class="{{ 'manage_amentity' == $sub_menu ? 'active' : '' }}">
+           <a href="{{url('/amenity')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.amenities')</a>
+         </li>
+
+         @endif
           {{-- @if(auth()->user()->can('manage-driver-needed-document'))
           <li class="{{ 'needed_document' == $sub_menu ? 'active' : '' }}">
             <a href="{{url('/needed_doc')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.needed_doc')</a>
@@ -138,13 +145,7 @@ if(str_contains((string)request()->path(),'dashboard')){
         </a>
 
         <ul class="treeview-menu">
-            @if(auth()->user()->roles->pluck('slug')->contains('owner'))
-         @if(auth()->user()->can('manage_amentity'))
-          <li class="{{ 'manage_amentity' == $sub_menu ? 'active' : '' }}">
-            <a href="{{url('/amenity')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.amenities')</a>
-          </li>
-          @endif
-          @endif
+
           @if(auth()->user()->roles->pluck('slug')->contains('owner'))
           @if(auth()->user()->can('manage_seat_layout'))
           <li class="{{ 'fleet_seat_layout' == $sub_menu ? 'active' : '' }}">
@@ -185,6 +186,7 @@ if(str_contains((string)request()->path(),'dashboard')){
          @endif
          @endif --}}
 
+
             @if(auth()->user()->roles->pluck('slug')->contains('owner'))
              @if(auth()->user()->can('manage-fleet'))
             <li class="{{ $main_menu == 'manage_fleet' ? 'active' : ''}}">
@@ -220,8 +222,8 @@ if(str_contains((string)request()->path(),'dashboard')){
 
 
 
-
-     {{-- @if(auth()->user()->can('view_journey'))
+    @if(auth()->user()->roles->pluck('slug')->contains('owner'))
+  @if(auth()->user()->can('view_journey'))
         <li class="treeview {{ 'view_journey' == $main_menu ? 'active menu-open' : '' }}">
           <a href="javascript: void(0);">
             <i class="fa fa-map"></i>
@@ -236,7 +238,7 @@ if(str_contains((string)request()->path(),'dashboard')){
 
             <li class="{{'journey' == $sub_menu ? 'active' : '' }}">
               <a href="{{url('/journey')}}">
-                <i class="fa fa-circle-thin"></i> <span>@lang('pages_names.pending')</span>
+                <i class="fa fa-circle-thin"></i> <span>@lang('pages_names.add_journey')</span>
               </a>
             </li>
           @endif
@@ -247,7 +249,7 @@ if(str_contains((string)request()->path(),'dashboard')){
               </a>
             </li>
           @endif
-         @if(auth()->user()->can('cancelled-journey'))
+         @if(auth()->user()->can('completed-journey'))
             <li class="{{'cancelled-journey' == $sub_menu ? 'active' : '' }}">
               <a href="{{url('/journey/cancelled')}}">
                 <i class="fa fa-circle-thin"></i> <span>@lang('pages_names.cancelled')</span>
@@ -256,7 +258,8 @@ if(str_contains((string)request()->path(),'dashboard')){
           @endif
         </ul>
       </li>
-     @endif --}}
+     @endif
+     @endif
   {{-- @if(auth()->user()->can('view_tickets'))
       <li class="treeview {{ 'view_tickets' == $main_menu ? 'active menu-open' : '' }}">
         <a href="javascript: void(0);">

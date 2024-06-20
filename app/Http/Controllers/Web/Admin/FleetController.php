@@ -90,7 +90,7 @@ class FleetController extends BaseController
 
         $owner = Owner::where('user_id',$user_checking_id)->first();
 
-        $amenties = Amenity::where('owner_id',$owner->id)->get();
+        $amenties = Amenity::all();
         $seat_layout_options = CommanFleet::where('owner_id',$owner->id)->get();
 
         // dd($amenties);
@@ -159,14 +159,14 @@ class FleetController extends BaseController
     {
        $fleet->fleetAmenity()->delete();
 
-        // foreach ($request->bus_amenties as $key=>$amenties)
-        // {
-        //     $amenity_params['fleet_id'] = $fleet->id;
-        //     $amenity_params['amenity_id'] =json_decode($amenties)->id;
+        foreach ($request->bus_amenties as $key=>$amenties)
+        {
+            $amenity_params['fleet_id'] = $fleet->id;
+            $amenity_params['amenity_id'] =json_decode($amenties)->id;
 
-        //     $fleet->fleetAmenity()->create($amenity_params);
+            $fleet->fleetAmenity()->create($amenity_params);
 
-        //  }
+         }
 
         $updated_params = $request->only(['brand','model','license_number','owner_id','total_seats','bus_type']);
         $updated_params['comman_fleet_id']= $request->seat_layout_options;

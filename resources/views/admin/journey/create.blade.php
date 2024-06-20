@@ -69,7 +69,7 @@ flex-direction: row-reverse;
 
 <div class="tab-pane" id="journeydetails">
                         <div class="row">
-                                <div class="col-sm-6">
+                                {{-- <div class="col-sm-6">
                                     <div class="form-group">
                                      <label for="service_location_id" class="">@lang('view_pages.select_boarding_area') <sup>*</sup></label>
                                             <select name="service_location_id" id="service_location_id" class="form-control" required>
@@ -79,8 +79,8 @@ flex-direction: row-reverse;
                                             @endforeach
                                         </select>
                                      </div>
-                                    </div>
-                                    <div class="col-sm-6 float-left mb-md-3">
+                                    </div> --}}
+                                    <div class="col-sm-12 float-left mb-md-3">
                                       <div class="form-group">
                                         <label for="fleet_id">@lang('view_pages.select_bus')
                                             <span class="text-danger">*</span>

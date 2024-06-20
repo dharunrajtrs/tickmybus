@@ -74,13 +74,13 @@ class JourneyController extends BaseController
     public function fetch(QueryFilterContract $queryFilter)
     {
 
-        if (access()->hasRole(RoleSlug::SUPER_ADMIN)) 
+        if (access()->hasRole(RoleSlug::SUPER_ADMIN))
         {
               $query = Journey::where('is_completed', false)->orderBy('created_at', 'desc');
         } else {
                 $fleets = auth()->user()->owner->fleet;
                 $this->validateAdmin();
-                foreach ($fleets as $fleet) 
+                foreach ($fleets as $fleet)
                 {
                 $query = Journey::where('is_completed', false)->where('fleet_id', $fleet->id)->orderBy('created_at', 'desc');
                 }
@@ -103,13 +103,13 @@ class JourneyController extends BaseController
     /*completedFetch*/
     public function completedFetch(QueryFilterContract $queryFilter)
     {
-        if (access()->hasRole(RoleSlug::SUPER_ADMIN)) 
+        if (access()->hasRole(RoleSlug::SUPER_ADMIN))
         {
               $query = Journey::where('is_completed', true)->where('is_cancelled', false)->orderBy('created_at', 'desc');
         } else {
                 $fleets = auth()->user()->owner->fleet;
                 $this->validateAdmin();
-                foreach ($fleets as $fleet) 
+                foreach ($fleets as $fleet)
                 {
                 $query = Journey::where('is_completed', true)->where('fleet_id', $fleet->id)->orderBy('created_at', 'desc');
                 }
@@ -131,14 +131,15 @@ class JourneyController extends BaseController
     public function create()
     {
         $page = trans('pages_names.add_journey');
-
-        $fleets = Fleet::whereApprove(true)->get();
-
+        $user_checking_id=auth()->user()->id;
+        $owner = Owner::where('user_id',$user_checking_id)->first();
+        $fleets = Fleet::where('owner_id',$owner->id)->whereApprove(true)->get();
+        $cities=AllCities::all();
         $main_menu = 'view_journey';
         $sub_menu = 'journey';
 
         $services = ServiceLocation::whereActive(true)->get();
-        
+
         $cities = City::whereActive(true)->get();
 
         return view('admin.journey.create', compact('page', 'main_menu', 'sub_menu','fleets','services','cities'));
@@ -174,7 +175,7 @@ class JourneyController extends BaseController
         }
         // Generate request number
         $journey_number = 'JOURNEY_'.sprintf("%06d", $journey_number+1);
-      
+
         if(($request->from_city_id) == ($request->to_city_id))
        {
         throw ValidationException::withMessages(['to_city_id' => __('from and To are same place')]);
@@ -198,7 +199,7 @@ class JourneyController extends BaseController
 /*borading_points*/
         if($request->has('boarding_point'))
         {
-            foreach ($request->boarding_point as $key => $point) 
+            foreach ($request->boarding_point as $key => $point)
             {
                   $boarding_params['boarding_id']   =  $point;
                   $boarding_params['boarding_time'] = $request->boarding_time[$key];
@@ -211,7 +212,7 @@ class JourneyController extends BaseController
                         // dd($journey->journeyBoardingPoint());
         if($request->has('drop_point'))
         {
-            foreach ($request->drop_point as $key => $dpoint) 
+            foreach ($request->drop_point as $key => $dpoint)
             {
                   $stop_params['stop_id']   =  $dpoint;
                   $stop_params['stop_time'] = $request->droping_time[$key];
@@ -247,7 +248,7 @@ class JourneyController extends BaseController
             ->pluck('seat_type')
             ->toArray();
             // dd($seatTypeExists);
-        
+
         return response()->json(array(
 			'fleets' => $fleets->seat_type,
 			'upperSeatTypeExists' => $upperSeatTypeExists,
@@ -268,9 +269,9 @@ class JourneyController extends BaseController
         $page = trans('pages_names.edit_journey');
 
         $item = $journey;
-        // dd($item);
-
-        $fleets = Fleet::whereApprove(true)->get();
+        $user_checking_id=auth()->user()->id;
+        $owner = Owner::where('user_id',$user_checking_id)->first();
+        $fleets = Fleet::where('owner_id',$owner->id)->whereApprove(true)->get();
         $services =ServiceLocation::whereActive(true)->get();
         // dd($services);
         $cities = City::whereActive(true)->get();
@@ -281,7 +282,7 @@ class JourneyController extends BaseController
         $main_menu = 'view_journey';
         $sub_menu = 'journey_details';
 
-        return view('admin.journey.update', compact('page', 'main_menu', 'sub_menu','fleets','item','services','cities','boarding','dropping'));    
+        return view('admin.journey.update', compact('page', 'main_menu', 'sub_menu','fleets','item','services','cities','boarding','dropping'));
     }
 
     public function update(CreateJourneyRequest $request, Journey $journey)
@@ -301,21 +302,21 @@ class JourneyController extends BaseController
         $minutes = $interval->i;
 
         $updated_params = $request->all();
-        $updated_params['duration'] =  (($days * 24)+$hours)." H ".$minutes." M "; 
+        $updated_params['duration'] =  (($days * 24)+$hours)." H ".$minutes." M ";
 
         $journey->update($updated_params);
-    
 
-       
+
+
 
         /*borading_points*/
         if($request->has('boarding_point'))
         {
             $journey_id = $request->id;
             JourneyBoardingPoint::where('journey_id', '=', $journey_id)->delete();
-            foreach ($request->boarding_point as $key => $point) 
+            foreach ($request->boarding_point as $key => $point)
             {
-                
+
                   $boarding_params['boarding_id']   =  $point;
                   $boarding_params['boarding_time'] = $request->boarding_time[$key];
 
@@ -324,13 +325,13 @@ class JourneyController extends BaseController
 
         }
 /*stop_points*/
-        
-                      
+
+
         if($request->has('drop_point'))
         {
             $journey_id = $request->id;
             JourneyStopPoint::where('journey_id', '=', $journey_id)->delete();
-            foreach ($request->drop_point as $key => $dpoint) 
+            foreach ($request->drop_point as $key => $dpoint)
             {
                   $stop_params['stop_id']   =  $dpoint;
                   $stop_params['stop_time'] = $request->droping_time[$key];
@@ -339,9 +340,9 @@ class JourneyController extends BaseController
             }
 
         }
-       
+
         $message = trans('succes_messages.journey_updated_succesfully');
-        
+
         return redirect('journey')->with('success', $message);
     }
     public function delete(Journey $journey)
@@ -362,10 +363,10 @@ class JourneyController extends BaseController
         $item = $journey;
 
         $owner = $journey->fleet->owner;
-       
+
         $drivers =Driver::where('owner_id', $owner->id)->get();
 
-        return view('admin.journey.assign_driver', compact('page', 'main_menu', 'sub_menu', 'item','drivers',));   
+        return view('admin.journey.assign_driver', compact('page', 'main_menu', 'sub_menu', 'item','drivers',));
     }
 
     public function assignDriverupdate(Request $request, Journey $journey)
@@ -375,7 +376,7 @@ class JourneyController extends BaseController
         $journey->update(['driver_id' => $driver_id]);
 
          $message = trans('succes_messages.driver_assigned_succesfully');
-     
+
         $title = trans('push_notifications.journey_assigned_title');
         $body = trans('push_notifications.journey_assigned_body');
 
@@ -410,13 +411,13 @@ class JourneyController extends BaseController
     /*cancelledFetch*/
     public function cancelledFetch(QueryFilterContract $queryFilter)
     {
-        if (access()->hasRole(RoleSlug::SUPER_ADMIN)) 
+        if (access()->hasRole(RoleSlug::SUPER_ADMIN))
         {
               $query = Journey::where('is_cancelled', true)->where('is_completed', false)->orderBy('created_at', 'desc');
         } else {
                 $fleets = auth()->user()->owner->fleet;
                 $this->validateAdmin();
-                foreach ($fleets as $fleet) 
+                foreach ($fleets as $fleet)
                 {
                 $query = Journey::where('is_cancelled', true)->where('fleet_id', $fleet->id)->orderBy('created_at', 'desc');
                 }
@@ -434,15 +435,15 @@ class JourneyController extends BaseController
         $sub_menu = 'view-journey';
         $item = $journey;
         $bus = $item->fleet;
-        
+
         return view('admin.journey.view', compact('page', 'main_menu', 'sub_menu', 'item', 'bus'));
     }
     /**
      * Find SeatLayout
-     * @queryParam journey_id foreign key required 
-     * @queryParam  
-     * @queryParam  
-     * @response 
+     * @queryParam journey_id foreign key required
+     * @queryParam
+     * @queryParam
+     * @response
      * */
     public function signleJourney(Journey $journey)
     {
