@@ -15,8 +15,10 @@ class UpdateCityIdToJourneys extends Migration
     {
         Schema::table('journeys', function (Blueprint $table) {
             $table->uuid('service_location_id')->after('id')->nullable();
-            $table->uuid('from_city_id')->after('service_location_id')->nullable();
-            $table->uuid('to_city_id')->after('from_city_id')->nullable();
+            $table->unsignedInteger('from_city_id')->after('service_location_id')->nullable();
+            $table->unsignedInteger('to_city_id')->after('from_city_id')->nullable();
+
+
 
             $table->foreign('service_location_id')
                     ->references('id')

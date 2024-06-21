@@ -582,8 +582,10 @@ $blocker = [
         seat_type.push(upper_left_seat_type);
         seat_type.push(upper_right_seat_type);
         //#block to build the upper right...!
+        column = column_right
         seatcount = buildSeatLayout(column,right_row,upper_right_seat_type,upperRightPreview,'UR');
         //#block to build the upper left...!
+        column = column_left
         seatcount = buildSeatLayout(column,left_row,upper_left_seat_type,upperLeftPreview,'UL');
       }
     }

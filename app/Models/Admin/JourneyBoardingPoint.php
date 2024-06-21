@@ -33,7 +33,7 @@ class JourneyBoardingPoint extends Model
      * @var array
      */
     protected $fillable = [ 'journey_id','boarding_id','boarding_time'
-       
+
     ];
 
 
