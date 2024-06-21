@@ -56,6 +56,10 @@ class JourneyBoardingPoint extends Model
     {
         return $this->belongsTo(BoardingPoint::class, 'boarding_id', 'id');
     }
+    public function boardingDropPoint()
+    {
+        return $this->belongsTo(BoardingDropingPoint::class, 'boarding_id', 'id');
+    }
          /**
     * The journey Chat associated with the journey's id.
     *

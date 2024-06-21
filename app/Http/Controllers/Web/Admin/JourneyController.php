@@ -286,11 +286,24 @@ class JourneyController extends BaseController
         $fleets = Fleet::where('owner_id',$owner->id)->whereApprove(true)->get();
         $services =ServiceLocation::whereActive(true)->get();
         // dd($services);
-        $cities = City::whereActive(true)->get();
-        $boarding = BoardingPoint::where('city_id',$item->from_city_id)->get();
-        $dropping = BoardingPoint::where('city_id',$item->to_city_id)->get();
-        // dd($boarding);
+        $user_checking_id=auth()->user()->id;
+        $cities=AllCities::whereActive(true)->get();
+        $cities2=AllCities::whereActive(true)->get();
+        $boardingPoint = BoardingPoint::where('city_id',$item->from_city_id)->first();
 
+        $boarding = BoardingDropingPoint::where('boarding_id', $boardingPoint->id)
+            ->select('id', 'boarding_id', 'admin_boarding_id', 'boarding_droping_time', 'boarding_droping_point_address', 'created_at', 'updated_at')
+            ->get();
+
+            $droppingPoint = BoardingPoint::where('city_id',$item->to_city_id)->first();
+
+            $dropping = BoardingDropingPoint::where('boarding_id', $boardingPoint->id)
+                ->select('id', 'boarding_id', 'admin_boarding_id', 'boarding_droping_time', 'boarding_droping_point_address', 'created_at', 'updated_at')
+                ->get();
+
+        // $dropping = BoardingPoint::where('city_id',$item->to_city_id)->get();
+        // // dd($boarding);
+// dd($dropping->all());
         $main_menu = 'view_journey';
         $sub_menu = 'journey_details';
 

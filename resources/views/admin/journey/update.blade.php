@@ -69,18 +69,8 @@ flex-direction: row-reverse;
 
 <div class="tab-pane" id="journeydetails">
                         <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                     <label for="service_location_id" class="">@lang('view_pages.select_area') <sup>*</sup></label>
-                                            <select name="service_location_id" id="service_location_id" class="form-control" required>
-                                            <option value="" >@lang('view_pages.select_area')</option>
-                                                 @foreach($services as $key=>$service)
-                                                    <option value="{{$service->id}}" {{ old('service_location_id',$item->service_location_id) == $service->id ? 'selected' : '' }}>{{$service->name}}</option>
-                                                    @endforeach
-                                        </select>
-                                     </div>
-                                    </div>
-                                    <div class="col-sm-6 float-left mb-md-3">
+
+                                    <div class="col-sm-12 float-left mb-md-3">
                                       <div class="form-group">
                                         <label for="fleet_id">@lang('view_pages.select_bus')
                                             <span class="text-danger">*</span>
@@ -99,11 +89,11 @@ flex-direction: row-reverse;
                                                 <select name="from_city_id" id="from_city_id" class="form-control">
                                                 <option value="" selected disabled>@lang('view_pages.from')</option>
                                                 @foreach($cities as $key=>$city)
-                                                <option value="{{$city->id}}" {{ old('from_city_id',$item->from_city_id) == $city->id ? 'selected' : '' }}>{{$city->city}}</option>
+                                                <option value="{{$city->id}}" {{ old('from_city_id',$item->from_city_id) == $city->id ? 'selected' : '' }}>{{$city->name}}</option>
                                                 @endforeach
                                                 </select>
                                             <span class="text-danger">{{ $errors->first('from_city_id') }}</span>
-                                            
+
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
@@ -112,17 +102,17 @@ flex-direction: row-reverse;
                                                 <select name="to_city_id" id="to_city_id" class="form-control">
                                                 <option value="" selected disabled>@lang('view_pages.to')</option>
                                                 @foreach($cities as $key=>$city)
-                                                <option value="{{$city->id}}" {{ old('to_city_id',$item->to_city_id) == $city->id ? 'selected' : '' }}>{{$city->city}}</option>
+                                                <option value="{{$city->id}}" {{ old('to_city_id',$item->to_city_id) == $city->id ? 'selected' : '' }}>{{$city->name}}</option>
                                                 @endforeach
                                                 </select>
                                             <span class="text-danger">{{ $errors->first('to_city_id') }}</span>
                                         </div>
-                                    </div>   
+                                    </div>
                                     <div class="col-sm-6">
                                     <div class="bootstrap-timepicker">
                                         <div class="form-group">
                                            <label for="depature_at">@lang('view_pages.depature_at') <span
-                                                    class="text-danger">*</span></label>  
+                                                    class="text-danger">*</span></label>
                                             <div class="input-group">
                                                 <div class="input-group-addon">
                                                 <i class="fa fa-clock-o"></i>
@@ -137,18 +127,18 @@ flex-direction: row-reverse;
                                     <div class="bootstrap-timepicker">
                                         <div class="form-group">
                                            <label for="arrived_at">@lang('view_pages.arrived_at') <span
-                                                    class="text-danger">*</span></label>  
+                                                    class="text-danger">*</span></label>
                                             <div class="input-group">
                                                 <div class="input-group-addon">
                                                 <i class="fa fa-clock-o"></i>
                                                 </div>
-                                             <input type="datetime-local" name="arrived_at" value="{{ old('arrived_at',$item->arrived_at) }}" class="form-control">                           
+                                             <input type="datetime-local" name="arrived_at" value="{{ old('arrived_at',$item->arrived_at) }}" class="form-control">
                                            </div>
                                             <span class="text-danger">{{ $errors->first('arrived_at') }}</span>
                                         </div>
                                      </div>
                                 </div>
-                           </div>  
+                           </div>
                         <div class="row">
                              <div class="col-lg-6" id="seater" style="display: none">
                                 <div class="form-group">
@@ -227,9 +217,9 @@ class="btn btn-primary mr-1 waves-effect waves-light">{{ trans('view_pages.updat
                             <select name="boarding_point[]" @if($k == 0)  id="boarding_point" @endif class="form-control" required>
                             <!-- <option value="" >@lang('view_pages.select_boarding_point')</option> -->
                                 @foreach ($boarding as $board_key=> $boardpoint)
-                                <option value="{{$boardpoint->id}}" {{ $boardpoint->id == $point->boarding_id ? 'selected' : '' }}>{{$boardpoint->boarding_address}}</option>
+                                <option value="{{$boardpoint->id}}" {{ $boardpoint->id == $point->boarding_id ? 'selected' : '' }}>{{$boardpoint->boarding_droping_point_address}}</option>
                                 @endforeach
-                               
+
                             </select>
                         </div>
                     </td>
@@ -275,7 +265,7 @@ class="btn btn-primary mr-1 waves-effect waves-light">{{ trans('view_pages.updat
 </div>
 <div class="tab-pane" id="drop_points">
 
-    
+
  <table class="table surgeTable" id="table_drop_points">
                 <thead>
                     <th> @lang('view_pages.drop_points') <span class="text-danger">*</span></th>
@@ -290,9 +280,9 @@ class="btn btn-primary mr-1 waves-effect waves-light">{{ trans('view_pages.updat
                             <select name="drop_point[]"  id="drop_point" class="form-control" required>
                                 <!-- <option value="" >@lang('view_pages.select_drop_points')</option> -->
                                 @foreach ($dropping as $board_key=> $droppoint)
-                                <option value="{{$droppoint->id}}" {{ $droppoint->id == $Spoint->stop_id ? 'selected' : '' }}>{{$droppoint->boarding_address}}</option>
+                                <option value="{{$droppoint->id}}" {{ $droppoint->id == $Spoint->stop_id ? 'selected' : '' }}>{{$droppoint->boarding_droping_point_address}}</option>
                                 @endforeach
-                                 <!-- <option value="{{$Spoint->stop_id}}" {{ old('boarding_point',$Spoint->stop_id) == $Spoint->stop_id ? 'selected' : '' }}>{{$Spoint->stopPoint->boarding_address}}</option> -->
+
                             </select>
                         </div>
                     </td>
@@ -416,9 +406,9 @@ function getBoardingOptions(boarding) {
         console.error("Boarding points data is undefined.");
         return '<option value="">Boarding points not available</option>';
     }
-    
+
     console.log("Boarding data received:", boarding);
-    
+
     var pointHtml = "";
     if (boarding!=0) {
         for (var i = 0; i < boarding.length; i++) {
@@ -428,8 +418,8 @@ function getBoardingOptions(boarding) {
         console.error("Boarding points data is not in the correct format.");
         pointHtml += '<option value="">Boarding points not available</option>';
     }
-    
-    console.log("Generated HTML:", pointHtml); 
+
+    console.log("Generated HTML:", pointHtml);
     return pointHtml;
 }
 
@@ -751,7 +741,7 @@ function getDroping(value,model=''){
                     if (selectedFromCity && selectedFromCity == element.id) {
                         return;
                     }
-                    if (model && model == element.id) { 
+                    if (model && model == element.id) {
                         selected = 'selected';
                     }
                     $("#to_city_id").append('<option value=' + element.id + ' ' + selected + '>' + element.city + '</option>');
@@ -777,8 +767,8 @@ function getDroping(value,model=''){
         console.log(service_location,from,to);
     })
     $(document).on('change', '#from_city_id', function () {
-        var selectedFromCity = $(this).val(); 
-        var selectedModel = $('#from_city_id option:selected').val(); 
+        var selectedFromCity = $(this).val();
+        var selectedModel = $('#from_city_id option:selected').val();
         getToCity($('#service_location_id').val(), selectedFromCity, selectedModel);
         getBoarding(selectedFromCity);
     });

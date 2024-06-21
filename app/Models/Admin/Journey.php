@@ -36,7 +36,7 @@ class Journey extends Model
     protected $fillable = [ 'journey_number','fleet_id','is_completed','completed_at','is_trip_start','started_at','depature_at','arrived_at','seater_price','sleeper_price','semi_sleeper_price',
     'from','to','from_lat','from_lng','to_lat','to_lng','from_city_id','to_city_id',
     'service_location_id','drop_service_location_id','duration','upper_seater_price','upper_sleeper_price','upper_semi_sleeper_price','driver_id','is_cancelled','cancelled_at','cancellation_reason','is_cancelled'
-       
+
     ];
     /**
      * The relationships that can be loaded with query string filtering includes.
@@ -52,7 +52,7 @@ class Journey extends Model
     * @param string $value
     * @return string
     */
-   
+
 
     protected $searchable = [
         'columns' => [
@@ -91,7 +91,7 @@ class Journey extends Model
     }
     public function getConvertedDepatureAtAttribute()
     {
-       
+
         if ($this->depature_at==null || !auth()->user()->exists()) {
             return null;
         }
@@ -127,6 +127,14 @@ class Journey extends Model
     {
         return $this->hasMany(JourneyBoardingPoint::class, 'journey_id', 'id');
     }
+     public function journeyBoardingPointNext()
+    {
+        return $this->hasMany(JourneyBoardingPoint::class, 'journey_id', 'id');
+    }
+    public function journeyStopPointNext()
+    {
+        return $this->hasMany(JourneyStopPoint::class, 'journey_id', 'id');
+    }
     public function journeyStopPoint()
     {
         return $this->hasMany(JourneyStopPoint::class, 'journey_id', 'id');
@@ -148,7 +156,7 @@ class Journey extends Model
       $semi_sleeper = $this->semi_sleeper_price;
 
       $lowPrice = array_diff(array($seater, $sleeper, $semi_sleeper), array(null));
-    
+
        return min($lowPrice);
 
 
@@ -160,7 +168,7 @@ class Journey extends Model
         $splitdate = explode(" ",$depature);
 
         $date = $splitdate[0];
-      
+
 
         return $date;
     }
@@ -171,7 +179,7 @@ class Journey extends Model
         $splitdate = explode(" ",$arrived);
 
         $date = $splitdate[0];
-      
+
 
         return $date;
     }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJourneyBoradingPointsTable extends Migration
+class CreateJourneyStopPointsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,18 @@ class CreateJourneyBoradingPointsTable extends Migration
      */
     public function up()
     {
-        Schema::create('journey_borading_points', function (Blueprint $table) {
+        Schema::create('journey_stop_points', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('journey_id');
-            $table->uuid('boarding_id');
-            $table->time('boarding_time');
+            $table->uuid('stop_id');
+            $table->time('stop_time');
             $table->timestamps();
 
-            $table->foreign('boarding_id')
+            $table->foreign('stop_id')
                     ->references('id')
-                    ->on('boardingpoints')
-                    ->onDelete('cascade'); 
-           
+                    ->on('boarding_droping_point')
+                    ->onDelete('cascade');
+
             $table->foreign('journey_id')
                     ->references('id')
                     ->on('journeys')
@@ -39,6 +39,6 @@ class CreateJourneyBoradingPointsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('journey_borading_points');
+        Schema::dropIfExists('journey_stop_points');
     }
 }
