@@ -97,6 +97,10 @@ flex-direction: row-reverse;
                                         <div class="form-group">
                                                 <label for="from_city_id" class="">@lang('view_pages.from') <sup>*</sup></label>
                                                 <select name="from_city_id" id="from_city_id" class="form-control" required>
+                                                    <option value="" >@lang('view_pages.from')</option>
+                                                    @foreach($cities as $key=>$cities)
+                                                    <option value="{{$cities->id}}">{{$cities->name}}</option>
+                                                    @endforeach
                                                 </select>
                                             <span class="text-danger">{{ $errors->first('from_city_id') }}</span>
 
@@ -106,6 +110,10 @@ flex-direction: row-reverse;
                                         <div class="form-group">
                                                 <label for="to_city_id" class="">@lang('view_pages.to') <sup>*</sup></label>
                                                 <select name="to_city_id" id="to_city_id" class="form-control" required>
+                                                    <option value="" >@lang('view_pages.from')</option>
+                                                    @foreach($cities2 as $key=>$cities)
+                                                    <option value="{{$cities->id}}">{{$cities->name}}</option>
+                                                    @endforeach
                                                 </select>
                                             <span class="text-danger">{{ $errors->first('to_city_id') }}</span>
                                         </div>
@@ -358,7 +366,7 @@ class="btn btn-primary mr-1 waves-effect waves-light">{{ trans('view_pages.creat
                     if (boarding_expt_array.indexOf(boarding[i].id) !== -1) {
                     }
                     else{
-                        pointHtml += '<option value="'+boarding[i].id +'">'+boarding[i].boarding_address+'</option>';
+                        pointHtml += '<option value="'+boarding[i].id +'">'+boarding[i].boarding_droping_point_address+'</option>';
                     }
 
 
@@ -436,7 +444,7 @@ class="btn btn-primary mr-1 waves-effect waves-light">{{ trans('view_pages.creat
                     if (dropping_expt_array.indexOf(dropping[i].id) !== -1) {
                     }
                     else{
-                        pointHtml += '<option value="'+dropping[i].id +'">'+dropping[i].boarding_address+'</option>';
+                        pointHtml += '<option value="'+dropping[i].id +'">'+dropping[i].boarding_droping_point_address+'</option>';
                     }
 
 
@@ -719,7 +727,7 @@ function getBoarding(value,model=''){
                     selected ='selected';
                      boarding_expt_array.push(value.id);
                 }
-                $("#boarding_point").append('<option value='+value.id+' '+selected+'>'+value.boarding_address+'</option>')
+                $("#boarding_point").append('<option value='+value.id+' '+selected+'>'+value.boarding_droping_point_address+'</option>')
                 });
                 // $("#boarding_point").append('<option value="" selected disabled>Select Boarding Point</option>');
                 // result.forEach(element => {
@@ -761,7 +769,7 @@ function getDroping(value,model=''){
                     selected ='selected';
                     dropping_expt_array.push(value.id);
                 }
-                $("#drop_point").append('<option value='+value.id+' '+selected+'>'+value.boarding_address+'</option>')
+                $("#drop_point").append('<option value='+value.id+' '+selected+'>'+value.boarding_droping_point_address +'</option>')
                 });
                 // $("#drop_point").append('<option value="" selected disabled>Select Drop Point</option>');
                 // result.forEach(element => {
@@ -828,7 +836,7 @@ function getDroping(value,model=''){
         url: "{{ route('getCity') }}",
         type: 'GET',
         data: {
-            'service_location_id': value,
+            'city_id': value,
         },
         success: function(result) {
             $('#to_city_id').empty();

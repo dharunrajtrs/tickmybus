@@ -13,15 +13,17 @@ use App\Base\Services\ImageUploader\ImageUploaderContract;
 use App\Base\Filters\Admin\RequestFilter;
 use App\Models\Admin\Journey;
 use App\Models\Admin\Fleet;
+use App\Models\Admin\CommanFleet;
 use App\Models\Admin\Driver;
 use App\Models\Admin\Owner;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\Journey\CreateJourneyRequest;
 use App\Models\Admin\FleetSeatLayout;
 use App\Models\Admin\ServiceLocation;
-use App\Models\City;
+use App\Models\AllCities;
 use Illuminate\Validation\ValidationException;
 use App\Models\BoardingPoint;
+use App\Models\Admin\BoardingDropingPoint;
 use App\Jobs\Notifications\SendPushNotification;
 use App\Models\Admin\JourneyBoardingPoint;
 use App\Models\Admin\JourneyStopPoint;
@@ -134,15 +136,16 @@ class JourneyController extends BaseController
         $user_checking_id=auth()->user()->id;
         $owner = Owner::where('user_id',$user_checking_id)->first();
         $fleets = Fleet::where('owner_id',$owner->id)->whereApprove(true)->get();
-        $cities=AllCities::all();
+        $cities=AllCities::whereActive(true)->get();
+        $cities2=AllCities::whereActive(true)->get();
         $main_menu = 'view_journey';
         $sub_menu = 'journey';
 
         $services = ServiceLocation::whereActive(true)->get();
 
-        $cities = City::whereActive(true)->get();
+     //   $cities = City::whereActive(true)->get();
 
-        return view('admin.journey.create', compact('page', 'main_menu', 'sub_menu','fleets','services','cities'));
+        return view('admin.journey.create', compact('page', 'main_menu', 'sub_menu','fleets','services','cities','cities2'));
     }
 
     /**
@@ -230,10 +233,11 @@ class JourneyController extends BaseController
     {
         $fleet_id = request()->fleet;
         $fleets= Fleet::whereId($fleet_id)->first();
-
+        $fleet_id= $fleets->comman_fleet_id;
+       $comman_fleet = CommanFleet::whereId($fleet_id)->first();
         $seatTypes = ['seater', 'semi_sleeper', 'sleeper'];
 
-        $upperSeatTypeExists = FleetSeatLayout::where('fleet_id', $fleet_id)
+        $upperSeatTypeExists = FleetSeatLayout::where('fleet_id', $comman_fleet->id)
             ->where('deck_type', 'upper')
             ->whereIn('seat_type', $seatTypes)
             ->distinct('seat_type')
@@ -241,7 +245,7 @@ class JourneyController extends BaseController
             ->toArray();
 
 
-        $seatTypeExists = FleetSeatLayout::where('fleet_id', $fleet_id)
+        $seatTypeExists = FleetSeatLayout::where('fleet_id', $comman_fleet->id)
             ->where('deck_type', 'lower')
             ->whereIn('seat_type', $seatTypes)
             ->distinct('seat_type')
@@ -250,7 +254,7 @@ class JourneyController extends BaseController
             // dd($seatTypeExists);
 
         return response()->json(array(
-			'fleets' => $fleets->seat_type,
+			'fleets' => $comman_fleet->seat_type,
 			'upperSeatTypeExists' => $upperSeatTypeExists,
             'seatTypeExists' => $seatTypeExists,
 		));
@@ -259,9 +263,17 @@ class JourneyController extends BaseController
     public function getBoarding()
     {
         $city_id = request()->city_id;
-        $boarding = BoardingPoint::where('city_id', $city_id)->get();
-       return $boarding;
+        $boardingPoint = BoardingPoint::where('city_id', $city_id)->first();
+
+        $boarding = BoardingDropingPoint::where('boarding_id', $boardingPoint->id)
+            ->select('id', 'boarding_id', 'admin_boarding_id', 'boarding_droping_time', 'boarding_droping_point_address', 'created_at', 'updated_at')
+            ->get();
+
+        // dd($boarding->toArray());
+
+        return $boarding;
     }
+
 
 
     public function getById(Journey $journey)

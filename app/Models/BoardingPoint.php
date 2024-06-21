@@ -112,6 +112,10 @@ class BoardingPoint extends Model
     {
         return $this->hasMany(BoardingDropingPoint::class, 'boarding_id', 'id');
     }
+    public function boardingDropingPoints()
+    {
+        return $this->hasMany(BoardingDropingPoint::class, 'boarding_id', 'id');
+    }
 
 
 }

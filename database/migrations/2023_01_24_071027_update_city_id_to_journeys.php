@@ -25,12 +25,12 @@ class UpdateCityIdToJourneys extends Migration
 
             $table->foreign('from_city_id')
                     ->references('id')
-                    ->on('cities')
+                    ->on('all_cities')
                     ->onDelete('cascade');
 
             $table->foreign('to_city_id')
                    ->references('id')
-                   ->on('cities')
+                   ->on('all_cities')
                    ->onDelete('cascade');
         });
     }
