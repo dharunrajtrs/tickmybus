@@ -80,6 +80,24 @@ flex-direction: row-reverse;
                                         </select>
                                      </div>
                                     </div> --}}
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="name">@lang('view_pages.schedule_name') <span class="text-danger">*(eg:Chennai to Coimbatore)</span></label>
+                                            <input class="form-control" type="text" id="schedule_name" name="schedule_name"
+                                                value="{{ old('schedule_name') }}" required
+                                                placeholder="@lang('view_pages.enter') @lang('view_pages.schedule_name')">
+                                            <span class="text-danger">{{ $errors->first('schedule_name') }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="name">@lang('view_pages.display_name') <span class="text-danger">*(eg:CSK to CBT)</span></label>
+                                            <input class="form-control" type="text" id="display_name" name="display_name"
+                                                value="{{ old('display_name') }}" required
+                                                placeholder="@lang('view_pages.enter') @lang('view_pages.display_name')">
+                                            <span class="text-danger">{{ $errors->first('display_name') }}</span>
+                                        </div>
+                                    </div>
                                     <div class="col-sm-12 float-left mb-md-3">
                                       <div class="form-group">
                                         <label for="fleet_id">@lang('view_pages.select_bus')
@@ -93,61 +111,10 @@ flex-direction: row-reverse;
                                         </select>
                                         </div>
                                         </div>
-                                 <div class="col-sm-6">
-                                        <div class="form-group">
-                                                <label for="from_city_id" class="">@lang('view_pages.from') <sup>*</sup></label>
-                                                <select name="from_city_id" id="from_city_id" class="form-control" required>
-                                                    <option value="" >@lang('view_pages.from')</option>
-                                                    @foreach($cities as $key=>$cities)
-                                                    <option value="{{$cities->id}}">{{$cities->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            <span class="text-danger">{{ $errors->first('from_city_id') }}</span>
 
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                                <label for="to_city_id" class="">@lang('view_pages.to') <sup>*</sup></label>
-                                                <select name="to_city_id" id="to_city_id" class="form-control" required>
-                                                    <option value="" >@lang('view_pages.from')</option>
-                                                    @foreach($cities2 as $key=>$cities)
-                                                    <option value="{{$cities->id}}">{{$cities->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            <span class="text-danger">{{ $errors->first('to_city_id') }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                    <div class="bootstrap-timepicker">
-                                        <div class="form-group">
-                                           <label for="depature_at">@lang('view_pages.depature_at') <span
-                                                    class="text-danger">*</span></label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                <i class="fa fa-clock-o"></i>
-                                                </div>
-                                                <input type="datetime-local" name="depature_at" value="{{ old('depature_at') }}" class="form-control">
-                                            </div>
-                                            <span class="text-danger">{{ $errors->first('depature_at') }}</span>
-                                        </div>
-                                    </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                    <div class="bootstrap-timepicker">
-                                        <div class="form-group">
-                                           <label for="arrived_at">@lang('view_pages.arrived_at') <span
-                                                    class="text-danger">*</span></label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                <i class="fa fa-clock-o"></i>
-                                                </div>
-                                                <input type="datetime-local" name="arrived_at" value="{{ old('arrived_at') }}" class="form-control">
-                                            </div>
-                                            <span class="text-danger">{{ $errors->first('arrived_at') }}</span>
-                                        </div>
-                                     </div>
-                                </div>
+
+
+
                            </div>
                 <div class="row">
                  <div class="col-lg-6" id="seater" style="display: none">
@@ -213,6 +180,36 @@ class="btn btn-primary mr-1 waves-effect waves-light">{{ trans('view_pages.creat
 </ul>
 </div>
 <div class="tab-pane" id="boarding_points">
+    <div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+                <label for="from_city_id" class="">@lang('view_pages.from') <sup>*</sup></label>
+                <select name="from_city_id" id="from_city_id" class="form-control" required>
+                    <option value="" >@lang('view_pages.from')</option>
+                    @foreach($cities2 as $key=>$cities)
+                    <option value="{{$cities->id}}">{{$cities->name}}</option>
+                    @endforeach
+                </select>
+            <span class="text-danger">{{ $errors->first('from_city_id') }}</span>
+
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="bootstrap-timepicker">
+            <div class="form-group">
+               <label for="depature_at">@lang('view_pages.depature_at') <span
+                        class="text-danger">*</span></label>
+                <div class="input-group">
+                    <div class="input-group-addon">
+                    <i class="fa fa-clock-o"></i>
+                    </div>
+                    <input type="datetime-local" name="depature_at" value="{{ old('depature_at') }}" class="form-control">
+                </div>
+                <span class="text-danger">{{ $errors->first('depature_at') }}</span>
+            </div>
+        </div>
+        </div>
+    </div>
             <table class="table surgeTable" id="table">
                 <thead>
                     <th> @lang('view_pages.boarding_point') <span class="text-danger">*</span></th>
@@ -268,7 +265,35 @@ class="btn btn-primary mr-1 waves-effect waves-light">{{ trans('view_pages.creat
 
 <!-- drop points start -->
 <div class="tab-pane" id="drop_points">
-
+    <div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+                <label for="to_city_id" class="">@lang('view_pages.to') <sup>*</sup></label>
+                <select name="to_city_id" id="to_city_id" class="form-control" required>
+                    <option value="" >@lang('view_pages.to')</option>
+                    @foreach($cities2 as $key=>$cities)
+                    <option value="{{$cities->id}}">{{$cities->name}}</option>
+                    @endforeach
+                </select>
+            <span class="text-danger">{{ $errors->first('to_city_id') }}</span>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="bootstrap-timepicker">
+            <div class="form-group">
+               <label for="arrived_at">@lang('view_pages.arrived_at') <span
+                        class="text-danger">*</span></label>
+                <div class="input-group">
+                    <div class="input-group-addon">
+                    <i class="fa fa-clock-o"></i>
+                    </div>
+                    <input type="datetime-local" name="arrived_at" value="{{ old('arrived_at') }}" class="form-control">
+                </div>
+                <span class="text-danger">{{ $errors->first('arrived_at') }}</span>
+            </div>
+         </div>
+    </div>
+</div>
  <table class="table surgeTable" id="table_drop_points">
                 <thead>
                     <th> @lang('view_pages.drop_points') <span class="text-danger">*</span></th>

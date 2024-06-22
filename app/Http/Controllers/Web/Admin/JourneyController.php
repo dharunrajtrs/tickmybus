@@ -166,7 +166,7 @@ class JourneyController extends BaseController
 
         // dd($request->all());
 
-        $created_params = $request->only(['fleet_id','depature_at','arrived_at','from','from_lat','from_lng','to','to_lat','to_lng','sleeper_price','seater_price','semi_sleeper_price','upper_seater_price','upper_sleeper_price','upper_semi_sleeper_price','from_city_id','to_city_id','service_location_id',]);
+        $created_params = $request->only(['fleet_id','depature_at','arrived_at','from','from_lat','from_lng','to','to_lat','to_lng','sleeper_price','seater_price','semi_sleeper_price','upper_seater_price','upper_sleeper_price','upper_semi_sleeper_price','from_city_id','to_city_id','service_location_id','schedule_name','display_name']);
 
         // Get last journeys request_number
         $journey_number = $this->journey->orderBy('created_at', 'DESC')->pluck('journey_number')->first();

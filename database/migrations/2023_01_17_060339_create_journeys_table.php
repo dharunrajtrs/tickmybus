@@ -18,6 +18,8 @@ class CreateJourneysTable extends Migration
             $table->string('journey_number');
             $table->uuid('fleet_id')->nullable();
             $table->boolean('is_completed')->default(0);
+            $table->string('schedule_name')->nullable();
+            $table->string('display_name')->nullable();
             $table->timestamp('completed_at')->nullable();
             $table->boolean('is_trip_start')->default(0);
             $table->timestamp('started_at')->nullable();
@@ -32,7 +34,7 @@ class CreateJourneysTable extends Migration
                 ->references('id')
                 ->on('fleets')
                 ->onDelete('cascade');
-            
+
         });
     }
 

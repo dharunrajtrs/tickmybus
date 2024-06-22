@@ -35,7 +35,7 @@ class Journey extends Model
      */
     protected $fillable = [ 'journey_number','fleet_id','is_completed','completed_at','is_trip_start','started_at','depature_at','arrived_at','seater_price','sleeper_price','semi_sleeper_price',
     'from','to','from_lat','from_lng','to_lat','to_lng','from_city_id','to_city_id',
-    'service_location_id','drop_service_location_id','duration','upper_seater_price','upper_sleeper_price','upper_semi_sleeper_price','driver_id','is_cancelled','cancelled_at','cancellation_reason','is_cancelled'
+    'service_location_id','drop_service_location_id','duration','upper_seater_price','upper_sleeper_price','upper_semi_sleeper_price','driver_id','is_cancelled','cancelled_at','cancellation_reason','is_cancelled','schedule_name','display_name'
 
     ];
     /**

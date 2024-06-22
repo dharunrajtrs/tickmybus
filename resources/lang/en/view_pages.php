@@ -893,4 +893,7 @@ return array(
 'boarding_point_droping_point'=> 'Boarding Point /Droping Point',
 'seat_layout_name'=> 'Seat Layout Name',
 'seat_layout_options'=> 'Seat Layout Options',
+'schedule_name'=> 'Schedule Name',
+'display_name'=> 'Display Name',
+'droping_points'=> 'Droping Points',
 );
