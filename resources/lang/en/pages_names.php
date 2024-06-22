@@ -201,4 +201,7 @@ return array (
 'set_up'=>'SetUp',
 'rotues'=>'Rotues',
 'add_journey'=>'Add Journey',
+'schedule'=>'Schedule',
+'add_schedule'=>'Add Schedule',
+'edit_schedule'=>'Edit Schedule',
 );
