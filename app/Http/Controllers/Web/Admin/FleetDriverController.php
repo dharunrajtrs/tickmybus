@@ -172,7 +172,9 @@ class FleetDriverController extends BaseController
         // $admins = User::doesNotBelongToRole(RoleSlug::SUPER_ADMIN)->get();
         $services = ServiceLocation::companyKey()->whereActive(true)->get();
         $countries = Country::all();
-        $owner = Owner::whereApprove(true)->get();
+        $user_checking_id=auth()->user()->id;
+        $owner = Owner::where('user_id',$user_checking_id)->first();
+        //$owner = Owner::whereApprove(true)->get();
 
         $main_menu = 'fleet-drivers';
         $sub_menu = 'driver_details';
@@ -188,10 +190,10 @@ class FleetDriverController extends BaseController
      */
   public function store(CreateDriverRequest $request)
     {
-        // dd($request->all());
+         //dd($request->all());
 
-        $created_params = $request->only(['service_location_id', 'name','mobile','email','address','gender', 'owner_id', 'country', 'city','postal_code' ]);
-
+        $created_params = $request->only([ 'name','mobile','email','address','gender', 'owner_id', 'city','postal_code' ]);
+$created_params['approve'] = 1;
 
         $validate_exists_email = $this->user->belongsTorole(Role::DRIVER)->where('email', $request->email)->exists();
 
@@ -206,9 +208,9 @@ class FleetDriverController extends BaseController
         $created_params['vehicle_type'] = $request->input('type');
         // $created_params['postal_code'] = $request->postal_code;
 
-        $service_location = ServiceLocation::find($request->service_location_id);
 
-        $country_id = $service_location->country;
+
+
 
         $user = $this->user->create(['name'=>$request->input('name'),
             'email'=>$request->input('email'),
@@ -217,7 +219,7 @@ class FleetDriverController extends BaseController
             // 'password' => bcrypt($request->input('password')),
             // 'company_key'=>auth()->user()->company_key,
             'refferal_code'=> str_random(6),
-            'country'=>$country_id,
+
         ]);
 
 
@@ -276,12 +278,12 @@ class FleetDriverController extends BaseController
         $user_param = $request->only(['profile']);
 
         $user_param['profile']=null;
-        
+
         if ($uploadedFile = $this->getValidatedUpload('profile_picture', $request)) {
             $user_param['profile_picture'] = $this->imageUploader->file($uploadedFile)
                 ->saveProfilePicture();
         }
-        
+
         $driver->update(['name'=>$request->input('name'),
             'email'=>$request->input('email'),
             'mobile'=>$request->input('mobile'),
@@ -448,7 +450,7 @@ class FleetDriverController extends BaseController
         // dd($item);
 
         $amount = DriverWallet::where('user_id',$driver->id)->first();
-        
+
         if ($amount == null) {
 
          $card = [];

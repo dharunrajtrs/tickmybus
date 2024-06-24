@@ -26,20 +26,7 @@
 <form  method="post" class="form-horizontal" action="{{url('fleet-drivers/store')}}" enctype="multipart/form-data">
 {{csrf_field()}}
 <div class="row">
-<div class="col-6">
-<div class="form-group">
-<label for="admin_id">@lang('view_pages.select_area')
-    <span class="text-danger">*</span>
-</label>
-<select name="service_location_id" id="service_location_id" class="form-control" onchange="getypesAndCompanys()" required>
-    <option value="" selected disabled>@lang('view_pages.select_area')</option>
-    @foreach($services as $key=>$service)
-    <option value="{{$service->id}}" {{ old('service_location_id') == $service->id ? 'selected' : '' }}>{{$service->name}}</option>
-    @endforeach
-</select>
-</div>
-</div>
-<div class="col-sm-6">
+<div class="col-sm-12">
     <div class="form-group">
     <label for="name">@lang('view_pages.name') <span class="text-danger">*</span></label>
     <input class="form-control" type="text" id="name" name="name" value="{{old('name')}}" required="" placeholder="@lang('view_pages.enter_name')">
@@ -98,37 +85,28 @@
 
         </div>
     </div>
- <div class="col-6">
-            <div class="form-group">
-               <label for="country">@lang('view_pages.select_country')
-                <span class="text-danger">*</span>
-              </label>
-            <select name="country" id="country" class="form-control" required>
-                <option value="" >@lang('view_pages.select_country')</option>
-                @foreach($countries as $key=>$country)
-                <option value="{{$country->id}}" {{ old('country') == $country->id ? 'selected' : '' }}>{{$country->name}}</option>
-                @endforeach
-            </select>
-            <span class="text-danger">{{ $errors->first('country') }}</span>
+    <div class="col-sm-6">
+    <div  class="form-group">
+        <label for="address">@lang('view_pages.address') <span
+        class="text-danger">*</span></label>
+        <input class="form-control" type="text" id="address"
+        name="address" value="{{ old('address') }}"
+        placeholder="@lang('view_pages.enter') @lang('view_pages.address')">
+        <span
+        class="text-danger">{{ $errors->first('address') }}</span>
+        <input type="hidden" class="form-control" id="address_lat"
+        name="address_lat">
+        <input type="hidden" class="form-control" id="address_lng"
+        name="address_lng">
 
-            </div>
-            </div> 
+        </div>
+    </div>
 </div>
 
 
 
-{{-- <div class="row"> --}}
 
 
- {{--  <div class="col-sm-6">
-            <div class="form-group">
-            <label for="state">@lang('view_pages.state')</label>
-            <input class="form-control" type="text" id="state" name="state" value="{{old('state')}}" required="" placeholder="@lang('view_pages.enter_state')">
-            <span class="text-danger">{{ $errors->first('state') }}</span>
-
-        </div>
-    </div>
-</div> --}}
 
  <div class="row">
       <div class="col-sm-6">
@@ -147,22 +125,21 @@
 
         </div>
     </div>
-</div> 
+</div>
 
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-6" style="display: none">
         <div class="form-group">
             <label for="owner">@lang('view_pages.owner')
                 <span class="text-danger">*</span>
             </label>
             <select name="owner_id" id="owner_id" class="form-control" required>
-                <option value="" >@lang('view_pages.select_owner')</option>
-                @foreach($owner as $key=>$owners)
-                <option value="{{$owners->id}}" {{ old('owners') == $owners->id ? 'selected' : '' }}>{{$owners->owner_name}}</option>
-                @endforeach
+
+                <option value="{{$owner->id}}" selected>{{$owner->name}}</option>
+
             </select>
             </div>
-       </div>  
+       </div>
 <div class="col-sm-6">
     <label for="profile_picture">@lang('view_pages.profile')</label><br>
     <img id="blah" src="#" alt=""><br>

@@ -24,7 +24,7 @@ class CreateDriversTable extends Migration
             $table->string('address', 500)->nullable();
             $table->string('state', 50)->nullable();
             $table->string('city', 50)->nullable();
-            $table->unsignedInteger('country');
+           
             $table->string('postal_code')->nullable();
             $table->enum('gender', ['male','female','others']);
             $table->timestamp('last_trip_date')->nullable();
@@ -34,27 +34,20 @@ class CreateDriversTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-                   
+
            $table->foreign('owner_id')
                     ->references('id')
                     ->on('owners')
                     ->onDelete('cascade');
 
-            
+
             $table->foreign('user_id')
                     ->references('id')
                     ->on('users')
                     ->onDelete('cascade');
 
-            $table->foreign('country')
-                    ->references('id')
-                    ->on('countries')
-                    ->onDelete('cascade');
 
-            $table->foreign('service_location_id')
-                    ->references('id')
-                    ->on('service_locations')
-                    ->onDelete('cascade');
+
         });
     }
 

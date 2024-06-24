@@ -16,10 +16,6 @@
 <span style="float: right;">
 </span>
 </th>
-<th> @lang('view_pages.area')
-<span style="float: right;">
-</span>
-</th>
 <th> @lang('view_pages.email')
 <span style="float: right;">
 </span>
@@ -35,7 +31,7 @@
 </span>
 </th>
 <th> @lang('view_pages.approve_status')<span style="float: right;"></span></th>
-<th> @lang('view_pages.declined_reason')<span style="float: right;"></span></th>
+
 <th> @lang('view_pages.rating')
 <span style="float: right;">
 </span>
@@ -65,11 +61,7 @@
 <tr>
 <td>{{ $key+1 }} </td>
 <td>{{$result->name}}</td>
-@if($result->serviceLocation)
-<td>{{$result->serviceLocation->name}}</td>
-@else
-<td>--</td>
-@endif
+
 <td>{{$result->email}}</td>
 @if(env('APP_FOR')=='demo')
 <td>**********</td>
@@ -87,17 +79,13 @@
 @else
 <td><button class="btn btn-danger btn-sm">{{ trans('view_pages.disapproved') }}</button></td>
 @endif
-@if($result->reason)
-<td>{{$result->reason}}</td>
-@else
-<td>--</td>
-@endif
+
 <td>
-  @php $rating = $result->rating($result->user_id); @endphp  
+  @php $rating = $result->rating($result->user_id); @endphp
 
             @foreach(range(1,5) as $i)
                 <span class="fa-stack" style="width:1em">
-                   
+
                     @if($rating > 0)
                         @if($rating > 0.5)
                             <i class="fa fa-star checked"></i>
@@ -109,7 +97,7 @@
                     @endif
                     @php $rating--; @endphp
                 </span>
-            @endforeach 
+            @endforeach
 
 <td>
 
@@ -117,14 +105,14 @@
 </button>
 @if($result->approve == 1)
     <div class="dropdown-menu w-48 ">
-         @if(auth()->user()->can('edit-fleet-drivers'))         
+         @if(auth()->user()->can('edit-fleet-drivers'))
 
         <a class="dropdown-item" href="{{url('fleet-drivers',$result->id)}}">
             <i class="fa fa-pencil"></i>@lang('view_pages.edit')
         </a>
         @endif
  @if (!auth()->user()->hasRole('owner'))
-        @if(auth()->user()->can('toggle-fleet-drivers'))         
+        @if(auth()->user()->can('toggle-fleet-drivers'))
         <a class="dropdown-item decline" data-reason="{{ $result->reason }}" data-id="{{ $result->id }}" href="{{url('fleet-drivers/toggle_approve',['driver'=>$result->id,'approval_status'=>0])}}">
         <i class="fa fa-dot-circle-o"></i>@lang('view_pages.disapproved')</a>
 
@@ -132,29 +120,29 @@
         <i class="fa fa-dot-circle-o"></i>@lang('view_pages.approved')</a>
         @endif
   @endif
-        @if(auth()->user()->can('delete-fleet-drivers'))         
+        @if(auth()->user()->can('delete-fleet-drivers'))
         <a class="dropdown-item sweet-delete" href="#" data-url="{{url('fleet-drivers/delete',$result->id)}}">
-        <i class="fa fa-trash-o"></i>@lang('view_pages.delete')</a> 
+        <i class="fa fa-trash-o"></i>@lang('view_pages.delete')</a>
         @endif
-<!--         @if(auth()->user()->can('fleet-drivers--request-list'))         
+<!--         @if(auth()->user()->can('fleet-drivers--request-list'))
         <a class="dropdown-item" href="{{url('fleet-drivers/request-list',$result->id)}}">
-        <i class="fa fa-dot-circle-o"></i>@lang('view_pages.request_list')</a> 
+        <i class="fa fa-dot-circle-o"></i>@lang('view_pages.request_list')</a>
         @endif -->
-<!--         @if(auth()->user()->can('fleet-driver-payment-history'))         
+<!--         @if(auth()->user()->can('fleet-driver-payment-history'))
         <a class="dropdown-item" href="{{url('fleet-drivers/payment-history',$result->id)}}">
         <i class="fa fa-dot-circle-o"></i>@lang('view_pages.driver_payment_history')</a>
         @endif -->
     </div>
 @else
             <div class="dropdown-menu">
-     @if(auth()->user()->can('edit-fleet-drivers'))         
+     @if(auth()->user()->can('edit-fleet-drivers'))
 
         <a class="dropdown-item" href="{{url('fleet-drivers',$result->id)}}">
             <i class="fa fa-pencil"></i>@lang('view_pages.edit')
         </a>
  @endif
 @if (!auth()->user()->hasRole('owner'))
-    @if(auth()->user()->can('toggle-fleet-drivers'))         
+    @if(auth()->user()->can('toggle-fleet-drivers'))
         <a class="dropdown-item decline" data-reason="{{ $result->reason }}" data-id="{{ $result->id }}" href="{{url('fleet-drivers/toggle_approve',['driver'=>$result->id,'approval_status'=>0])}}">
         <i class="fa fa-dot-circle-o"></i>@lang('view_pages.disapproved')</a>
 
@@ -162,15 +150,15 @@
         <i class="fa fa-dot-circle-o"></i>@lang('view_pages.approved')</a>
      @endif
 @endif
-    @if(auth()->user()->can('delete-fleet-drivers'))         
+    @if(auth()->user()->can('delete-fleet-drivers'))
         <a class="dropdown-item sweet-delete" href="#" data-url="{{url('fleet-drivers/delete',$result->id)}}">
-        <i class="fa fa-trash-o"></i>@lang('view_pages.delete')</a> 
+        <i class="fa fa-trash-o"></i>@lang('view_pages.delete')</a>
     @endif
 
 </div>
 @endif
-                     
-</td>   
+
+</td>
 </a>
 </tr>
 @endforeach

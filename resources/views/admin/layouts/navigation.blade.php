@@ -104,11 +104,12 @@ if(str_contains((string)request()->path(),'dashboard')){
          </li>
 
          @endif
-          {{-- @if(auth()->user()->can('manage-driver-needed-document'))
+         @if(auth()->user()->can('manage-driver-needed-document'))
           <li class="{{ 'needed_document' == $sub_menu ? 'active' : '' }}">
             <a href="{{url('/needed_doc')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.needed_doc')</a>
           </li>
           @endif
+          {{--
            @if(auth()->user()->can('manage-boarding-point'))
           <li class="{{ 'boarding_point' == $sub_menu ? 'active' : '' }}">
             <a href="{{url('/boarding_point')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.boarding_point')</a>
@@ -286,6 +287,7 @@ if(str_contains((string)request()->path(),'dashboard')){
         </ul>
       </li>
     @endif --}}
+    @if(auth()->user()->roles->pluck('slug')->contains('owner'))
        @if(auth()->user()->can('fleet-drivers-menu'))
         <li class="treeview {{ 'fleet-drivers' == $main_menu ? 'active menu-open' : '' }}">
           <a href="javascript: void(0);">
@@ -299,18 +301,19 @@ if(str_contains((string)request()->path(),'dashboard')){
           <ul class="treeview-menu">
             @if(auth()->user()->can('view-approved-fleet-drivers'))
             <li class="{{ 'driver_details' == $sub_menu ? 'active' : '' }}">
-              <a href="{{url('/fleet-drivers')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.approved_drivers')</a>
+              <a href="{{url('/fleet-drivers')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.add_drivers')</a>
             </li>
             @endif
-
-            {{-- @if(auth()->user()->can('fleet-drivers-waiting-for-approval'))
+{{--
+         @if(auth()->user()->can('fleet-drivers-waiting-for-approval'))
             <li class="{{ 'driver_approval_pending' == $sub_menu ? 'active' : '' }}">
               <a href="{{url('/fleet-drivers/waiting-for-approval')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.approval_pending_drivers')</a>
             </li>
-            @endif --}}
-          </ul>
+            @endif
+          </ul> --}}
 
         </li>
+      @endif
       @endif
     {{-- @if(auth()->user()->can('user-menu'))
       <li class="treeview {{ 'users' == $main_menu ? 'active menu-open' : '' }}">

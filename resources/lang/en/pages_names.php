@@ -204,4 +204,5 @@ return array (
 'schedule'=>'Schedule',
 'add_schedule'=>'Add Schedule',
 'edit_schedule'=>'Edit Schedule',
+'add_drivers'=>'Add Drivers',
 );

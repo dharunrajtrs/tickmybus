@@ -896,4 +896,5 @@ return array(
 'schedule_name'=> 'Schedule Name',
 'display_name'=> 'Display Name',
 'droping_points'=> 'Droping Points',
+'add_drivers'=> 'Add Drivers',
 );

@@ -76,7 +76,7 @@ class JourneyController extends BaseController
     public function fetch(QueryFilterContract $queryFilter)
     {
 
-        if (access()->hasRole(RoleSlug::SUPER_ADMIN))
+        if (access()->hasRole(RoleSlug::OWNER))
         {
               $query = Journey::where('is_completed', false)->orderBy('created_at', 'desc');
         } else {

@@ -27,23 +27,8 @@
                                 enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="admin_id">@lang('view_pages.select_area')
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <select name="service_location_id" id="service_location_id" class="form-control"
-                                                onchange="getypesAndCompanys()" required>
-                                                <option value="" selected disabled>@lang('view_pages.select_area')</option>
-                                                @foreach ($services as $key => $service)
-                                                    <option value="{{ $service->id }}"
-                                                        {{ old('service_location_id', $item->service_location_id) == $service->id ? 'selected' : '' }}>
-                                                        {{ $service->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
+
+                                    <div class="col-sm-12">
                                         <div class="form-group">
                                             <label for="name">@lang('view_pages.name') <span class="text-danger">*</span></label>
                                             <input class="form-control" type="text" id="name" name="name"
@@ -53,21 +38,7 @@
 
                                         </div>
                                     </div>
-                                </div>
-       <!--                              <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="address">@lang('view_pages.address') <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" id="address" name="address"
-                                                value="{{ old('address', $item->address) }}" required=""
-                                                placeholder="@lang('view_pages.enter_address')">
-                                            <span class="text-danger">{{ $errors->first('address') }}</span>
-
-                                        </div>
-                                    </div>
-                                 </div> -->
-
-                                <div class="row">
-                                   <!--  <div class="col-6">
+                                      <div class="col-6">
                                         <div class="form-group">
                                             <label for="gender">@lang('view_pages.gender')
                                                 <span class="text-danger">*</span>
@@ -87,7 +58,23 @@
                                             <span class="text-danger">{{ $errors->first('gender') }}</span>
 
                                         </div>
-                                    </div> -->
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="address">@lang('view_pages.address') <span class="text-danger">*</span></label>
+                                            <input class="form-control" type="text" id="address" name="address"
+                                                value="{{ old('address', $item->address) }}" required=""
+                                                placeholder="@lang('view_pages.enter_address')">
+                                            <span class="text-danger">{{ $errors->first('address') }}</span>
+
+                                        </div>
+                                    </div>
+                                </div>
+       <!--
+                                 </div> -->
+
+                                <div class="row">
+
                                 <div class="col-6">
                                         <div class="form-group">
                                              <label for="name">@lang('view_pages.mobile') <span class="text-danger">*</span></label>
@@ -107,21 +94,19 @@
                                             <span class="text-danger">{{ $errors->first('email') }}</span>
                                         </div>
                                     </div>
-                                 <div class="col-sm-6">
+                                 <div class="col-sm-6" style="display: none">
                                     <div class="form-group">
                                         <label for="owner_id">@lang('view_pages.owner')
                                             <span class="text-danger">*</span>
                                         </label>
                                         <select name="owner_id" id="owner_id" class="form-control" required>
-                                            <option value="">@lang('view_pages.select_owner')</option>
+
                                             @foreach ($owner as $key => $owner)
-                                                <option value="{{ $owner->id }}"
-                                                    {{ old('owner_id', $owner->id) == $owner->id ? 'selected' : '' }}>
-                                                    {{ $owner->owner_name }}</option>
+                                                <option value="{{ $owner->id }}" selected>{{ $owner->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                 </div>    
+                                 </div>
                 <div class="form-group">
                     <div class="col-6">
                         <label for="profile_picture">@lang('view_pages.profile')</label><br>
@@ -135,9 +120,9 @@
                                         <span class="text-danger">{{ $errors->first('icon') }}</span>
                                     </div>
                                 </div>
-                                
+
                                 </div>
-                                
+
 
 
                                 <div class="form-group">
