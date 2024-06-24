@@ -52,12 +52,12 @@ class JourneyTransformer extends Transformer
             'upper_semi_sleeper_price' =>  $journey->upper_semi_sleeper_price,
             'from_city_id' =>  $journey->from_city_id,
             'to_city_id' =>  $journey->to_city_id,
-            'from_city' =>  $journey->fromCity->city,
-            'to_city' =>  $journey->toCity->city,
+            //  'from_city' =>  $journey->fromCity->city,
+            //  'to_city' =>  $journey->toCity->city,
             'bus_company_name' => $journey->fleet->owner->company_name,
             'rating' => '5',
             'available_seats' =>(($journey->fleet->total_seats)-(count($journey->journeyUser))),
-            'currency_symbol' => $journey->serviceLocation->currency_symbol,
+           // 'currency_symbol' => $journey->serviceLocation->currency_symbol,
             'duration' => $journey->duration,
             'low_price' => $journey->getLowPrice(),
         ];
@@ -72,9 +72,9 @@ class JourneyTransformer extends Transformer
 
     if (auth()->check()) { //check auth user has role
 
-        if (auth()->user()->hasRole('driver')) 
+        if (auth()->user()->hasRole('driver'))
         {
-       
+
         $boardingpoints = $journey->journeyBoardingPoint()->count();
         $stoppoints = $journey->journeyStopPoint()->count();
 
@@ -85,7 +85,7 @@ class JourneyTransformer extends Transformer
 
         // dd($journey->driver->user->timezone);
 
-        if ($date->d != 0) 
+        if ($date->d != 0)
         {
         $params['difference_in_days'] =  $date->d;
         }elseif ($date->h != 0) {
@@ -93,7 +93,7 @@ class JourneyTransformer extends Transformer
         }elseif ($date->i != 0) {
         $params['difference_in_minutes'] =  $date->h;
         }
-       
+
         $params['from_city_code'] =  $journey->fromCity->short_code;
         $params['to_city_code'] =  $journey->toCity->short_code;
         $params['number_of_stops'] = $boardingpoints + $stoppoints;

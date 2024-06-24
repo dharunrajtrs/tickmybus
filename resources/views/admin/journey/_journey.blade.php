@@ -39,21 +39,21 @@
                 @if (auth()->user()->can('edit-journey'))
                     <a class="dropdown-item" href="{{url('journey/edit',$result->id)}}"><i class="fa fa-pencil"></i>@lang('view_pages.edit')</a>
                 @endif
-                @if (auth()->user()->can('view-journey'))
+                @if (auth()->user()->can('edit-journey'))
                    <a class="dropdown-item" href="{{url('journey/view',$result->id)}}">
                    <i class="fa fa-trash-o"></i>@lang('view_pages.view')</a>
-                @endif  
+                @endif
 
             @if(($result->is_cancelled == 0 ) && ($result->is_completed == 0))
 
                 @if (auth()->user()->can('assign-driver'))
                     <a class="dropdown-item" href="{{url('journey/assign-driver',$result->id)}}"> <i class="fa fa-dot-circle-o"></i>@lang('view_pages.assign_driver')</a>
-                @endif  
-            @endif 
+                @endif
+            @endif
                 @if (auth()->user()->can('cancel-journey'))
                    <a class="dropdown-item" href="{{url('journey/cancel',$result->id)}}">
                    <i class="fa fa-trash-o"></i>@lang('view_pages.cancel')</a>
-                @endif                     
+                @endif
                 @if (auth()->user()->can('delete-journey'))
                    <a class="dropdown-item sweet-delete" href="#" data-url="{{url('journey/delete',$result->id)}}">
                    <i class="fa fa-trash-o"></i>@lang('view_pages.delete')</a>

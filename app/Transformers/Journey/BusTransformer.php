@@ -31,7 +31,9 @@ class BusTransformer extends Transformer
         $layout_rows = [];
 
         // left lower deck
-        $seat_type = $fleet->fleetSeatLayout()->where("position",'left')->where("deck_type",'lower')->orderByRaw('CAST(`order` AS UNSIGNED)')->pluck('seat_type')->toArray();
+        //dd($fleet->comman_fleet_id);
+        $seat_type = $fleet->fleetSeatLayoutComman()->where("position",'left')->where("deck_type",'lower')->orderByRaw('CAST(`order` AS UNSIGNED)')->pluck('seat_type')->toArray();
+
         $seat_type = array_unique($seat_type);
         if (count($seat_type) > 1){  rsort($seat_type); }
         if(count($seat_type)>0){
@@ -135,7 +137,7 @@ class BusTransformer extends Transformer
             'layout_type'=> $layout_type,
         ];
 
-        
+
 
 
         return $params;
@@ -167,7 +169,7 @@ class BusTransformer extends Transformer
     public function includeAmenties(Fleet $fleet)
     {
 
-        
+
         $amenity = $fleet->amenities;
 
             // dd($amenity);

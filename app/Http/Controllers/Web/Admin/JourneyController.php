@@ -386,12 +386,13 @@ class JourneyController extends BaseController
         $page = trans('pages_names.edit_journey');
 
         $item = $journey;
-
+        $cities=AllCities::whereActive(true)->get();
+        $cities2=AllCities::whereActive(true)->get();
         $owner = $journey->fleet->owner;
 
         $drivers =Driver::where('owner_id', $owner->id)->get();
 
-        return view('admin.journey.assign_driver', compact('page', 'main_menu', 'sub_menu', 'item','drivers',));
+        return view('admin.journey.assign_driver', compact('page', 'main_menu', 'sub_menu', 'item','drivers','cities','cities2'));
     }
 
     public function assignDriverupdate(Request $request, Journey $journey)
@@ -459,9 +460,14 @@ class JourneyController extends BaseController
         $main_menu = 'view_journey';
         $sub_menu = 'view-journey';
         $item = $journey;
+        $cities=AllCities::where('id',$item->from_city_id)->first();
+        $cities1=$cities->name;
+
+        $cities2=AllCities::where('id',$item->to_city_id)->first();
+        $cities22=$cities2->name;
         $bus = $item->fleet;
 
-        return view('admin.journey.view', compact('page', 'main_menu', 'sub_menu', 'item', 'bus'));
+        return view('admin.journey.view', compact('page', 'main_menu', 'sub_menu', 'item', 'bus','cities1', 'cities22'));
     }
     /**
      * Find SeatLayout

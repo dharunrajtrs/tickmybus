@@ -271,7 +271,7 @@ ol {
                 <div class="col">
                     <span class="text-grey">{{ $item->convertedDepatureDate() }}</span><br>
                     <span class="text-grey">{{ $item->convertedDepaturedAt() }}</span><br>
-                    <p>{{ $item->fromCity->city }}</p>
+                    <p>{{ $cities1 }}</p>
                 </div>
                 <div class="col">
                     <div class="elapsed-time">
@@ -281,14 +281,14 @@ ol {
                 <div class="col" style="text-align:end;">
                     <span class="text-grey">{{ $item->convertedArraivalDate() }}</span><br>
                     <span class="text-grey">{{ $item->convertedArrivedAt() }}</span><br>
-                    <p>{{ $item->toCity->city }}</p>
+                    <p>{{ $cities22 }}</p>
                 </div>
             </div>
         </div>
         <div class="col-2 ticket-info">
             <h3>Starting At</h3>
             <!-- <p>{{ $item->getLowPrice() }}</p> -->
-         <button class="btn btn-danger btn-sm pull-right" type="submit" id="show_sheets"> Show sheets </button>    
+         <button class="btn btn-danger btn-sm pull-right" type="submit" id="show_sheets"> Show sheets </button>
          </div>
     </div>
     <hr>

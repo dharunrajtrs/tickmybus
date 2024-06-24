@@ -26,6 +26,14 @@ class Fleet extends Model
     {
         return $this->hasMany(FleetSeatLayout::class,'fleet_id','id');
     }
+    public function fleetSeatLayoutComman()
+    {
+        return $this->hasMany(FleetSeatLayout::class,'fleet_id','comman_fleet_id');
+    }
+    public function fleetSeatLayout1()
+    {
+        return $this->hasMany(FleetSeatLayout::class,'fleet_id','id');
+    }
     public function fleetDocument(){
         return $this->hasMany(FleetDocument::class,'fleet_id','id');
     }

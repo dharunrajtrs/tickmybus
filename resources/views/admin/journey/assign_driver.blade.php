@@ -31,9 +31,12 @@
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="from_city_id">@lang('view_pages.from_city') <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" id="from_city_id" name="from_city_id"
-                                                value="{{ old('name', $item->fromCity->city) }}" required=""
-                                                placeholder="@lang('view_pages.enter_name')" readonly>
+                                            <select name="from_city_id" id="from_city_id" class="form-control" disabled>
+                                                <option value="" selected disabled>@lang('view_pages.from')</option>
+                                                @foreach($cities as $key=>$city)
+                                                <option value="{{$city->id}}" {{ old('from_city_id',$item->from_city_id) == $city->id ? 'selected' : '' }}>{{$city->name}}</option>
+                                                @endforeach
+                                                </select>
                                             <span class="text-danger">{{ $errors->first('from_city') }}</span>
 
                                         </div>
@@ -41,9 +44,12 @@
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="to_city_id">@lang('view_pages.to_city') <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" id="to_city_id" name="to_city_id"
-                                                value="{{ old('name', $item->toCity->city) }}" required=""
-                                                placeholder="@lang('view_pages.enter_name')" readonly>
+                                            <select name="to_city_id" id="to_city_id" class="form-control" disabled>
+                                                <option value="" selected disabled>@lang('view_pages.to')</option>
+                                                @foreach($cities as $key=>$city)
+                                                <option value="{{$city->id}}" {{ old('to_city_id',$item->to_city_id) == $city->id ? 'selected' : '' }}>{{$city->name}}</option>
+                                                @endforeach
+                                                </select>
                                             <span class="text-danger">{{ $errors->first('to_city') }}</span>
 
                                         </div>
