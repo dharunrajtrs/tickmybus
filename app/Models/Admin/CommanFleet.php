@@ -24,7 +24,7 @@ class CommanFleet extends Model
 
     public function fleetSeatLayout()
     {
-        return $this->hasMany(FleetSeatLayout::class,'fleet_id','id');
+        return $this->hasMany(CommonFleetSeatLayout::class,'fleet_id','id');
     }
     public function fleetDocument(){
         return $this->hasMany(FleetDocument::class,'fleet_id','id');

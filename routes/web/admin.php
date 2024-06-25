@@ -252,6 +252,31 @@ Route::middleware('auth:web')->group(function () {
 
 
         });
+        Route::group(['prefix' => 'common_fleet_seat_layout',  'middleware' => 'permission:seat_layout'], function () {
+            Route::get('/seat_layout', 'CommonSeatLayoutController@seatLayout');
+            Route::get('/', 'CommonSeatLayoutController@index')->name('busSeats');
+            Route::get('/fetch', 'CommonSeatLayoutController@getAllSeatLayout');
+            Route::get('/fetch/bus', 'CommonSeatLayoutController@fetchBus')->name('getBus');
+
+            Route::get('/create', 'CommonSeatLayoutController@create');
+            Route::post('/store', 'CommonSeatLayoutController@store');
+            Route::post('/seat/view/modal', 'CommonSeatLayoutController@seatajax');
+
+            Route::get('edit/{fleet}', 'CommonSeatLayoutController@getById');
+            Route::get('delete/{fleet}', 'CommonSeatLayoutController@delete');
+
+
+            Route::post('update', 'CommonSeatLayoutController@update');
+            Route::get('toggle_status/{fleet_seat_layout}', 'CommonSeatLayoutController@toggleStatus');
+            // Route::get('delete/{fleet_seat_layout}', 'CommonSeatLayoutController@delete');
+
+// test
+            Route::get('/create1', 'CommonSeatLayoutController@create1');
+
+
+
+        });
+
 
 
         Route::group(['prefix' => 'admins',  'middleware' => 'permission:admin'], function () {

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFleetSeatLayoutsTable extends Migration
+class CreateCommonFleetSeatLayoutsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateFleetSeatLayoutsTable extends Migration
      */
     public function up()
     {
-        Schema::create('fleet_seat_layouts', function (Blueprint $table) {
+        Schema::create('common_fleet_seat_layouts', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('fleet_id')->nullable();
             $table->uuid('owner_id')->nullable();
-            $table->uuid('journey_id')->nullable();
             $table->string('position');
             $table->string('seat_no');
             $table->string('seat_layout_name');
@@ -35,10 +34,6 @@ class CreateFleetSeatLayoutsTable extends Migration
             $table->foreign('fleet_id')
                 ->references('id')
                 ->on('comman_fleets')
-                ->onDelete('cascade');
-            $table->foreign('journey_id')
-                ->references('id')
-                ->on('journeys')
                 ->onDelete('cascade');
             $table->foreign('owner_id')
                 ->references('id')

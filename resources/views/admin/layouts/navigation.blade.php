@@ -150,7 +150,7 @@ if(str_contains((string)request()->path(),'dashboard')){
           @if(auth()->user()->roles->pluck('slug')->contains('owner'))
           @if(auth()->user()->can('manage_seat_layout'))
           <li class="{{ 'fleet_seat_layout' == $sub_menu ? 'active' : '' }}">
-              <a href="{{url('/fleet_seat_layout')}}">  <i class="fa fa-code-fork"></i>@lang('pages_names.seat_layout')</a>
+              <a href="{{url('/common_fleet_seat_layout')}}">  <i class="fa fa-code-fork"></i>@lang('pages_names.seat_layout')</a>
             </li>
        @endif
        @endif
