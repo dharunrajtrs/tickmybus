@@ -103,7 +103,7 @@ class UserRegistrationController extends LoginController
              if($request->is_web){
 
                 $user = $this->user->belongsTorole(Role::USER)->where('email', $request->email)->first();
-                
+
                 return $this->authenticateAndRespond($user, $request, $needsToken=true);
 
             }
@@ -127,9 +127,9 @@ class UserRegistrationController extends LoginController
             $this->throwCustomException('Provided mobile has already been taken');
         }
 
-        if (!$country_id) {
-            $this->throwCustomException('unable to find country');
-        }
+        // if (!$country_id) {
+        //     $this->throwCustomException('unable to find country');
+        // }
 
 
         if ($request->has('refferal_code')) {
@@ -162,9 +162,8 @@ class UserRegistrationController extends LoginController
             'login_by'=>$request->input('login_by'),
             'country'=>$country_id,
             'refferal_code'=>str_random(6),
-            'gender'=>$request->input('gender'),
             'profile_picture'=>$profile_picture,
-            'lang'=>$request->input('lang')
+            'lang'=>'en'
         ];
 
         if (env('APP_FOR')=='demo' && $request->has('company_key') && $request->input('company_key')) {
@@ -225,6 +224,7 @@ class UserRegistrationController extends LoginController
     */
     public function validateUserMobile(Request $request)
     {
+
         $mobile = $request->mobile;
 
         $validate_exists_mobile = $this->user->belongsTorole(Role::USER)->where('mobile', $mobile)->exists();
@@ -312,7 +312,7 @@ class UserRegistrationController extends LoginController
 
         DB::beginTransaction();
         try {
-            $country_code = $this->country->where('code', $request->input('country'))->exists();
+            $country_code = $this->country->where('code', 'IN')->exists();
             if (!$country_code) {
                 $this->throwCustomValidationException('unable to find country', 'code');
             }

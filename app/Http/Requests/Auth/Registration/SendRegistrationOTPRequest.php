@@ -14,7 +14,7 @@ class SendRegistrationOTPRequest extends BaseRequest
     public function rules()
     {
         return [
-            'country' => 'required|exists:countries,dial_code',
+            //'country' => 'required|exists:countries,dial_code',
             'mobile' => 'required',
             'email'=>'sometimes|required'
         ];
