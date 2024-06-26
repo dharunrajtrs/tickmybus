@@ -594,6 +594,10 @@ Route::group(['prefix' => 'privacy',  'middleware' => 'permission:manage-privacy
             Route::post('/', 'SettingController@store');
         });
 
+        Route::group(['prefix' => 'otp',  'middleware' => 'permission:otp'], function () {
+            Route::get('/', 'OtpController@index');
+            Route::get('/fetch', 'OtpController@fetch');
+        });
     // Countries CRUD
             Route::group(['prefix' => 'country',  'middleware' => 'permission:manage-country'], function () {
                 Route::get('/', 'CountryController@index');
@@ -714,6 +718,7 @@ Route::group(['prefix' => 'privacy',  'middleware' => 'permission:manage-privacy
         // });
     });
 });
+
 
     Route::middleware('auth:web')->namespace('Dispatcher')->group(function () {
         Route::prefix('dispatch')->group(function () {

@@ -897,4 +897,12 @@ return array(
 'display_name'=> 'Display Name',
 'droping_points'=> 'Droping Points',
 'add_drivers'=> 'Add Drivers',
+'un_verified' => 'Un Verified',
+  'generated_date' => 'Generated Date',
+  'mail_id' => 'Mail ID',
+  'verification_status' => 'Verification Status',
+  'otp' => 'OTP',
+  'verified' => 'Verified',
+  'add_mail_template' => 'Add Mail Template',
+  'welcome_mail' => 'Welcome Mail'
 );

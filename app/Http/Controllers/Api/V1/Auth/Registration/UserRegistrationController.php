@@ -317,13 +317,12 @@ class UserRegistrationController extends LoginController
                 $this->throwCustomValidationException('unable to find country', 'code');
             }
             $mobileForOtp = $request->input('country') . $mobile;
-
             if (!$this->otpHandler->setMobile($mobile)->create()) {
                 $this->throwSendOTPErrorException($field);
             }
 
             $otp = $this->otpHandler->getOtp();
-            // Generate sms from template
+
             $sms = sms_template('generic-otp', ['otp'=>$otp,'mobile'=>$mobileForOtp], 'en');
             // Send sms by providers
             $this->smsContract->queueOn('default', $mobile, $sms);

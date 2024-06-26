@@ -211,12 +211,12 @@ class DatabaseOTPHandler implements OTPHandlerContract
     {
         $this->deleteExistingOTP();
 
-        // $otp = $this->generateNewOTP();
-        $otp = 1234;
+         $otp = $this->generateNewOTP();
+
 
         $mobileOtp = $this->getModel()->create([
             'mobile' => $this->getMobile(),
-            'otp' => $this->hashOTP($otp),
+            'otp' => $otp,
         ]);
 
         if (!$mobileOtp && !$mobileOtp->id) {
